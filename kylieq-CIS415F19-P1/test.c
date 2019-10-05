@@ -7,11 +7,11 @@
 int main() {
 
 	/* Main function variables */
-	char *buffer;
-	size_t bufsize = 300;
-	size_t num_char;
+	char *buffer = NULL;
+	size_t bufsize = NULL;
+	size_t num_char = 0;
 
-	const char s[2] = " \n";
+	const char *s = " \n";
 	char *token = NULL;
 
 	char check1[] = "./pseudu-shell";
@@ -25,8 +25,16 @@ int main() {
 	printf(">>> ");
 	num_char = getline(&buffer, &bufsize, stdin);
 
+
 	/* Tokenize the input string */
 	token = strtok(buffer, s);
+
+	/* Check that token is not a null pointer before proceeding */
+	if (token == NULL) {
+		printf("Error: Command unknown\n");
+		exit(1);
+	}
+
 	if (strcmp(token, check1) != 0) {
 		fprintf(stderr, "Error: Command unknown\n");
 		exit(-1);
@@ -39,12 +47,12 @@ int main() {
 		if (ctr == 1) {
 			if (strcmp(token, check2) == 0) {
 				token = strtok(NULL, s);
-				filemode(token);
+			//	filemode(token);
 				break;
 			}
 			else if (strcmp(token, check3) == 0) {
 				token = strtok(NULL, s);
-				intermode(token);
+			//	intermode(token);
 				break;
 			}
 			else {
