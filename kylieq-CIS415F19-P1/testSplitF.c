@@ -5,7 +5,7 @@
 
 int splitFile(char** arr) {
 	int i = 0;
-	char** ptr;
+	char** ptr = NULL;
 	while (i < sizeof(arr)) {
 		int ctr = 0;
 		ptr = (char**)malloc(10*sizeof(char*));
@@ -15,7 +15,7 @@ int splitFile(char** arr) {
 			i++;
 		}
 
-		splitLine(ptr);
+//		splitLine(ptr);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
@@ -24,7 +24,7 @@ int splitFile(char** arr) {
 		i++;
 	}
 
-	free(ptr);
+//	free(ptr);
 	return 1;
 }
 
