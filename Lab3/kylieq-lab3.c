@@ -99,7 +99,7 @@ void lfcat()
 			
 			/* close the read file and frre/null assign your line buffer */
 			fclose(input);
-			//free(buffer);
+			free(buffer);
 		}
 		//free(filename);
 	
