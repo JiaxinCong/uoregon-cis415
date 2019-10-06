@@ -31,17 +31,18 @@ int main() {
 		ptr[0] = token;
 		ctr = 1;
 
-        while (token != NULL) {
-           	token = strtok(NULL, s);
-          	ptr[ctr++] = token;
-        }
+        	while (token != NULL) {
+           		token = strtok(NULL, s);
+          		ptr[ctr++] = token;
+       		}
 
-        ptr[ctr-1] = "NULL";
-//        splitFile(ptr, -1);
+        	ptr[ctr-1] = "NULL";
+//        	splitFile(ptr, -1);
+		free(ptr);
 	}
 
 	/*Free the allocated memory*/
-	free(ptr);
+	free(buffer);
 	fclose(fp);
 	return 1;
 }
