@@ -81,8 +81,30 @@ int makeCall(char** arr, int mode) {
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
+
+			char src[strlen(fileSrc)];
+			char dst[strlen(fileDst)];
+			int i;
+			for (i=0; i<strlen(fileSrc)-4; i++) {
+				src[i] = fileSrc[i];
+			}
+			int j;
+			for (j=0; j<strlen(fileDst)-4; j++) {
+				dst[i] = fileDst[i];
+			}
+			src[i++] = '.';
+			src[i++] = 't';
+			src[i++] = 'x';
+			src[i++] = 't';
+			src[i++] = '\0';
+	
+			dst[j++] = '.';
+			dst[j++] = 't';
+			dst[j++] = 'x';
+			dst[j++] = 't';
+
 			if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
-//			copyFile(fileSrc, fileDst);
+			copyFile(src, dst);
 		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
