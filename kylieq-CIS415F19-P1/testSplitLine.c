@@ -27,43 +27,43 @@ int splitLine(char** arr) {
 		char *command = arr[0];
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
 			printf(">>> %s\n", command);
-			listDir();
+		//	listDir();
 		}
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
 			printf(">>> %s\n", command);
-			showCurrentDir();
+		//	showCurrentDir();
 		}
 		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
 			char *newDir = arr[1];
 			printf(">>> %s %s\n", command, newDir);
-			makeDir(newDir);
+		//	makeDir(newDir);
 		}
 		else if (strcmp(command, "cd") == 0 || strcmp(command, "cd") == 13) {
 			char *newDir = arr[1];
 			printf(">>> %s %s\n", command, newDir);
-			changeDir(newDir);
+		//	changeDir(newDir);
 		}
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
 			printf(">>> %s %s %s\n", command, fileSrc, fileDst);
-			copyFile(fileSrc, fileDst);
+		//	copyFile(fileSrc, fileDst);
 		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
 			char *fpDst = arr[2];
 			printf(">>> %s %s %s\n", command, fpSrc, fpDst);
-			moveFile(fpSrc, fpDst);
+		//	moveFile(fpSrc, fpDst);
 		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
 			char *filename = arr[1];
 			printf(">>> %s %s\n", command, filename);
-			deleteFile(filename);
+		//	deleteFile(filename);
 		}
 		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
 			char *filename = arr[1];
 			printf(">>> %s %s\n", command, filename);
-			displayFile(filename);
+		//	displayFile(filename);
 		}
 	}
 
