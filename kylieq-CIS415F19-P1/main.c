@@ -128,7 +128,7 @@ int splitFile(char** arr, int mode) {
 
 		i++;
 	}
-
+	free(ptr);
 	return 1;
 }
 
@@ -193,7 +193,9 @@ int intermode() {
 		printf("Error: Unable to allocate input buffer.\n");
 		exit(1);
 	}
-
+	
+	free(buffer);
+	
 	char **ptr = NULL;
 	while(1) {
 		int ctr = 0;
@@ -212,6 +214,7 @@ int intermode() {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
+
            	token = strtok(NULL, s);
           	ptr[ctr++] = token;
 		}
@@ -221,13 +224,14 @@ int intermode() {
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
         	splitFile(ptr, -2);
-        }
+        	}
 
 		if (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
 		}
+		free(ptr);
 	}
 	return 1;
 }
