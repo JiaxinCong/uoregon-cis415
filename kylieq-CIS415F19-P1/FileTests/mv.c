@@ -1,5 +1,8 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 	char *sourcePath = argv[1];
@@ -14,15 +17,15 @@ int main(int argc, char *argv[]) {
 
 		char *buffer = NULL;
 		size_t bufsize = 0;
-		ssize_t num_char;
 
-		while ((num_char = getline(&buffer, &bufsize, fpSrc)) != -1) {
+		while (getline(&buffer, &bufsize, fpSrc) != -1) {
 			fprintf(fpDst, "%s", buffer);
 		}
 
-		//free(buffer);
-		remove(sourcePath);
+		fclose(fpSrc);
+		unlink(sourcePath);
 		fclose(fpDst);
+		free(buffer);
 	}
 }
 
