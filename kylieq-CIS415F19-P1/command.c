@@ -132,6 +132,5 @@ void displayFile(char *filename) { /*for the cat command*/
 		printf("%s\n", buffer);
 	}
 
-	close(file);
 	free(buffer);
 }
