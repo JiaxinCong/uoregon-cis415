@@ -7,7 +7,7 @@ int main() {
 	/* Main Function Variables */
 	char *buffer = NULL;
 	size_t bufsize = 100;
-	size_t num_char = 0;
+//	size_t num_char = 0;
 
 	const char *s = " \n";
 	char *token = NULL;
@@ -28,7 +28,8 @@ int main() {
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
-		num_char = getline(&buffer, &bufsize, stdin);
+		//num_char = 
+		getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
 		token = strtok(buffer, s);
