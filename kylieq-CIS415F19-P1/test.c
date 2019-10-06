@@ -16,7 +16,7 @@ int splitFile(char** arr, int mode) {
 			i++;
 		}
 
-		splitLine(ptr, mode);
+//		splitLine(ptr, mode);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
@@ -32,12 +32,10 @@ int main() {
 	/* Main Function Variables */
 	char *buffer = NULL;
 	size_t bufsize = 100;
-//	size_t num_char = 0;
 
 	const char *s = " \n";
+	const char *exitStr = "exit";
 	char *token = NULL;
-
-	char *exitStr = "exit";
 
 	/* Allocate memory for the input buffer. */
 	buffer = (char *)malloc(bufsize * sizeof(char));
@@ -53,7 +51,6 @@ int main() {
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
-		//num_char = 
 		getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
@@ -85,5 +82,5 @@ int main() {
 		free(ptr);
 	}
 	free(buffer);
-	return 1;
+	exit(0);
 }
