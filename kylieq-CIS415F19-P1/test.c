@@ -6,7 +6,7 @@
 int main() {	
 	/* Main Function Variables */
 	char *buffer = NULL;
-	size_t bufsize = NULL;
+	size_t bufsize = 100;
 	size_t num_char = 0;
 
 	const char *s = " \n";
@@ -20,8 +20,6 @@ int main() {
 		printf("Error: Unable to allocate input buffer.\n");
 		exit(1);
 	}
-	
-	//free(buffer);
 	
 	char **ptr = NULL;
 	while(1) {
@@ -42,15 +40,15 @@ int main() {
 				break;
 			}
 
-           	token = strtok(NULL, s);
-          	ptr[ctr++] = token;
+           		token = strtok(NULL, s);
+          		ptr[ctr++] = token;
 		}
 
 		ptr[ctr-1] = "NULL";
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr, -2);
+//	        	splitFile(ptr, -2);
         	}
 
 		if (token != NULL) {
@@ -58,7 +56,7 @@ int main() {
 				break;
 			}
 		}
-		//free(ptr);
+		free(ptr);
 	}
 	free(buffer);
 	return 1;
