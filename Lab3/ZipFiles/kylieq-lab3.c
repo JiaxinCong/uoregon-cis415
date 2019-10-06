@@ -100,6 +100,7 @@ void lfcat()
 			
 			/* close the read file and frre/null assign your line buffer */
 			fclose(input);
+			free(buffer);
 		}
 	
 	}
@@ -159,6 +160,6 @@ int main() {
 			}
 		}
 	}
-
+	free(buffer);
 	return 1;
 }
