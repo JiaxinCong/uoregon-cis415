@@ -41,11 +41,22 @@ int checkCommand(char *token) {
 int splitLine(char** arr) {
 	int ctr = 0;
 	/* Get total count of valid entries */
-	for (int i=0; i<sizeof(arr); i++) {
-		if (arr[i] != NULL) {
-			ctr++;
+	
+	//for (int i=0; i<sizeof(arr); i++) {
+	//	char *check = arr[i];
+	//	if (arr[i] != NULL) {
+	//	ctr++;
+	//}
+	int i=0;
+	do {
+		char *check = arr[i];
+		if (check == NULL) {
+			//break;
+			exit(1);
 		}
-	}
+		ctr++;
+		i++;
+	} while (i<sizeof(arr));
 
 	/* checkCommand returns how many strings should be in the line depending 
 	   on the command that is called. If this value does not equal ctr, the 
@@ -101,7 +112,6 @@ int splitLine(char** arr) {
 		//	displayFile(filename);
 		}
 	}
-
 	return 1;
 }
 
