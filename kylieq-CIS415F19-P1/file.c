@@ -181,6 +181,10 @@ int splitTokens(char** arr, int mode) {
 		int ctr = 0;
 		ptr = (char**)malloc(10*sizeof(char*));
 
+		for (int i=0; i<10; i++) {
+			ptr[i] = NULL;
+		}
+
 		while ((strcmp(arr[i], ";") != 0) && (arr[i] != NULL)) {
 				ptr[ctr] = arr[i];
 				printf("check: %s\n", arr[i]);
