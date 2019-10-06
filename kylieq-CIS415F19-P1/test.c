@@ -16,13 +16,14 @@ int splitFile(char** arr, int mode) {
 			i++;
 		}
 
-		splitLine(ptr, mode);
+//		splitLine(ptr, mode);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
 		}
 
 		i++;
+		free(ptr);
 	}
 	free(ptr);
 	return 1;
