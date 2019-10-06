@@ -8,13 +8,13 @@ int main()
     char s[100]; 
   
     // printing current working directory 
-    printf("%s\n", getcwd(s, 100)); 
+    printf("cwd1: %s\n", getcwd(s, 100)); 
   
     // using the command 
     chdir("CIS415"); 
   
     // printing current working directory 
-    printf("%s\n", getcwd(s, 100)); 
+    printf("cwd2: %s\n", getcwd(s, 100)); 
   
     // after chdir is executed 
     return 0; 
