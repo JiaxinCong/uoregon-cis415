@@ -129,7 +129,7 @@ int main() {
 		printf("Error: Unable to allocate input buffer.\n");
 		exit(1);
 	}
-
+	free(buffer);
 	/*main run loop*/
 	while(1) {
 		/* Print >>> then get the input string */
