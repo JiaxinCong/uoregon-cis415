@@ -34,9 +34,9 @@ void lfcat()
 	printf("<<In lfcat(): Step-01: Function called>>\n");
 	printf("<<In lfcat(): Step-02: Listing all files in current dir.>>\n");
 	/* Define your variables here */
-	FILE *output;
-	DIR *dir;
-	struct dirent *dirEntry;
+	FILE *output = NULL;
+	DIR *dir = NULL;
+	struct dirent *dirEntry = NULL;
 
 	/* Open the file output.txt for writing */
 	output = fopen("output.txt", "w");
@@ -86,9 +86,9 @@ void lfcat()
 			FILE *input = fopen(filename, "r");
 			
 			/* Read in each line using getline() */
-			char *buffer;
-			size_t bufferSize = 0;
-			size_t inputSize;
+			char *buffer = NULL;
+			size_t bufferSize = NULL;
+			size_t inputSize = 0;
 
 			fprintf(output, "File: %s\n", filename);
 			while ((inputSize = getline(&buffer, &bufferSize, input)) != -1) {
@@ -164,6 +164,6 @@ int main() {
 	}
 
 	/*Free the allocated memory*/
-	free(buffer);
+	//free(buffer);
 	return 1;
 }
