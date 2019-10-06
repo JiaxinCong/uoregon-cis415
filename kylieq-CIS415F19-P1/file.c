@@ -2,32 +2,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
+#include <unistd.h>
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
-	char newSrc[strlen(sourcePath)-1];
-
+//	char newSrc[strlen(sourcePath)-1];
+	printf("src: %s dst: %s\n", sourcePath, destinationPath);
 	// First check if working directory needs to be changed.
 	// Get rid of unneccesary white-space characters at end of string.
-	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
-		changeDir("..");
-		int i;
-		for (i=0; i<strlen(sourcePath); i++) {
-			newSrc[i] = sourcePath[i];
-		}
-		newSrc[i] = '\0';
-		memmove(newSrc, newSrc+3, strlen(newSrc));
-	}
-	else {
-		int i;
-		for (i=0; i<strlen(sourcePath); i++) {
-			newSrc[i] = sourcePath[i];
-		}
-		newSrc[i] = '\0';
-	}
+//	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
+//		chdir("..");
+//		int i;
+//		for (i=0; i<strlen(sourcePath); i++) {
+//			newSrc[i] = sourcePath[i];
+//		}
+//		newSrc[i] = '\0';
+//		memmove(newSrc, newSrc+3, strlen(newSrc));
+//	}
+//	else {
+//		int i;
+//		for (i=0; i<strlen(sourcePath); i++) {
+//			newSrc[i] = sourcePath[i];
+//		}
+//		newSrc[i] = '\0';
+//	}
 
-	FILE *fpSrc = fopen(newSrc, "r");
+	FILE *fpSrc = fopen(sourcePath, "r");
 	if (fpSrc == NULL) {
-		printf("Error: Source file not found: %s\n", newSrc);
+		printf("Error: Source file not found: %s\n", sourcePath);
 	}
 	else if (strcmp(destinationPath, ".") == 0) {
 		printf("Error: Destination file name not valid.\n");
@@ -120,6 +122,8 @@ int makeCall(char** arr, int mode) {
 //			changeDir(newDir);
 		}
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
+			printf("MADE IT\n");
+
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
 
@@ -169,7 +173,7 @@ int makeCall(char** arr, int mode) {
 }
 
 int main() {
-	char file_name[] = "input.txt";
+	char file_name[] = "input2.txt";
 	FILE *fp = fopen(file_name, "r");
 
 	if (fp == NULL) {
