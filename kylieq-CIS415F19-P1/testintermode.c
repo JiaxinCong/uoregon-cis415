@@ -47,7 +47,7 @@ int main() {
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr, -2);
+        //	splitFile(ptr, -2);
         }
 
 		if (token != NULL) {
@@ -58,6 +58,6 @@ int main() {
 	}
 
 	/*Free the allocated memory*/
-	free(buffer);
+	//free(buffer);
 	return 1;
 }
