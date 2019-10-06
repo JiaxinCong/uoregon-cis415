@@ -126,7 +126,7 @@ int splitFile(char** arr, int mode) {
 
 		i++;
 	}
-
+	free(ptr);
 	return 1;
 }
 
@@ -177,7 +177,7 @@ int main() {
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr, -2);
+//        	splitFile(ptr, -2);
         	}
 
 		if (token != NULL) {
@@ -185,7 +185,10 @@ int main() {
 				break;
 			}
 		}
+
 		free(ptr);
+		free(token);
 	}
+	free(buffer);
 	return 1;
 }
