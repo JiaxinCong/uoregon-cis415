@@ -18,6 +18,7 @@
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -41,7 +42,7 @@ void lfcat()
 	output = fopen("output.txt", "w");
 	
 	/* Get the current directory*/
-	char cwd[PATH_MAX];
+	char cwd[300];
 	if (getcwd(cwd, sizeof(cwd)) == NULL) {
 		printf("Error: Directory not found.\n");
 		exit(1);
