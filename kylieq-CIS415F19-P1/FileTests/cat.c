@@ -8,7 +8,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void displayFile(char *filename) { /*for the cat command*/
+int main() { /*for the cat command*/
+	char *filename = "input.txt";
 	char newFn[strlen(filename)-1];
 	int i;
 	for (i=0; i<strlen(filename)-1; i++) {
@@ -29,7 +30,8 @@ void displayFile(char *filename) { /*for the cat command*/
 		while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
 			printf("%s", buffer);			
 		}
+		fclose(fp);
 	}
 
-	fclose(fp);
+	return 0;
 }
