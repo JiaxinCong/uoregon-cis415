@@ -26,7 +26,7 @@ int main() {
 	char **ptr = NULL;
 	while(1) {
 		int ctr = 0;
-		ptr = (char**)malloc(bufsize * sizeof(char*));
+		ptr = (char**)malloc(20 * sizeof(char*));
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
@@ -42,22 +42,22 @@ int main() {
 				break;
 			}
 
-           	token = strtok(NULL, s);
-          	ptr[ctr++] = token;
+           		token = strtok(NULL, s);
+          		ptr[ctr++] = token;
 		}
 
 		ptr[ctr-1] = "NULL";
-
-		/* Check if user entered anything on the command line at all */
-		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr, -2);
-        	}
 
 		if (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
 		}
+
+        	splitFile(ptr, -2);
 		free(ptr);
 	}
+
+//	free(ptr);
 	return 1;
+}
