@@ -115,10 +115,6 @@ int splitFile(char** arr, int mode) {
 		ptr = (char**)malloc(10*sizeof(char*));
 
 		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
-			if (strcmp(arr[i], "\n") == 0) {
-				arr[i] = "\0";
-			}
-
 			ptr[ctr] = arr[i];
 			ctr++;
 			i++;
