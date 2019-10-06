@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	// First check if working directory needs to be changed.
 	// Get rid of unneccesary white-space characters at end of string.
 	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
-		changeDir("..");
+		chdir("..");
 		int i;
 		for (i=0; i<strlen(sourcePath); i++) {
 			newSrc[i] = sourcePath[i];
