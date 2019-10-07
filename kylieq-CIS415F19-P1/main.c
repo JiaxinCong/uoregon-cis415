@@ -238,7 +238,7 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 int filemode(char filename[]) {
 	
 	/* Connect open stream to output.txt in file mode only */
-	freopen("output.txt", "a", stdout);
+	freopen("output.txt", "w", stdout);
 
     char *buffer = NULL;
     size_t bufferSize = 300;
