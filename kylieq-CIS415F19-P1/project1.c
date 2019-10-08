@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* File Mode */
 int filemode(char file_name[]) {
 	FILE *fp = fopen(file_name, "r");
 	if (fp == NULL) {
@@ -64,6 +65,11 @@ int filemode(char file_name[]) {
 	return 1;
 }
 
+/* Interactive Mode */
+int intermode(char file_name[]) {
+	return 1;
+}
+
 int main(int argc, char *argv[]) {
 
 	/* Main function variables */
@@ -94,9 +100,17 @@ int main(int argc, char *argv[]) {
 		if (ctr == 1) {
 			if (strcmp(token, check1) == 0) {
 				token = strtok(NULL, s);
-				//fp = fopen(token, "r");
 				filemode(token);
 				break;
+			}
+			else if (strcmp(token, check2) == 0) {
+				token = strtok(NULL, s);
+				intermode(token);
+				break;
+			}
+			else {
+				fprintf(stderr, "Command Unknown\n");
+				exit(-1);
 			}
 		}
 	}
