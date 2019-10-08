@@ -29,5 +29,4 @@ int main(int args, char *argv[])  {
 	// Deallocate memory
 	free(buffer);
 	return(0);
-
 }
