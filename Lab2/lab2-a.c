@@ -1,9 +1,21 @@
+/*
+* Description: User input is required before the program may proceed. After
+* the user enters a string of text, said string is broken up into a series of 
+* tokens using white space as the delimiter. These tokens are then displayed
+* line by line.
+*
+* Author: Kylie Quan
+*
+* Date: 7 October 2019
+*/
+
+/*-------------------------Preprocessor Directives---------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> 
+#include <string.h>
+/*---------------------------------------------------------------------------*/
 
-int input(char *s, int length);
-
+/*-----------------------------Program Main----------------------------------*/
 int main(int args, char *argv[])  {
 
 	/* Main Function Variables */
@@ -36,3 +48,4 @@ int main(int args, char *argv[])  {
 	free(buffer);
 	return 1;
 }
+/*-----------------------------Program End-----------------------------------*/
