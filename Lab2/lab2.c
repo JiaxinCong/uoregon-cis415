@@ -26,6 +26,7 @@ int main(int args, char *argv[])  {
 		ctr++;
 	}
 
+	free(buffer)
 	return(0);
 
 }
