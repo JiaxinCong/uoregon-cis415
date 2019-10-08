@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
-// 	makeCall(PCBS);
+ 	makeCall(PCBS);
 
  	freePCB(PCBS);
     free(ptr);
