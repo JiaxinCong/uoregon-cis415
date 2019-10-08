@@ -11,7 +11,7 @@ struct ProcessControlBlock {
 	pid_t pid;
 	char *executable;
 	char **args;
-}
+};
 
 /* Read file */
 int getline_File(char *filename, char *buffer, size_t bufferSize) {
@@ -93,7 +93,9 @@ int main(int argc, char *argv[]) {
 	struct ProcessControlBlock pcb1 = {pid, ptr[0]};
 	char *exe = ptr[0];
 	if (pcb1.pid == 0) {
-		execvp(exe, NULL);
+		execvp(pcb1.executable, NULL);
+		free(ptr);
+		free(buffer);
 		exit(-1);
 	}
 	printf("Done\n");
