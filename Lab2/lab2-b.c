@@ -80,6 +80,7 @@ int main() {
 	}
 
 	/*Free the allocated memory*/
+	fclose(fp);
 	free(buffer);
 	return 1;
 }
