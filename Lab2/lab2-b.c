@@ -7,7 +7,7 @@
 *
 * Author: Kylie Quan
 *
-* Date: 7 October 2019
+* Date: 10/072019
 *
 * Notes: 
 * 1. After the end of the file has been reached, user input is required before 
