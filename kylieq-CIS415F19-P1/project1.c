@@ -67,6 +67,7 @@ int filemode(char file_name[]) {
 
 /* Interactive Mode */
 int intermode(char file_name[]) {
+	
 	return 1;
 }
 
