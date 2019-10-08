@@ -26,7 +26,8 @@ int main(int args, char *argv[])  {
 		ctr++;
 	}
 
-	free(buffer)
+	// Deallocate memory
+	free(buffer);
 	return(0);
 
 }
