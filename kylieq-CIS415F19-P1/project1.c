@@ -67,7 +67,57 @@ int filemode(char file_name[]) {
 
 /* Interactive Mode */
 int intermode(char file_name[]) {
+	/* Main Function Variables */
+	char *buffer;
+	size_t bufsize = 100;
+	size_t num_char;
 
+	const char s[2]= " \n";
+	char *token;
+
+	char exitStr[] = "exit";
+
+	/* Allocate memory for the input buffer. */
+	buffer = (char *)malloc(bufsize * sizeof(char));
+
+	while(1) {
+		/* Print >>> then get the input string */
+		printf(">>> ");
+		num_char = getline(&buffer, &bufsize, stdin);
+
+		/* Tokenize the input string */
+		token = strtok(buffer, s);
+
+		/* Display each token */
+		int ctr = 0;
+		while (token != NULL) {
+			printf("T%d: %s\n", ctr, token);
+			token = strtok(NULL, s);
+			ctr++;
+		}
+		/* If the user entered <exit> then exit the loop */
+		printf(">>> ");
+		num_char = getline(&buffer, &bufsize, stdin);
+		token = strtok(buffer, s);
+
+        /* Check user input */
+		if (strcmp(exitStr, buffer) == 0) {
+			break;
+		}
+		/* REMOVE OPTION TO PRINT TOKENS */
+		else {
+			/* Display each token */
+			int ctr = 0;
+			while (token != NULL) {
+				printf("T%d: %s\n", ctr, token);
+				token = strtok(NULL, s);
+				ctr++;
+			}
+		}
+	}
+
+	/*Free the allocated memory*/
+	free(buffer);
 	return 1;
 }
 
