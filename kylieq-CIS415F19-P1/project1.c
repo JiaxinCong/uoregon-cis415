@@ -67,7 +67,7 @@ int filemode(char file_name[]) {
 
 /* Interactive Mode */
 int intermode(char file_name[]) {
-	
+
 	return 1;
 }
 
@@ -81,8 +81,9 @@ int main(int argc, char *argv[]) {
 	const char s[2] = " \n";
 	char *token;
 
-	char check1[] = "-f";
-	char check2[] = "-command";
+	char check1[] = "./pseudu-shell";
+	char check2[] = "-f";
+	char check3[] = "-command";
 
 	/* Allocate memory for the input buffer */
 	buffer = (char *)malloc(bufsize * sizeof(char));
@@ -93,18 +94,22 @@ int main(int argc, char *argv[]) {
 
 	/* Tokenize the input string */
 	token = strtok(buffer, s);
+	if (strcmp(token, check1) != 0) {
+		fprintf(stderr, "Command Unknown\n");
+		exit(-1);
+	}
 
 	int ctr = 0;
 	while (token != NULL) {
 		token = strtok(NULL, s);
 		ctr++;
 		if (ctr == 1) {
-			if (strcmp(token, check1) == 0) {
+			if (strcmp(token, check2) == 0) {
 				token = strtok(NULL, s);
 				filemode(token);
 				break;
 			}
-			else if (strcmp(token, check2) == 0) {
+			else if (strcmp(token, check3) == 0) {
 				token = strtok(NULL, s);
 				intermode(token);
 				break;
