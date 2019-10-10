@@ -2,6 +2,46 @@
 #include <stdlib.h>
 #include <string.h>
 
+int checkCommand(char *token) {
+
+    if (strcmp(token, "ls") == 0 || strcmp(token, "ls") == 13) {
+    	printf("VALID\n");
+    	return 1;
+   	}
+    else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "cd") == 0 || strcmp(token, "cd") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "cp") == 0 || strcmp(token, "cp") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "mv") == 0 || strcmp(token, "mv") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "rm") == 0 || strcmp(token, "rm") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else if (strcmp(token, "cat") == 0 || strcmp(token, "cat") == 13) {
+    	printf("VALID\n");
+    	return 1;
+    }
+    else {
+    	printf("NOT VALID\n");
+        return 0; // Command not valid.
+    }
+}
+
 /* File Mode */
 int filemode(char file_name[]) {
 	FILE *fp = fopen(file_name, "r");
@@ -31,12 +71,14 @@ int filemode(char file_name[]) {
 
 		/* Tokenize the input string */
 		token = strtok(buffer, s);
+		checkCommand(token);
 
 		/* Display each token */
 		int ctr = 0;
 		while (token != NULL) {
 			printf("T%d: %s\n", ctr, token);
 			token = strtok(NULL, s);
+			checkCommand(token);
 			ctr++;
 		}
 		
@@ -48,15 +90,6 @@ int filemode(char file_name[]) {
         /* Check user input */
 		if (strcmp(exitStr, buffer) == 0) {
 			break;
-		}
-		else {
-			/* Display each token */
-			int ctr = 0;
-			while (token != NULL) {
-				printf("T%d: %s\n", ctr, token);
-				token = strtok(NULL, s);
-				ctr++;
-			}
 		}
 	}
 

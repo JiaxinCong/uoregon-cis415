@@ -15,22 +15,22 @@ int checkCommand(char *token) {
     	return 1;
     }
     else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) { // 1 arg
-    	return 1;
+    	return 2;
     }
     else if (strcmp(token, "cd") == 0 || strcmp(token, "cd") == 13) { // 1 arg
-    	return 1;
+    	return 2;
     }
     else if (strcmp(token, "cp") == 0 || strcmp(token, "cp") == 13) { // 2 args
-    	return 1;
+    	return 3;
     }
     else if (strcmp(token, "mv") == 0 || strcmp(token, "mv") == 13) { // 2 args
-    	return 1;
+    	return 3;
     }
     else if (strcmp(token, "rm") == 0 || strcmp(token, "rm") == 13) { // 1 arg
-    	return 1;
+    	return 2;
     }
     else if (strcmp(token, "cat") == 0 || strcmp(token, "cat") == 13) { // 1 arg
-    	return 1;
+    	return 2;
     }
     else {
         return 0; 
@@ -39,12 +39,26 @@ int checkCommand(char *token) {
 
 int printVal(char** arr){
 	int ctr = 0;
+
+	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
 		if (arr[i] != NULL) {
 			ctr++;
 		}
 	}
-	printf("valid out of total size: %d/%lu\n", ctr, sizeof(arr));
+
+	int check = checkCommand(arr[0]);
+	if (check != ctr) {
+		printf("Command not valid: ");
+		for (int i=0; i<ctr; i++){
+			printf("%s ", arr[i]);
+		}
+		printf("\n");
+		exit(1);
+	}
+
+//	printf("ctr: %d\n", ctr);
+//	printf("check1: %d\n", check);
 	return 1;
 }
 
@@ -55,7 +69,6 @@ int printArr(char** arr) {
 		int ctr = 0;
 		ptr = (char**)malloc(10*sizeof(char*));
 		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
-			//ptr = (char**)malloc(10*sizeof(char*));
 			ptr[ctr] = arr[i];
 			ctr++;
 			i++;
