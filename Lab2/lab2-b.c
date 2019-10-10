@@ -27,9 +27,7 @@ int main(int argc, char *argv[]) {
 	setbuf(stdout, NULL);
 	
 	/* Main Function Variables */
-//	FILE *fp = fopen("input.txt", "r");
 	FILE *fp;
-
 	fp = fopen(argv[1], "r");
 
 	char *buffer;
