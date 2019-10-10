@@ -57,8 +57,8 @@ int printVal(char** arr){
 		exit(1);
 	}
 
-	printf("ctr: %d\n", ctr);
-	printf("check1: %d\n", check);
+//	printf("ctr: %d\n", ctr);
+//	printf("check1: %d\n", check);
 	return 1;
 }
 
@@ -106,9 +106,7 @@ int filemode(char file_name[]) {
 	strcpy(exitStr, "exit");
 
 	char **ptr;
-	num_char = getline(&buffer, &bufsize, fp);
-	while (num_char != -1) {
-//	while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
+	while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
 		int ctr = 0;
 		ptr = (char**)malloc(20*sizeof(char*));
 
@@ -125,7 +123,6 @@ int filemode(char file_name[]) {
         }
         ptr[ctr-1] = "NULL";
         printArr(ptr);
-        num_char = getline(&buffer, &bufsize, fp);
 	}
 
 	/*Free the allocated memory*/
