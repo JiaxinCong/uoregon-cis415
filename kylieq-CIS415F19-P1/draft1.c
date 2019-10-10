@@ -3,48 +3,76 @@
 #include <string.h>
 
 int checkCommand(char *token) {
+	// If command requires 0 args, return 1
+	// If command requires 1 arg, return 2
+	// If commmand requires 2 args, return 3
+	// If not valid command, return 0
 
-    if (strcmp(token, "ls") == 0 || strcmp(token, "ls") == 13) {
+    if (strcmp(token, "ls") == 0 || strcmp(token, "ls") == 13) { // 0 args
     	return 1;
    	}
-    else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) {
+    else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) { // 0 args
     	return 1;
     }
-    else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) {
+    else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) { // 1 arg
     	return 1;
     }
-    else if (strcmp(token, "cd") == 0 || strcmp(token, "cd") == 13) {
+    else if (strcmp(token, "cd") == 0 || strcmp(token, "cd") == 13) { // 1 arg
     	return 1;
     }
-    else if (strcmp(token, "cp") == 0 || strcmp(token, "cp") == 13) {
+    else if (strcmp(token, "cp") == 0 || strcmp(token, "cp") == 13) { // 2 args
     	return 1;
     }
-    else if (strcmp(token, "mv") == 0 || strcmp(token, "mv") == 13) {
+    else if (strcmp(token, "mv") == 0 || strcmp(token, "mv") == 13) { // 2 args
     	return 1;
     }
-    else if (strcmp(token, "rm") == 0 || strcmp(token, "rm") == 13) {
+    else if (strcmp(token, "rm") == 0 || strcmp(token, "rm") == 13) { // 1 arg
     	return 1;
     }
-    else if (strcmp(token, "cat") == 0 || strcmp(token, "cat") == 13) {
+    else if (strcmp(token, "cat") == 0 || strcmp(token, "cat") == 13) { // 1 arg
     	return 1;
     }
     else {
-        return 0; // Command not valid.
+        return 0; 
     }
 }
 
-int printArr(char* arr[]) {
+int printVal(char** arr){
 	int ctr = 0;
-	while (ctr < 100) {
-		while (strcmp(arr[ctr], ";") != 0) {
-			printf("%s ", arr[ctr]);
+	for (int i=0; i<sizeof(arr); i++) {
+		if (arr[i] != NULL) {
 			ctr++;
 		}
-		printf("\n");
-		ctr++;
 	}
+	printf("valid out of total size: %d/%lu\n", ctr, sizeof(arr));
 	return 1;
-} 
+}
+
+int printArr(char** arr) {
+	int i = 0;
+	char** ptr;
+	while (i < sizeof(arr)) {
+		int ctr = 0;
+		ptr = (char**)malloc(10*sizeof(char*));
+		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
+			//ptr = (char**)malloc(10*sizeof(char*));
+			ptr[ctr] = arr[i];
+			ctr++;
+			i++;
+		}
+
+		printVal(ptr);
+
+		if (strcmp(arr[i], "NULL") == 0) {
+			break;
+		}
+
+		i++;
+	}
+
+	free(ptr);
+	return 1;
+}
 
 /* File Mode */
 int filemode(char file_name[]) {
@@ -64,25 +92,28 @@ int filemode(char file_name[]) {
 	char exitStr[100];
 	strcpy(exitStr, "exit");
 
+	char **ptr;
 	while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
-		char *arr[100];
-		int idx = 0;
+		int ctr = 0;
+		ptr = (char**)malloc(20*sizeof(char*));
 
 		printf("%s\n", buffer);
-		token = strtok(buffer, s);
 
-		arr[idx] = token;
-		idx = 1;
+		token = strtok(buffer, s);
+		ptr[0] = token;
+		ctr = 1;
 
         while (token != NULL) {
         	checkCommand(token);
            	token = strtok(NULL, s);
-           	arr[idx++] = token;
+          	ptr[ctr++] = token;
         }
-        printArr(arr);
+        ptr[ctr-1] = "NULL";
+        printArr(ptr);
 	}
 
 	/*Free the allocated memory*/
+	free(ptr);
 	fclose(fp);
 	return 1;
 }
