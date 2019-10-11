@@ -61,9 +61,14 @@ int splitLine(char** arr) {
 		printf("\n");
 	}
 	else{
-		if (strcmp(arr[0], "ls") == 0) {
-			printf(">>> %s\n", arr[0]);
+		char *command = arr[0];
+		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
+			printf(">>> %s\n", command);
 			listDir();
+		}
+		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
+			printf(">>> %s\n", command);
+			showCurrentDir();
 		}
 	}
 

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <dirent.h>
+#include <unistd.h>
+#include <limits.h>
 
 #include "command.h"
 
@@ -19,7 +21,15 @@ void listDir() { /*for the ls command*/
 	closedir(dir);
 }
 
-//void showCurrentDir(); /*for the pwd command*/
+void showCurrentDir() {/*for the pwd command*/
+	char cwd[PATH_MAX];
+	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+		printf("%s\n", cwd);
+	}
+	else {
+		perror("Directory Not Found\n");
+	}
+}
 
 //void makeDir(char *dirName); /*for the mkdir command*/
 
