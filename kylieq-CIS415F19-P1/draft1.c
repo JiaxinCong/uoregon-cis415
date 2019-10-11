@@ -37,16 +37,20 @@ int checkCommand(char *token) {
     }
 }
 
-int printVal(char** arr){
+int splitLine(char** arr) {
 	int ctr = 0;
 
 	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
 		if (arr[i] != NULL) {
 			ctr++;
+			printf("idx: %d token: %s\n", i, arr[i]);
 		}
 	}
 
+	/* checkCommand returns how many strings should be in the line depending 
+	   on the command that is called. If this value does not equal ctr, the 
+	   call is invalid */
 	int check = checkCommand(arr[0]);
 	if (check != ctr) {
 		printf("Command not valid: ");
@@ -54,11 +58,8 @@ int printVal(char** arr){
 			printf("%s ", arr[i]);
 		}
 		printf("\n");
-		exit(1);
 	}
 
-//	printf("ctr: %d\n", ctr);
-//	printf("check1: %d\n", check);
 	return 1;
 }
 
@@ -74,7 +75,7 @@ int printArr(char** arr) {
 			i++;
 		}
 
-		printVal(ptr);
+		splitLine(ptr);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
