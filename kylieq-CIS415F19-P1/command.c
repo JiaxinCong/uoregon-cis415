@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <limits.h>
@@ -26,7 +28,7 @@ void showCurrentDir() {/*for the pwd command*/
 		printf("%s\n", cwd);
 	}
 	else {
-		perror("Directory Not Found\n");
+		printf("Directory Not Valid\n");
 	}
 }
 
@@ -41,8 +43,25 @@ void showCurrentDir() {/*for the pwd command*/
 void deleteFile(char *filename) { /*for the rm command*/
     int check = remove(filename);
     if (check != 0) {
-    	printf("Unable to delete file: %s\n", filename);
+    	printf("File Not Found: %s\n", filename);
     }
 }
 
-//void displayFile(char *filename); /*for the cat command*/
+void displayFile(char *filename) { /*for the cat command*/
+	FILE  *fp = fopen(filename, "r");
+
+	if (fp == NULL) {
+		printf("File Not Found: %s\n", filename);
+	}
+	else {
+		char *buffer;
+		size_t bufsize = 100;
+		size_t num_char;
+
+		while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
+			printf("%s", buffer);			
+		}
+	}
+
+	fclose(fp);
+}

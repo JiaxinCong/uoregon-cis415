@@ -75,6 +75,11 @@ int splitLine(char** arr) {
 			char *filename = arr[1];
 			deleteFile(filename);
 		}
+		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
+			printf(">>> %s\n", command);
+			char *filename = arr[1];
+			displayFile(filename);
+		}
 	}
 
 	return 1;
