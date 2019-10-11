@@ -6,7 +6,6 @@
 #include "command.h"
 
 void listDir() { /*for the ls command*/
-	// Pointer to directory entry
 	DIR *dir = opendir(".");
 	struct dirent *dirEntry;
 
@@ -39,6 +38,11 @@ void showCurrentDir() {/*for the pwd command*/
 
 //void moveFile(char *sourcePath, char *destinationPath); /*for the mv command*/
 
-//void deleteFile(char *filename); /*for the rm command*/
+void deleteFile(char *filename) { /*for the rm command*/
+    int check = remove(filename);
+    if (check != 0) {
+    	printf("Unable to delete file: %s\n", filename);
+    }
+}
 
 //void displayFile(char *filename); /*for the cat command*/

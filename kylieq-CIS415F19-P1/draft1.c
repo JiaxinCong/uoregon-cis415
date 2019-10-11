@@ -70,6 +70,11 @@ int splitLine(char** arr) {
 			printf(">>> %s\n", command);
 			showCurrentDir();
 		}
+		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
+			printf(">>> %s\n", command);
+			char *filename = arr[1];
+			deleteFile(filename);
+		}
 	}
 
 	return 1;
