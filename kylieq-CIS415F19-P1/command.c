@@ -36,7 +36,25 @@ void showCurrentDir() {/*for the pwd command*/
 
 //void changeDir(); /*for the cd command*/
 
-//void copyFile(char *sourcePath, char *destinationPath); /*for the cp command*/
+void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
+	FILE *fpSrc = fopen(sourcePath, "r");
+	FILE *fpDst = fopen(destinationPath, "w");
+	char input;
+
+	printf("hello\n");
+
+	if (fpSrc == NULL || fpDst == NULL) {
+		printf("File Not Found\n");
+		exit(1);
+	}
+
+	while ((input = fgetc(fpSrc)) != EOF) {
+		fputc(input, fpDst);
+	}
+
+	fclose(fpSrc);
+	fclose(fpDst);
+}
 
 //void moveFile(char *sourcePath, char *destinationPath); /*for the mv command*/
 

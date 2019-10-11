@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "command.h"
 
@@ -69,6 +70,25 @@ int splitLine(char** arr) {
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
 			printf(">>> %s\n", command);
 			showCurrentDir();
+		}
+		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
+			printf(">>> %s\n", command);
+			char *fileSrc = arr[1];
+			char *fileDst = arr[2];
+
+			while (1) {
+				if (isalpha(fileSrc[0]) || isdigit(fileSrc[0])) {
+					continue;
+				}
+				if (isalpha(fileSrc[0]) || isdigit(fileSrc[0])) {
+					continue;
+				}
+				else {
+					printf("One Or Both Files Are Invalid\n");
+					break;
+				}
+				copyFile(fileSrc, fileDst);
+			}
 		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
 			printf(">>> %s\n", command);
