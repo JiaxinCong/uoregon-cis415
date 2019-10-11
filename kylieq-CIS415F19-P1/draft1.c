@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "command.h"
+
 int checkCommand(char *token) {
 	// If command requires 0 args, return 1
 	// If command requires 1 arg, return 2
@@ -44,7 +46,6 @@ int splitLine(char** arr) {
 	for (int i=0; i<sizeof(arr); i++) {
 		if (arr[i] != NULL) {
 			ctr++;
-			printf("idx: %d token: %s\n", i, arr[i]);
 		}
 	}
 
@@ -58,6 +59,12 @@ int splitLine(char** arr) {
 			printf("%s ", arr[i]);
 		}
 		printf("\n");
+	}
+	else{
+		if (strcmp(arr[0], "ls") == 0) {
+			printf(">>> %s\n", arr[0]);
+			listDir();
+		}
 	}
 
 	return 1;
@@ -206,7 +213,7 @@ int main(int argc, char *argv[]) {
 	buffer = (char *)malloc(bufsize * sizeof(char));
 
 	/* print >>> then get the input string */
-	printf(">>>");
+	printf(">>> ");
 	num_char = getline(&buffer, &bufsize, stdin);
 
 	/* Tokenize the input string */
