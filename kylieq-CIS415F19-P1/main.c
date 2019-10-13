@@ -9,7 +9,7 @@ int checkCommand(char *token) {
 	// If command requires 0 args, return 1
 	// If command requires 1 arg, return 2
 	// If commmand requires 2 args, return 3
-	// If not valid command, return 0
+	// If command not valid, return 0
 
     if (strcmp(token, "ls") == 0 || strcmp(token, "ls") == 13) { // 0 args
     	return 1;
@@ -81,24 +81,23 @@ int splitLine(char** arr) {
 			changeDir(newDir);
 		}
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
-/*			printf(">>> %s\n", command);
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
+			printf(">>> %s %s %s\n", command, fileSrc, fileDst);
 
-			while (1) {
-				if (isalpha(fileSrc[0]) || isdigit(fileSrc[0])) {
-					continue;
+			if (fileSrc[0] == '.' && fileSrc[1] == '.') {
+				changeDir("..");
+				char newSrc[strlen(fileSrc)];
+				int i;
+				for (i=0; i<strlen(fileSrc); i++) {
+					newSrc[i] = fileSrc[i];
 				}
-				if (isalpha(fileSrc[0]) || isdigit(fileSrc[0])) {
-					continue;
-				}
-				else {
-					printf("One Or Both Files Are Invalid\n");
-					break;
-				}
-				copyFile(fileSrc, fileDst);
+				memmove(newSrc, newSrc+3, strlen(newSrc));
+				newSrc[i] = '\0';
+
+				copyFile(newSrc, fileDst);
 			}
-*/		}
+		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
 			char *fpDst = arr[2];
@@ -106,8 +105,8 @@ int splitLine(char** arr) {
 			moveFile(fpSrc, fpDst);
 		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
-			printf(">>> %s\n", command);
 			char *filename = arr[1];
+			printf(">>> %s %s\n", command, filename);
 			deleteFile(filename);
 		}
 		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {

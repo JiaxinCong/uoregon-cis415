@@ -42,15 +42,13 @@ void makeDir(char *dirName) { /*for the mkdir command*/
 }
 
 void changeDir(char *dirName) { /*for the cd command*/
-	char dir[100];
 	chdir(dirName);
-	printf("%s\n", getcwd(dir, 100));
 }
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	FILE *fpSrc = fopen(sourcePath, "r");
 	if (fpSrc == NULL) {
-		printf("File Not Found\n");
+		printf("File Not Found: %s\n", sourcePath);
 	}
 	else {
 		FILE *fpDst = fopen(destinationPath, "w");
