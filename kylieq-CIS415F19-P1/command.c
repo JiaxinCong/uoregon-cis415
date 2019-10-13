@@ -4,6 +4,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <limits.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "command.h"
 
@@ -32,16 +34,23 @@ void showCurrentDir() {/*for the pwd command*/
 	}
 }
 
-//void makeDir(char *dirName); /*for the mkdir command*/
+void makeDir(char *dirName) { /*for the mkdir command*/
+	struct stat st = {0};
+	if (stat(dirName, &st) == -1) {
+		mkdir(dirName, 0700);
+	}
+}
 
-//void changeDir(); /*for the cd command*/
+void changeDir(char *dirName) { /*for the cd command*/
+	char dir[100];
+	chdir(dirName);
+	printf("%s\n", getcwd(dir, 100));
+}
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	FILE *fpSrc = fopen(sourcePath, "r");
 	FILE *fpDst = fopen(destinationPath, "w");
 	char input;
-
-	printf("hello\n");
 
 	if (fpSrc == NULL || fpDst == NULL) {
 		printf("File Not Found\n");
