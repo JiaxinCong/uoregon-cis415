@@ -78,7 +78,7 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 		ssize_t num_char;
 
 		while ((num_char = getline(&buffer, &bufsize, fpSrc)) != -1) {
-			fprintf(fpDst, buffer);
+			fprintf(fpDst, "%s", buffer);
 		}
 
 		deleteFile(sourcePath);

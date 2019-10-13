@@ -42,7 +42,6 @@ int checkCommand(char *token) {
 
 int splitLine(char** arr) {
 	int ctr = 0;
-
 	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
 		if (arr[i] != NULL) {
