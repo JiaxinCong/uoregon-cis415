@@ -93,7 +93,10 @@ int splitLine(char** arr) {
 					newSrc[i] = fileSrc[i];
 				}
 				memmove(newSrc, newSrc+3, strlen(newSrc));
-				newSrc[i] = '\0';
+
+				for (int i=0; i<strlen(newSrc); i++) {
+					printf("CHECK: %c\n", newSrc[i]);
+				}
 
 				copyFile(newSrc, fileDst);
 			}
@@ -167,7 +170,7 @@ int filemode(char file_name[]) {
 		int ctr = 0;
 		ptr = (char**)malloc(20*sizeof(char*));
 
-		printf("%s\n", buffer);
+		printf("\n%s\n", buffer);
 
 		token = strtok(buffer, s);
 		ptr[0] = token;
