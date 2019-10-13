@@ -100,14 +100,20 @@ int splitLine(char** arr) {
 				copyFile(fileSrc, fileDst);
 			}
 */		}
+		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
+			char *fpSrc = arr[1];
+			char *fpDst = arr[2];
+			printf(">>> %s %s %s\n", command, fpSrc, fpDst);
+			moveFile(fpSrc, fpDst);
+		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
 			printf(">>> %s\n", command);
 			char *filename = arr[1];
 			deleteFile(filename);
 		}
 		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
-			printf(">>> %s\n", command);
 			char *filename = arr[1];
+			printf(">>> %s %s\n", command, filename);
 			displayFile(filename);
 		}
 	}

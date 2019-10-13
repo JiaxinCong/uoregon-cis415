@@ -49,23 +49,42 @@ void changeDir(char *dirName) { /*for the cd command*/
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	FILE *fpSrc = fopen(sourcePath, "r");
-	FILE *fpDst = fopen(destinationPath, "w");
-	char input;
-
-	if (fpSrc == NULL || fpDst == NULL) {
+	if (fpSrc == NULL) {
 		printf("File Not Found\n");
-		exit(1);
 	}
+	else {
+		FILE *fpDst = fopen(destinationPath, "w");
+		char input;
 
-	while ((input = fgetc(fpSrc)) != EOF) {
-		fputc(input, fpDst);
+		while ((input = fgetc(fpSrc)) != EOF) {
+			fputc(input, fpDst);
+		}
+
+		fclose(fpSrc);
+		fclose(fpDst);
 	}
-
-	fclose(fpSrc);
-	fclose(fpDst);
 }
 
-//void moveFile(char *sourcePath, char *destinationPath); /*for the mv command*/
+void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
+	FILE *fpSrc = fopen(sourcePath, "r");
+	if (fpSrc == NULL) {
+		printf("File Not Found: %s\n", sourcePath);		
+	}
+	else {
+		FILE *fpDst = fopen(destinationPath, "w");
+
+		char *buffer;
+		size_t bufsize = 0;
+		ssize_t num_char;
+
+		while ((num_char = getline(&buffer, &bufsize, fpSrc)) != -1) {
+			fprintf(fpDst, buffer);
+		}
+
+		deleteFile(sourcePath);
+		fclose(fpDst);
+	}
+}
 
 void deleteFile(char *filename) { /*for the rm command*/
     int check = remove(filename);
