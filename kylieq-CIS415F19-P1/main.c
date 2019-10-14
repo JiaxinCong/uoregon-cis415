@@ -87,9 +87,9 @@ int splitLine(char** arr) {
 
 			if (fileSrc[0] == '.' && fileSrc[1] == '.') {
 				changeDir("..");
-				char newSrc[strlen(fileSrc)];
-				int i;
-				for (i=0; i<strlen(fileSrc); i++) {
+				char newSrc[strlen(fileSrc)-1];
+
+				for (int i=0; i<strlen(fileSrc); i++) {
 					newSrc[i] = fileSrc[i];
 				}
 				memmove(newSrc, newSrc+3, strlen(newSrc));
@@ -97,6 +97,8 @@ int splitLine(char** arr) {
 				for (int i=0; i<strlen(newSrc); i++) {
 					printf("CHECK: %c\n", newSrc[i]);
 				}
+
+				printf("SIZE: %lu\n", strlen(newSrc));
 
 				copyFile(newSrc, fileDst);
 			}

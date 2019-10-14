@@ -71,7 +71,7 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 	else {
 		FILE *fpDst = fopen(destinationPath, "w");
 
-		char *buffer;
+		char *buffer = NULL;
 		size_t bufsize = 0;
 		ssize_t num_char;
 
@@ -79,6 +79,7 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 			fprintf(fpDst, "%s", buffer);
 		}
 
+		free(buffer);
 		deleteFile(sourcePath);
 		fclose(fpDst);
 	}
