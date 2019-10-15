@@ -30,10 +30,15 @@
 /*----------------------------Function Definitions---------------------------*/
 void lfcat()
 {
+	printf("<<In lfcat(): Step-01: Function called>>\n");
+	printf("<<In lfcat(): Step-02: Listing all files in current dir.>>\n");
 	/* Define your variables here */
-	
+	FILE *output;
+	DIR *dir;
+	struct dirent *dirEntry;
+
 	/* Open the file output.txt for writing */
-	FILE *output = fopen("output.txt", "w");
+	output = fopen("output.txt", "w");
 	
 	/* Get the current directory*/
 	char cwd[PATH_MAX];
@@ -43,8 +48,7 @@ void lfcat()
 	}
 
 	/* Open the dir using opendir() */
-	DIR *dir = opendir(".");
-	struct dirent *dirEntry;
+	dir = opendir(".");
 
 	if (dir == NULL) {
 		printf("Directory can not be found.\n");
@@ -58,24 +62,25 @@ void lfcat()
 
 		/* Hint: use an if statement to skip any names that are not readable files (e.g. ".", "..", "lab-3.c", "lab3.exe", "output.txt" */
 		if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) {
-			printf("File not readable: %s\n", filename);		
+			printf("%s\n", filename);		
 		}
 		else if (strcmp(filename, "output.txt") == 0) {
-			printf("File not readable: %s\n", filename);
+			printf("%s\n", filename);
 		}
 		else if (strcmp(filename, "kylieq-lab3.c") == 0) {
-			printf("File not readable: %s\n", filename);
+			printf("%s\n", filename);
 		}
 		else if (strcmp(filename, "command.h") == 0){
-			printf("File not readable: %s\n", filename);
+			printf("%s\n", filename);
 		}
 		else if (strcmp(filename, ".DS_Store") == 0){
-			printf("File not readable: %s\n", filename);
+			printf("%s\n", filename);
 		}
 		else if (strcmp(filename, "lab3") == 0){
-			printf("File not readable: %s\n", filename);
+			printf("%s\n", filename);
 		}
 		else {
+			printf("%s\n", filename);
 			/* Open the file */
 			FILE *input = fopen(filename, "r");
 			
