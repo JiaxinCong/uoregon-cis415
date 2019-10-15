@@ -102,7 +102,7 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 			fprintf(fpDst, "%s", buffer);
 		}
 
-		free(buffer);
+		//free(buffer);
 		remove(sourcePath);
 		fclose(fpDst);
 	}
