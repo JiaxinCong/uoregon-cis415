@@ -54,7 +54,7 @@ int splitLine(char** arr) {
 	   call is invalid */
 	int check = checkCommand(arr[0]);
 	if (check != ctr) {
-		printf("Command not valid: ");
+		printf("Error: Command not valid: ");
 		for (int i=0; i<ctr; i++){
 			printf("%s ", arr[i]);
 		}
@@ -84,24 +84,7 @@ int splitLine(char** arr) {
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
 			printf(">>> %s %s %s\n", command, fileSrc, fileDst);
-
-			if (fileSrc[0] == '.' && fileSrc[1] == '.') {
-				changeDir("..");
-				char newSrc[strlen(fileSrc)-1];
-
-				for (int i=0; i<strlen(fileSrc); i++) {
-					newSrc[i] = fileSrc[i];
-				}
-				memmove(newSrc, newSrc+3, strlen(newSrc));
-
-				for (int i=0; i<strlen(newSrc); i++) {
-					printf("CHECK: %c\n", newSrc[i]);
-				}
-
-				printf("SIZE: %lu\n", strlen(newSrc));
-
-				copyFile(newSrc, fileDst);
-			}
+			copyFile(fileSrc, fileDst);
 		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
@@ -153,7 +136,7 @@ int splitFile(char** arr) {
 int filemode(char file_name[]) {
 	FILE *fp = fopen(file_name, "r");
 	if (fp == NULL) {
-		perror("File Not Found");
+		printf("Error: File not found: %s\n", file_name);
 		exit(1);
 	}
 
@@ -163,9 +146,6 @@ int filemode(char file_name[]) {
 
 	const char s[3]= " \n";
 	char *token;
-	
-	char exitStr[100];
-	strcpy(exitStr, "exit");
 
 	char **ptr;
 	while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
@@ -249,7 +229,7 @@ int intermode(char file_name[]) {
 	return 1;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 
 	/* Main function variables */
 	char *buffer;
@@ -273,7 +253,7 @@ int main(int argc, char *argv[]) {
 	/* Tokenize the input string */
 	token = strtok(buffer, s);
 	if (strcmp(token, check1) != 0) {
-		fprintf(stderr, "Command Unknown\n");
+		fprintf(stderr, "Error: Command unknown\n");
 		exit(-1);
 	}
 
@@ -293,7 +273,7 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 			else {
-				fprintf(stderr, "Command Unknown\n");
+				fprintf(stderr, "Error: Command unknown\n");
 				exit(-1);
 			}
 		}
