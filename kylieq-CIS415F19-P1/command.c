@@ -47,9 +47,11 @@ void changeDir(char *dirName) { /*for the cd command*/
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	char newSrc[strlen(sourcePath)-1];
+
+	// First check if working directory needs to be changed.
+	// Get rid of unneccesary white-space characters at end of string.
 	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
 		changeDir("..");
-
 		int i;
 		for (i=0; i<strlen(sourcePath); i++) {
 			newSrc[i] = sourcePath[i];
@@ -114,8 +116,22 @@ void deleteFile(char *filename) { /*for the rm command*/
 }
 
 void displayFile(char *filename) { /*for the cat command*/
-	char *token = strtok(filename, " ");
-	FILE  *fp = fopen(token, "r");
+//	char *token = strtok(filename, " ");
+	char newFn[strlen(filename)-1];
+	int i;
+	for (i=0; i<strlen(filename); i++) {
+		newFn[i] = filename[i];
+	}
+	newFn[i] = '\0';
+	memmove(newFn, newFn, strlen(newFn));
+
+	//TEST
+	for (int j=0; j<strlen(newFn); j++) {
+		printf("CHECK: %c\n", newFn[j]);
+	}
+	//END TEST
+
+	FILE  *fp = fopen(newFn, "r");
 
 	if (fp == NULL) {
 		printf("Error: File not found: %s\n", filename);
