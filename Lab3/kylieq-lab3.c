@@ -6,7 +6,8 @@
 * Date: <today's date>
 *
 * Notes: 
-* 1. <add notes we should consider when grading>
+* 1. When compiling the program, enter "gcc kylieq-lab3.c -o lab3". The program
+     checks for an executable file named "lab3"
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
@@ -33,50 +34,67 @@ void lfcat()
 		printf("Error: Directory not found.\n");
 		exit(1);
 	}
+	else {
+		printf("Current working directory is: %s\n", cwd);
+	}
 
 	/* Open the dir using opendir() */
 	DIR *dir = opendir(".");
-	struct dirent *dirEntry = readdir(dir);
+	struct dirent *dirEntry;
+
+	if (dir == NULL) {
+		printf("Directory can not be found.\n");
+		exit(1);
+	}
 
 	/* use a while loop to read the dir */
-	while (dirEntry != NULL) {
-	
+	while ((dirEntry = readdir(dir)) != NULL) {
+		
+		char *filename = dirEntry->d_name;
+
 		/* Hint: use an if statement to skip any names that are not readable files (e.g. ".", "..", "lab-3.c", "lab3.exe", "output.txt" */
-		if (strcmp(dirEntry->d_name, ".") == 0) {
-			printf("File is not readable: %s\n", dirEntry->d_name);
-			break;
+		if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0) {
+			printf("File not readable: %s\n", filename);		
 		}
-		else if (strcmp(dirEntry->d_name, "lab3.exe") == 0) {
-			printf("File is not readable: %s\n", dirEntry->d_name);
-			break;
+		else if (strcmp(filename, "output.txt") == 0) {
+			printf("File not readable: %s\n", filename);
 		}
-		else if (strcmp(dirEntry->d_name, "output.txt") == 0) {
-			printf("File is not readable: %s\n", dirEntry->d_name);
-			break;
+		else if (strcmp(filename, "kylieq-lab3.c") == 0) {
+			printf("File not readable: %s\n", filename);
+		}
+		else if (strcmp(filename, "command.h") == 0){
+			printf("File not readable: %s\n", filename);
+		}
+		else if (strcmp(filename, ".DS_Store") == 0){
+			printf("File not readable: %s\n", filename);
+		}
+		else if (strcmp(filename, "lab3") == 0){
+			printf("File not readable: %s\n", filename);
 		}
 		else {
 			/* Open the file */
-			FILE *input = fopen(dirEntry->d_name, "r");
+			printf("%s\n", filename);
+			FILE *input = fopen(filename, "r");
 			
 			/* Read in each line using getline() */
 			char *buffer;
 			size_t bufferSize = 0;
 			size_t inputSize;
 
+			fprintf(output, "File: %s\n", filename);
 			while ((inputSize = getline(&buffer, &bufferSize, input)) != -1) {
 				/* Write each line to output.txt */
 				fprintf(output, "%s", buffer);
 			}
 			
 			/* print 80 "-" characters to output.txt */
-			for (int i=0; i<80; i++) {
-				fprintf(output, "-");
-			}
+			fprintf(output, "\n---------------------------------------------------------------------------------------------------------------\n");
 			
 			/* close the read file and frre/null assign your line buffer */
 			fclose(input);
-			free(buffer);
+			//free(buffer);
 		}
+		//free(filename);
 	
 	}
 	/*close both the output file and the directory you were reading from using closedir() and fclose() */
@@ -86,26 +104,21 @@ void lfcat()
 /*---------------------------------------------------------------------------*/
 
 /*-----------------------------Program Main----------------------------------*/
-int main(int argc, char *argv[]) {
+int main() {
 	setbuf(stdout, NULL);
-	
-	/* Main Function Variables */
-	FILE *fp;
-	fp = fopen(argv[1], "r");
 
 	char *buffer;
-	size_t bufferSize = 100;
+	size_t bufferSize;
 	size_t inputSize;
 
-	const char s[2]= " \n";
+	const char s[] = " \n";
 	char *token;
 	
-	char exitStr[4];
-	strcpy(exitStr, "exit");
+	char *exitStr = "exit";
 
 	/* Allocate memory for the input buffer. */
 	buffer = (char *)malloc(bufferSize * sizeof(char));
-	if (buffer== NULL) {
+	if (buffer == NULL) {
 		printf("Error: Unable to allocate input buffer.\n");
 		exit(1);
 	}
@@ -113,8 +126,8 @@ int main(int argc, char *argv[]) {
 	/*main run loop*/
 	while(1) {
 		/* Print >>> then get the input string */
-		printf(">>> %s\n", buffer);
-		inputSize = getline(&buffer, &bufferSize, fp);
+		printf(">>> ");
+		inputSize = getline(&buffer, &bufferSize, stdin);
 
 		token = strtok(buffer, s);
 		while (token != NULL) {
@@ -123,7 +136,7 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 
-			if (strcmp(token, "lfcat\n") == 0) {
+			if (strcmp(token, "lfcat") == 0) {
 				lfcat();
 			}
 			else {
@@ -134,13 +147,14 @@ int main(int argc, char *argv[]) {
 		}
 
 		/* If the user entered <exit> then exit the loop */
-		if (strcmp(exitStr, buffer) == 0) {
-			break;
+		if (token != NULL) {
+			if (strcmp(exitStr, buffer) == 0) {
+				break;
+			}
 		}
 	}
 
 	/*Free the allocated memory*/
-	fclose(fp);
 	free(buffer);
 	return 1;
 }
