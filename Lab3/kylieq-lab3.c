@@ -1,13 +1,20 @@
 /*
-* Description: <write a brief description of your lab>
+* Description: User input is required before the program may proceed. After
+* the user enters a string of text, said string is broken up into a series of 
+* tokens using white space as the delimiter. If the user enters "exit", the 
+* program will terminate. Otherwise, if the user enters "lfcat", the program
+* will read from accessible files in the current working directory. The contents 
+* of each of these files are copied over into a new text file, output.txt.
 *
-* Author: <your name>
+* Author: Kylie Quan
 *
-* Date: <today's date>
+* Date: 10/17/19
 *
 * Notes: 
-* 1. When compiling the program, enter "gcc kylieq-lab3.c -o lab3". The program
-     checks for an executable file named "lab3"
+* 1. When compiling the program, enter "gcc kylieq-lab3.c -o lab3". 
+*    And then "./lab3" to run it. 
+*    The program checks for a file named "lab3" when determining whether the
+*    files are readable.
 */
 
 /*-------------------------Preprocessor Directives---------------------------*/
