@@ -116,22 +116,14 @@ void deleteFile(char *filename) { /*for the rm command*/
 }
 
 void displayFile(char *filename) { /*for the cat command*/
-//	char *token = strtok(filename, " ");
 	char newFn[strlen(filename)-1];
 	int i;
-	for (i=0; i<strlen(filename); i++) {
+	for (i=0; i<strlen(filename)-1; i++) {
 		newFn[i] = filename[i];
 	}
 	newFn[i] = '\0';
-	memmove(newFn, newFn, strlen(newFn));
 
-	//TEST
-	for (int j=0; j<strlen(newFn); j++) {
-		printf("CHECK: %c\n", newFn[j]);
-	}
-	//END TEST
-
-	FILE  *fp = fopen(newFn, "r");
+	FILE *fp = fopen(newFn, "r");
 
 	if (fp == NULL) {
 		printf("Error: File not found: %s\n", filename);
