@@ -41,9 +41,6 @@ void lfcat()
 		printf("Error: Directory not found.\n");
 		exit(1);
 	}
-	else {
-		printf("Current working directory is: %s\n", cwd);
-	}
 
 	/* Open the dir using opendir() */
 	DIR *dir = opendir(".");
@@ -80,7 +77,6 @@ void lfcat()
 		}
 		else {
 			/* Open the file */
-			printf("%s\n", filename);
 			FILE *input = fopen(filename, "r");
 			
 			/* Read in each line using getline() */
@@ -99,7 +95,7 @@ void lfcat()
 			
 			/* close the read file and frre/null assign your line buffer */
 			fclose(input);
-			free(buffer);
+			//free(buffer);
 		}
 		//free(filename);
 	
