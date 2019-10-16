@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+//#include <ctype.h>
 
 #include "command.h"
 
@@ -233,12 +233,12 @@ int intermode(char file_name[]) {
 int main() {
 
 	/* Main function variables */
-	char *buffer;
-	size_t bufsize = 300;
-	size_t num_char;
+	char *buffer = NULL;
+	size_t bufsize = NULL;
+	size_t num_char = 0;
 
-	const char s[2] = " \n";
-	char *token;
+	const char *s = " \n";
+	char *token = NULL;
 
 	char check1[] = "./pseudu-shell";
 	char check2[] = "-f";
@@ -253,6 +253,14 @@ int main() {
 
 	/* Tokenize the input string */
 	token = strtok(buffer, s);
+
+	/* Check that token is not a null pointer before proceeding */
+	if (token == NULL) {
+		printf("Error: Command unknown\n");
+		exit(1);
+	}
+
+	/* Check if first argument is "./pseudu-shell" */
 	if (strcmp(token, check1) != 0) {
 		fprintf(stderr, "Error: Command unknown\n");
 		exit(-1);
