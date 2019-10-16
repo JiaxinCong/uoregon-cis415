@@ -15,7 +15,7 @@ int main() {
 	size_t bufsize = NULL;
 	size_t num_char = 0;
 
-	const char s[3]= " \n";
+	const char *s = " \n";
 	char *token;
 
 	char **ptr;
