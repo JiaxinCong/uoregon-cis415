@@ -113,6 +113,7 @@ int splitFile(char** arr) {
 	while (i < sizeof(arr)) {
 		int ctr = 0;
 		ptr = (char**)malloc(10*sizeof(char*));
+
 		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
 			ptr[ctr] = arr[i];
 			ctr++;
@@ -134,6 +135,7 @@ int splitFile(char** arr) {
 /* File Mode */
 int filemode(char file_name[]) {
 	FILE *fp = fopen(file_name, "r");
+
 	if (fp == NULL) {
 		printf("Error: File not found: %s\n", file_name);
 		exit(1);
@@ -143,7 +145,7 @@ int filemode(char file_name[]) {
 	size_t bufsize = NULL;
 	size_t num_char = 0;
 
-	const char s[3]= " \n";
+	const char *s = " \n";
 	char *token;
 
 	char **ptr;
