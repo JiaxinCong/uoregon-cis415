@@ -12,7 +12,7 @@ int main() {
 	size_t num_char;
 
 	const char s[2] = " \n";
-	char *token;
+	char *token = NULL;
 
 	char check1[] = "./pseudu-shell";
 	char check2[] = "-f";
