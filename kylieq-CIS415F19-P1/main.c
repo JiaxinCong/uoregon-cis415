@@ -109,7 +109,7 @@ int splitLine(char** arr) {
 
 int splitFile(char** arr) {
 	int i = 0;
-	char** ptr;
+	char** ptr = NULL;
 	while (i < sizeof(arr)) {
 		int ctr = 0;
 		ptr = (char**)malloc(10*sizeof(char*));
@@ -128,7 +128,6 @@ int splitFile(char** arr) {
 		i++;
 	}
 
-	free(ptr);
 	return 1;
 }
 
