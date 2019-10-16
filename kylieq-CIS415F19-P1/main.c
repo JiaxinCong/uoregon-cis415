@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <ctype.h>
 
 #include "command.h"
 
@@ -141,9 +140,9 @@ int filemode(char file_name[]) {
 		exit(1);
 	}
 
-	char *buffer;
-	size_t bufsize = 100;
-	size_t num_char;
+	char *buffer = NULL;
+	size_t bufsize = NULL;
+	size_t num_char = 0;
 
 	const char s[3]= " \n";
 	char *token;
@@ -164,6 +163,7 @@ int filemode(char file_name[]) {
            	token = strtok(NULL, s);
           	ptr[ctr++] = token;
         }
+
         ptr[ctr-1] = "NULL";
         splitFile(ptr);
 	}
