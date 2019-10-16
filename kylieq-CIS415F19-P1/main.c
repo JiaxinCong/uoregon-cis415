@@ -263,8 +263,8 @@ int main() {
 
 	/* Check if first argument is "./pseudu-shell" */
 	if (strcmp(token, check1) != 0) {
-		fprintf(stderr, "Error: Command unknown\n");
-		exit(-1);
+		printf(stderr, "Error: Command unknown\n");
+		exit(1);
 	}
 
 	int ctr = 0;
@@ -283,8 +283,8 @@ int main() {
 				break;
 			}
 			else {
-				fprintf(stderr, "Error: Command unknown\n");
-				exit(-1);
+				printf("Error: Command unknown\n");
+				exit(1);
 			}
 		}
 	}
