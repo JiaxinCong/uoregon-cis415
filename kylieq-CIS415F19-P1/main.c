@@ -160,7 +160,6 @@ int filemode(char file_name[]) {
 		ctr = 1;
 
         while (token != NULL) {
-        	checkCommand(token);
            	token = strtok(NULL, s);
           	ptr[ctr++] = token;
         }
@@ -178,50 +177,60 @@ int filemode(char file_name[]) {
 /* Interactive Mode */
 int intermode(char file_name[]) {
 	/* Main Function Variables */
-	char *buffer;
-	size_t bufsize = 100;
-	size_t num_char;
+	char *buffer = NULL;
+	size_t bufsize = NULL;
+	size_t num_char = 0;
 
-	const char s[2]= " \n";
-	char *token;
+	const char *s = " \n";
+	char *token = NULL;
 
-	char exitStr[] = "exit";
+	char *exitStr = "exit";
 
 	/* Allocate memory for the input buffer. */
 	buffer = (char *)malloc(bufsize * sizeof(char));
+	if (buffer == NULL) {
+		printf("Error: Unable to allocate input buffer.\n");
+		exit(1);
+	}
 
+	char **ptr;
 	while(1) {
+		int ctr = 0;
+		ptr = (char**)malloc(20*sizeof(char*));
+
 		/* Print >>> then get the input string */
 		printf(">>> ");
 		num_char = getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
 		token = strtok(buffer, s);
+		ptr[0] = token;
+		ctr = 1;
 
-		/* Display each token */
-		int ctr = 0;
 		while (token != NULL) {
-			printf("T%d: %s\n", ctr, token);
+			if (strcmp(exitStr, buffer) == 0) {
+				break;
+			}
+			else if (strcmp("\n", buffer) == 0){
+				break;
+			}
+			else {
+           		token = strtok(NULL, s);
+          		ptr[ctr++] = token;
+			}
 			token = strtok(NULL, s);
-			ctr++;
 		}
-		/* If the user entered <exit> then exit the loop */
-		printf(">>> ");
-		num_char = getline(&buffer, &bufsize, stdin);
-		token = strtok(buffer, s);
 
-        /* Check user input */
-		if (strcmp(exitStr, buffer) == 0) {
-			break;
-		}
-		/* REMOVE OPTION TO PRINT TOKENS */
-		else {
-			/* Display each token */
-			int ctr = 0;
-			while (token != NULL) {
-				printf("T%d: %s\n", ctr, token);
-				token = strtok(NULL, s);
-				ctr++;
+		ptr[ctr-1] = "NULL";
+
+		/* Check if user entered anything on the command line at all */
+		if (strcmp(ptr[0], "NULL") != 0) {
+        	splitFile(ptr);
+        }
+
+		if (token != NULL) {
+			if (strcmp(exitStr, buffer) == 0) {
+				break;
 			}
 		}
 	}
