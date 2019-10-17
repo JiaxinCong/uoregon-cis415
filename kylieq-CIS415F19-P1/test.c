@@ -3,6 +3,31 @@
 #include <stdlib.h>
 #include <string.h>
 
+int splitFile(char** arr, int mode) {
+	int i = 0;
+	char** ptr = NULL;
+	while (i < sizeof(arr)) {
+		int ctr = 0;
+		ptr = (char**)malloc(10*sizeof(char*));
+
+		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
+			ptr[ctr] = arr[i];
+			ctr++;
+			i++;
+		}
+
+		splitLine(ptr, mode);
+
+		if (strcmp(arr[i], "NULL") == 0) {
+			break;
+		}
+
+		i++;
+	}
+	free(ptr);
+	return 1;
+}
+
 int main() {
 	char *file_name = "input.txt";
 	FILE *fp = fopen(file_name, "r");
@@ -37,7 +62,7 @@ int main() {
        		}
 
         	ptr[ctr-1] = "NULL";
-//        	splitFile(ptr, -1);
+        	splitFile(ptr, -1);
 		free(ptr);
 	}
 
