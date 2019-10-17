@@ -40,7 +40,7 @@ int checkCommand(char *token) {
     }
 }
 
-int splitLine(char** arr) {
+int splitLine(char** arr, int mode) {
 	int ctr = 0;
 	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
@@ -63,43 +63,43 @@ int splitLine(char** arr) {
 	else{
 		char *command = arr[0];
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
-			printf(">>> %s\n", command);
+			if (mode == -1) { printf(">>> %s\n", command); }
 			listDir();
 		}
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
-			printf(">>> %s\n", command);
+			if (mode == -1) { printf(">>> %s\n", command); }
 			showCurrentDir();
 		}
 		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
 			char *newDir = arr[1];
-			printf(">>> %s %s\n", command, newDir);
+			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
 			makeDir(newDir);
 		}
 		else if (strcmp(command, "cd") == 0 || strcmp(command, "cd") == 13) {
 			char *newDir = arr[1];
-			printf(">>> %s %s\n", command, newDir);
+			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
 			changeDir(newDir);
 		}
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
-			printf(">>> %s %s %s\n", command, fileSrc, fileDst);
+			if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
 			copyFile(fileSrc, fileDst);
 		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
 			char *fpDst = arr[2];
-			printf(">>> %s %s %s\n", command, fpSrc, fpDst);
+			if (mode == -1) { printf(">>> %s %s %s\n", command, fpSrc, fpDst); }
 			moveFile(fpSrc, fpDst);
 		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
 			char *filename = arr[1];
-			printf(">>> %s %s\n", command, filename);
+			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
 			deleteFile(filename);
 		}
 		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
 			char *filename = arr[1];
-			printf(">>> %s %s\n", command, filename);
+			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
 			displayFile(filename);
 		}
 	}
@@ -107,7 +107,7 @@ int splitLine(char** arr) {
 	return 1;
 }
 
-int splitFile(char** arr) {
+int splitFile(char** arr, int mode) {
 	int i = 0;
 	char** ptr = NULL;
 	while (i < sizeof(arr)) {
@@ -120,7 +120,7 @@ int splitFile(char** arr) {
 			i++;
 		}
 
-		splitLine(ptr);
+		splitLine(ptr, mode);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
@@ -166,7 +166,7 @@ int filemode(char file_name[]) {
         }
 
         ptr[ctr-1] = "NULL";
-        splitFile(ptr);
+        splitFile(ptr, -1);
 	}
 
 	/*Free the allocated memory*/
@@ -195,7 +195,7 @@ int intermode() {
 		exit(1);
 	}
 
-	char **ptr;
+	char **ptr = NULL;
 	while(1) {
 		int ctr = 0;
 		ptr = (char**)malloc(bufsize * sizeof(char*));
@@ -213,18 +213,15 @@ int intermode() {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
-			else {
-           		token = strtok(NULL, s);
-          		ptr[ctr++] = token;
-			}
-			token = strtok(NULL, s);
+           	token = strtok(NULL, s);
+          	ptr[ctr++] = token;
 		}
 
 		ptr[ctr-1] = "NULL";
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr);
+        	splitFile(ptr, -2);
         }
 
 		if (token != NULL) {
