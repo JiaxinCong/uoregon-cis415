@@ -176,7 +176,6 @@ int filemode(char file_name[]) {
 }
 
 /* Interactive Mode */
-// PROBLEM: ONLY ADDING FIRST TOKEN TO PTR!!
 int intermode() {
 	/* Main Function Variables */
 	char *buffer = NULL;
