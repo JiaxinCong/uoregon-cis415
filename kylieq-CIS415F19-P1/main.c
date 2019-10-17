@@ -194,12 +194,12 @@ int intermode() {
 		exit(1);
 	}
 	
-	free(buffer);
+	//free(buffer);
 	
 	char **ptr = NULL;
 	while(1) {
 		int ctr = 0;
-		ptr = (char**)malloc(bufsize * sizeof(char*));
+		ptr = (char**)malloc(20 * sizeof(char*));
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
@@ -231,8 +231,9 @@ int intermode() {
 				break;
 			}
 		}
-		free(ptr);
+		//free(ptr);
 	}
+	free(buffer);
 	return 1;
 }
 
