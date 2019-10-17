@@ -137,7 +137,7 @@ void displayFile(char *filename) { /*for the cat command*/
 		while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
 			printf("%s", buffer);			
 		}
+		
+		fclose(fp);
 	}
-
-	fclose(fp);
 }
