@@ -229,9 +229,6 @@ int intermode() {
 			}
 		}
 	}
-
-	/*Free the allocated memory*/
-	free(buffer);
 	return 1;
 }
 
