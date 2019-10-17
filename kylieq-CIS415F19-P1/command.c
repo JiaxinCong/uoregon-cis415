@@ -19,8 +19,9 @@ void listDir() { /*for the ls command*/
 	}
 
 	while ((dirEntry = readdir(dir)) != NULL) {
-		printf("%s\n", dirEntry->d_name);
+		printf("%s ", dirEntry->d_name);
 	}
+	printf("\n");
 
 	closedir(dir);
 }
