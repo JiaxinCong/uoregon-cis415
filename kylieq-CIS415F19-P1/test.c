@@ -53,6 +53,14 @@ int splitLine(char** arr, int mode) {
 	int check = checkCommand(arr[0]);
 
 	if (check != ctr) {
+		if (mode == -1) { 
+			printf(">>> "); 
+		}
+		for (int i=0; i<ctr; i++) {
+			printf("%s ", arr[i]);
+		}
+		printf("\n");
+
 		printf("Error: Command not valid: ");
 		for (int i=0; i<ctr; i++){
 			printf("%s ", arr[i]);
