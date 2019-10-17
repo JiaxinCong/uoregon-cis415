@@ -156,6 +156,7 @@ int filemode(char file_name[]) {
 		printf("\n%s\n", buffer);
 
 		token = strtok(buffer, s);
+
 		ptr[0] = token;
 		ctr = 1;
 
@@ -175,7 +176,8 @@ int filemode(char file_name[]) {
 }
 
 /* Interactive Mode */
-int intermode(char file_name[]) {
+// PROBLEM: ONLY ADDING FIRST TOKEN TO PTR!!
+int intermode() {
 	/* Main Function Variables */
 	char *buffer = NULL;
 	size_t bufsize = NULL;
@@ -196,7 +198,7 @@ int intermode(char file_name[]) {
 	char **ptr;
 	while(1) {
 		int ctr = 0;
-		ptr = (char**)malloc(20*sizeof(char*));
+		ptr = (char**)malloc(bufsize * sizeof(char*));
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
@@ -209,9 +211,6 @@ int intermode(char file_name[]) {
 
 		while (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
-				break;
-			}
-			else if (strcmp("\n", buffer) == 0){
 				break;
 			}
 			else {
@@ -272,7 +271,7 @@ int main() {
 
 	/* Check if first argument is "./pseudu-shell" */
 	if (strcmp(token, check1) != 0) {
-		printf(stderr, "Error: Command unknown\n");
+		printf("Error: Command unknown\n");
 		exit(1);
 	}
 
@@ -288,7 +287,7 @@ int main() {
 			}
 			else if (strcmp(token, check3) == 0) {
 				token = strtok(NULL, s);
-				intermode(token);
+				intermode();
 				break;
 			}
 			else {
