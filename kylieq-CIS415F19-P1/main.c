@@ -179,8 +179,7 @@ int filemode(char file_name[]) {
 int intermode() {
 	/* Main Function Variables */
 	char *buffer = NULL;
-	size_t bufsize = NULL;
-	size_t num_char = 0;
+	size_t bufsize = 100;
 
 	const char *s = " \n";
 	char *token = NULL;
@@ -194,8 +193,6 @@ int intermode() {
 		exit(1);
 	}
 	
-	//free(buffer);
-	
 	char **ptr = NULL;
 	while(1) {
 		int ctr = 0;
@@ -203,7 +200,7 @@ int intermode() {
 
 		/* Print >>> then get the input string */
 		printf(">>> ");
-		num_char = getline(&buffer, &bufsize, stdin);
+		getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
 		token = strtok(buffer, s);
@@ -224,14 +221,14 @@ int intermode() {
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
         	splitFile(ptr, -2);
-        	}
+        }
 
 		if (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
 		}
-		//free(ptr);
+		free(ptr);
 	}
 	free(buffer);
 	return 1;
@@ -241,7 +238,7 @@ int main() {
 
 	/* Main function variables */
 	char *buffer = NULL;
-	size_t bufsize = NULL;
+	size_t bufsize = 100;
 	size_t num_char = 0;
 
 	const char *s = " \n";
