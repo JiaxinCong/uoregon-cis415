@@ -127,6 +127,7 @@ int splitFile(char** arr, int mode) {
 		}
 
 		i++;
+		free(ptr);
 	}
 	free(ptr);
 	return 1;
