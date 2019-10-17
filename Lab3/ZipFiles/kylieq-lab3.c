@@ -115,12 +115,12 @@ void lfcat()
 int main() {
 	setbuf(stdout, NULL);
 
-	char *buffer;
-	size_t bufferSize;
-	size_t inputSize;
+	char *buffer = NULL;
+	size_t bufferSize = NULL;
+	size_t inputSize = 0;
 
-	const char s[] = " \n";
-	char *token;
+	const char *s = " \n";
+	char *token = NULL;
 	
 	char *exitStr = "exit";
 
