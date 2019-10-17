@@ -167,10 +167,11 @@ int filemode(char file_name[]) {
 
         ptr[ctr-1] = "NULL";
         splitFile(ptr, -1);
+        free(ptr);
 	}
 
 	/*Free the allocated memory*/
-	free(ptr);
+	free(buffer);
 	fclose(fp);
 	return 1;
 }
