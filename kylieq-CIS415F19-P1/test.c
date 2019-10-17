@@ -21,7 +21,7 @@ int main() {
 		exit(1);
 	}
 	
-	free(buffer);
+	//free(buffer);
 	
 	char **ptr = NULL;
 	while(1) {
@@ -42,22 +42,24 @@ int main() {
 				break;
 			}
 
-           		token = strtok(NULL, s);
-          		ptr[ctr++] = token;
+           	token = strtok(NULL, s);
+          	ptr[ctr++] = token;
 		}
 
 		ptr[ctr-1] = "NULL";
+
+		/* Check if user entered anything on the command line at all */
+		if (strcmp(ptr[0], "NULL") != 0) {
+        	splitFile(ptr, -2);
+        	}
 
 		if (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
 			}
 		}
-
-        	splitFile(ptr, -2);
-		free(ptr);
+		//free(ptr);
 	}
-
-//	free(ptr);
+	free(buffer);
 	return 1;
 }
