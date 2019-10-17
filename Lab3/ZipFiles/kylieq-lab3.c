@@ -24,7 +24,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
-#include <limits.h>
 #include "command.h"
 /*---------------------------------------------------------------------------*/
 
@@ -101,9 +100,7 @@ void lfcat()
 			
 			/* close the read file and frre/null assign your line buffer */
 			fclose(input);
-			//free(buffer);
 		}
-		//free(filename);
 	
 	}
 	/*close both the output file and the directory you were reading from using closedir() and fclose() */
@@ -163,7 +160,5 @@ int main() {
 		}
 	}
 
-	/*Free the allocated memory*/
-	//free(buffer);
 	return 1;
 }
