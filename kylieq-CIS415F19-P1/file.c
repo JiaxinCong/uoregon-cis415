@@ -284,6 +284,7 @@ int main() {
         		printtoken(send); 
         		//free(send);
         	}
+        	i++;
         	free(send);
         }
 
