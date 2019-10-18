@@ -187,6 +187,15 @@ int makeCall(char** arr, int mode) {
 		return 1;
 }
 
+int printtoken(char **arr) {
+	for (int i=0; i<sizeof(arr); i++) {
+		if (arr[i] != NULL) {
+			printf("CHECK: %s\n", arr[i]);
+		}
+	}
+	return 0;
+}
+
 int splitTokens(char** arr, int mode) {
 	int i = 0;
 	char** ptr = NULL;
@@ -259,8 +268,25 @@ int main() {
         	ptr[ctr++] = NULL;
         }
         //ptr[ctr-1] = "NULL";
-        makeCall(ptr, -1);
-        //splitTokens(ptr, -1);
+        //makeCall(ptr, -1);
+        ///splitTokens(ptr, -1);
+        char **send;
+        int i = 0;
+        while(ptr[i] != NULL) {
+        	send = (char**)malloc(10*sizeof(char*));
+        	int count = 0;
+        	while (strcmp(ptr[i], ";") != 0) {
+        		send[count] = ptr[i];
+        		i++;
+        		count++;
+        	}
+        	if (send != NULL) { 
+        		printtoken(send); 
+        		//free(send);
+        	}
+        	free(send);
+        }
+
         free(ptr);
 	}
 
