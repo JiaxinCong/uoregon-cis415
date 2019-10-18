@@ -38,7 +38,7 @@ void showCurrentDir() {/*for the pwd command*/
 void makeDir(char *dirName) { /*for the mkdir command*/
 	struct stat st = {0};
 	if (stat(dirName, &st) == -1) {
-		mkdir(dirName, 0700);
+		mkdir(dirName, 1000);
 	}
 }
 
