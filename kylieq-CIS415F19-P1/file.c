@@ -95,11 +95,12 @@ int makeCall(char** arr, int mode) {
 	   call is invalid */
 	int check = checkCommand(arr[0]);
 	if (check != ctr) {
-		printf("Error: Command not valid: ");
-		for (int i=0; i<ctr; i++){
-			printf("%s ", arr[i]);
-		}
-		printf("\n");
+//		printf("Error: Command not valid: ");
+		printf("check: %d ctr: %d\n", check, ctr);
+//		for (int i=0; i<ctr; i++){
+//			printf("%s ", arr[i]);
+//		}
+//		printf("\n");
 	}
 	else{
 		char *command = arr[0];
@@ -135,7 +136,7 @@ int makeCall(char** arr, int mode) {
 			}
 			int j;
 			for (j=0; j<strlen(fileDst)-4; j++) {
-				dst[i] = fileDst[i];
+				dst[j] = fileDst[j];
 			}
 			src[i++] = '.';
 			src[i++] = 't';
@@ -147,6 +148,7 @@ int makeCall(char** arr, int mode) {
 			dst[j++] = 't';
 			dst[j++] = 'x';
 			dst[j++] = 't';
+			dst[j++] = '\0';
 
 			if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
 			copyFile(src, dst);
@@ -205,8 +207,11 @@ int main() {
           	ptr[ctr++] = token;
         }
 
-        ptr[ctr-1] = "NULL";
-//        splitTokens(ptr, -1);
+        while (ctr<sizeof(ptr)) {
+        	ptr[ctr++] = NULL;
+        }
+        //ptr[ctr-1] = "NULL";
+        makeCall(ptr, -1);
         free(ptr);
 	}
 
