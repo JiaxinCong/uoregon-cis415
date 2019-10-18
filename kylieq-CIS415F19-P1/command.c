@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <limits.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
 #include "command.h"
 
@@ -98,15 +97,15 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 
 		char *buffer = NULL;
 		size_t bufsize = 0;
-		ssize_t num_char;
 
-		while ((num_char = getline(&buffer, &bufsize, fpSrc)) != -1) {
+		while (getline(&buffer, &bufsize, fpSrc) != -1) {
 			fprintf(fpDst, "%s", buffer);
 		}
 
-		//free(buffer);
-		remove(sourcePath);
+		fclose(fpSrc);
+		unlink(sourcePath);
 		fclose(fpDst);
+		free(buffer);
 	}
 }
 
