@@ -7,7 +7,7 @@
 
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 //	char newSrc[strlen(sourcePath)-1];
-	printf("src: %s dst: %s\n", sourcePath, destinationPath);
+//	printf("src: %s dst: %s\n", sourcePath, destinationPath);
 	// First check if working directory needs to be changed.
 	// Get rid of unneccesary white-space characters at end of string.
 //	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
@@ -95,12 +95,12 @@ int makeCall(char** arr, int mode) {
 	   call is invalid */
 	int check = checkCommand(arr[0]);
 	if (check != ctr) {
-//		printf("Error: Command not valid: ");
-		printf("check: %d ctr: %d\n", check, ctr);
-//		for (int i=0; i<ctr; i++){
-//			printf("%s ", arr[i]);
-//		}
-//		printf("\n");
+		printf("Error: Command not valid: ");
+//		printf("check: %d ctr: %d\n", check, ctr);
+		for (int i=0; i<ctr; i++){
+			printf("%s ", arr[i]);
+		}
+		printf("\n");
 	}
 	else{
 		char *command = arr[0];
@@ -174,6 +174,34 @@ int makeCall(char** arr, int mode) {
 	return 1;
 }
 
+int splitTokens(char** arr, int mode) {
+	int i = 0;
+	char** ptr = NULL;
+	while (i < sizeof(arr)) {
+		int ctr = 0;
+		ptr = (char**)malloc(10*sizeof(char*));
+
+		while ((strcmp(arr[i], ";") != 0) && (arr[i] != NULL)) {
+				ptr[ctr] = arr[i];
+				printf("check: %s\n", arr[i]);
+				ctr++;
+				i++;
+		}
+
+		printf("CHECK1\n");
+		makeCall(ptr, mode);
+
+		if (arr[i] == NULL) {
+			break;
+		}
+
+		i++;
+		free(ptr);
+	}
+	free(ptr);
+	return 1;
+}
+
 int main() {
 	char file_name[] = "input2.txt";
 	FILE *fp = fopen(file_name, "r");
@@ -211,7 +239,8 @@ int main() {
         	ptr[ctr++] = NULL;
         }
         //ptr[ctr-1] = "NULL";
-        makeCall(ptr, -1);
+        //makeCall(ptr, -1);
+        splitTokens(ptr, -1);
         free(ptr);
 	}
 
