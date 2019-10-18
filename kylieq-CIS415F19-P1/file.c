@@ -82,111 +82,109 @@ int checkCommand(char *token) {
 }
 
 int makeCall(char** arr, int mode) {
-//	int ctr = 0;
-	/* Get total count of valid entries */
-//	for (int i=0; i<sizeof(arr); i++) {
-//		if (arr[i] != NULL) {
-//			ctr++;
-//		}
-//	}
-
-	int i;
+	int i = 0;
 	char **ptr = NULL;
 	while(i < sizeof(arr)) {
-	int ctr2 = 0;
-	ptr = (char**)malloc(10*sizeof(char*));
-	while(strcmp(arr[i], ";") != 0 && arr[i] != NULL) {
-		ptr[ctr2++] = arr[i];
-		i++;
-	}
-	int ctr = 0;
-	for (int i=0; i<sizeof(ptr); i++) {
-		if (ptr[i] != NULL) {
-			ctr++;
-		}
-	}
+		int ctr2 = 0;
+		ptr = (char**)malloc(10*sizeof(char*));
 
-	/* checkCommand returns how many strings should be in the line depending 
-	   on the command that is called. If this value does not equal ctr, the 
-	   call is invalid */
-	int check = checkCommand(ptr[0]);
-	if (check != ctr) {
-		printf("Error: Command not valid: ");
-		for (int i=0; i<ctr; i++){
-			printf("%s ", arr[i]);
+		while(strcmp(arr[i], ";") != 0) {// && arr[i] != NULL) {
+			printf("arr val: %s bool: %d\n", arr[i], strcmp(arr[i], ";") != 0);
+			ptr[ctr2] = arr[i];
+			ctr2++;
+			i++;
 		}
-		printf("\n");
-	}
-	else{
-		char *command = ptr[0];
-		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
-			if (mode == -1) { printf(">>> %s\n", command); }
-//			listDir();
-		}
-		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
-			if (mode == -1) { printf(">>> %s\n", command); }
-//			showCurrentDir();
-		}
-		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
-			char *newDir = ptr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
-//			makeDir(newDir);
-		}
-		else if (strcmp(command, "cd") == 0 || strcmp(command, "cd") == 13) {
-			char *newDir = ptr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
-//			changeDir(newDir);
-		}
-		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
-			printf("MADE IT\n");
 
-			char *fileSrc = ptr[1];
-			char *fileDst = ptr[2];
-
-			char src[strlen(fileSrc)];
-			char dst[strlen(fileDst)];
-			int i;
-			for (i=0; i<strlen(fileSrc)-4; i++) {
-				src[i] = fileSrc[i];
+		int ctr = 0;
+		/* Get total count of valid entries */
+		for (int i=0; i<sizeof(ptr); i++) {
+			if (ptr[i] != NULL) {
+				ctr++;
 			}
-			int j;
-			for (j=0; j<strlen(fileDst)-4; j++) {
-				dst[j] = fileDst[j];
+		}
+
+		/* checkCommand returns how many strings should be in the line depending 
+	       on the command that is called. If this value does not equal ctr, the 
+	       call is invalid */
+		int check = checkCommand(ptr[0]);
+		if (check != ctr) {
+			printf("Error: Command not valid: ");
+			for (int i=0; i<ctr; i++){
+				printf("%s ", ptr[i]);
 			}
-			src[i++] = '.';
-			src[i++] = 't';
-			src[i++] = 'x';
-			src[i++] = 't';
-			src[i++] = '\0';
+			printf("\n");
+		}
+		else{
+			char *command = ptr[0];
+			if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
+				if (mode == -1) { printf(">>> %s\n", command); }
+//				listDir();
+			}
+			else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
+				if (mode == -1) { printf(">>> %s\n", command); }
+//				showCurrentDir();
+			}
+			else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
+				char *newDir = ptr[1];
+				if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
+//				makeDir(newDir);
+			}
+			else if (strcmp(command, "cd") == 0 || strcmp(command, "cd") == 13) {
+				char *newDir = ptr[1];
+				if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
+//				changeDir(newDir);
+			}
+			else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
+				printf("MADE IT\n");
+
+				char *fileSrc = ptr[1];
+				char *fileDst = ptr[2];
+
+				char src[strlen(fileSrc)];
+				char dst[strlen(fileDst)];
+				int i;
+				for (i=0; i<strlen(fileSrc)-4; i++) {
+					src[i] = fileSrc[i];
+				}
+				int j;
+				for (j=0; j<strlen(fileDst)-4; j++) {
+					dst[j] = fileDst[j];
+				}
+				src[i++] = '.';
+				src[i++] = 't';
+				src[i++] = 'x';
+				src[i++] = 't';
+				src[i++] = '\0';
 	
-			dst[j++] = '.';
-			dst[j++] = 't';
-			dst[j++] = 'x';
-			dst[j++] = 't';
-			dst[j++] = '\0';
+				dst[j++] = '.';
+				dst[j++] = 't';
+				dst[j++] = 'x';
+				dst[j++] = 't';
+				dst[j++] = '\0';
 
-			if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
-			copyFile(src, dst);
-		}
-		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
-			char *fpSrc = ptr[1];
-			char *fpDst = ptr[2];
-			if (mode == -1) { printf(">>> %s %s %s\n", command, fpSrc, fpDst); }
-//			moveFile(fpSrc, fpDst);
-		}
-		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
-			char *filename = ptr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
-//			deleteFile(filename);
-		}
-		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
-			char *filename = ptr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
-//			displayFile(filename);
-		}
+				if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
+				copyFile(src, dst);
+			}
+			else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
+				char *fpSrc = ptr[1];
+				char *fpDst = ptr[2];
+				if (mode == -1) { printf(">>> %s %s %s\n", command, fpSrc, fpDst); }
+//				moveFile(fpSrc, fpDst);
+			}
+			else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
+				char *filename = ptr[1];
+				if (mode == -1) { printf(">>> %s %s\n", command, filename); }
+//				deleteFile(filename);
+			}
+			else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
+				char *filename = ptr[1];
+				if (mode == -1) { printf(">>> %s %s\n", command, filename); }
+//				displayFile(filename);
+			}
+		}	
 	}
 
-	return 1;
+		return 1;
 }
 
 int splitTokens(char** arr, int mode) {
@@ -219,7 +217,6 @@ int splitTokens(char** arr, int mode) {
 
 		i++;
 		free(ptr);
-	}
 	}
 	free(ptr);
 	return 1;
