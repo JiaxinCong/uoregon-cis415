@@ -121,14 +121,6 @@ void deleteFile(char *filename) { /*for the rm command*/
 }
 
 void displayFile(char *filename) { /*for the cat command*/
-	//char newFn[strlen(filename)-1];
-	//int i;
-	//for (i=0; i<strlen(filename)-1; i++) {
-	//	newFn[i] = filename[i];
-	//}
-	//newFn[i] = '\0';
-
-	//FILE *fp = fopen(newFn, "r");
 	FILE * fp = fopen(filename, "r");
 	if (fp == NULL) {
 		printf("Error: File not found: %s\n", filename);
@@ -136,12 +128,12 @@ void displayFile(char *filename) { /*for the cat command*/
 	else {
 		char *buffer = NULL;
 		size_t bufsize = 100;
-		size_t num_char = 0;
 
-		while ((num_char = getline(&buffer, &bufsize, fp)) != -1) {
+		while (getline(&buffer, &bufsize, fp) != -1) {
 			printf("%s", buffer);			
 		}
 		
 		fclose(fp);
+		free(buffer);
 	}
 }
