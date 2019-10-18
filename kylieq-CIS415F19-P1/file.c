@@ -272,7 +272,7 @@ int main() {
         ///splitTokens(ptr, -1);
         char **send;
         int i = 0;
-        while(ptr[i] != NULL) {
+        while(ptr[i] != EOL) {
         	send = (char**)malloc(10*sizeof(char*));
         	int count = 0;
         	while (strcmp(ptr[i], ";") != 0) {
