@@ -143,7 +143,7 @@ int filemode(char file_name[]) {
 	}
 
 	char *buffer = NULL;
-	size_t bufsize = NULL;
+	size_t bufsize = 100;
 	size_t num_char = 0;
 
 	const char *s = " \n";
