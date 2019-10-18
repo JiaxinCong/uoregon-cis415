@@ -244,7 +244,7 @@ int main() {
 	size_t bufsize = 100;
 	size_t num_char = 0;
 
-	const char *s = " \n";
+	const char *s = " ";
 	char *token;
 
 	char **ptr;
@@ -272,7 +272,7 @@ int main() {
         ///splitTokens(ptr, -1);
         char **send;
         int i = 0;
-        while(ptr[i] != EOL) {
+        while(strcmp(ptr[i], "\n") != 0) {
         	send = (char**)malloc(10*sizeof(char*));
         	int count = 0;
         	while (strcmp(ptr[i], ";") != 0) {
