@@ -113,7 +113,7 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 void deleteFile(char *filename) { /*for the rm command*/
     int check = unlink(filename);
     if (check == 0) {
-	printf("File deleted successfully\n");
+		printf("File deleted successfully\n");
     }
     else {
     	printf("Error: File not found: %s\n", filename);
