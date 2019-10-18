@@ -127,7 +127,7 @@ int splitTokens(char** arr, int mode) {
 		}
 
 		i++;
-		free(ptr);g
+		free(ptr);
 	}
 	free(ptr);
 	return 1;
