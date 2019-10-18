@@ -40,7 +40,7 @@ int checkCommand(char *token) {
     }
 }
 
-int splitLine(char** arr, int mode) {
+int makeCall(char** arr, int mode) {
 	int ctr = 0;
 	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
@@ -120,7 +120,7 @@ int splitFile(char** arr, int mode) {
 			i++;
 		}
 
-		splitLine(ptr, mode);
+		makeCall(ptr, mode);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
