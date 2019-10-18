@@ -107,7 +107,7 @@ int makeCall(char** arr, int mode) {
 	return 1;
 }
 
-int splitFile(char** arr, int mode) {
+int splitTokens(char** arr, int mode) {
 	int i = 0;
 	char** ptr = NULL;
 	while (i < sizeof(arr)) {
@@ -127,7 +127,7 @@ int splitFile(char** arr, int mode) {
 		}
 
 		i++;
-		free(ptr);
+		free(ptr);g
 	}
 	free(ptr);
 	return 1;
@@ -167,7 +167,7 @@ int filemode(char file_name[]) {
         }
 
         ptr[ctr-1] = "NULL";
-        splitFile(ptr, -1);
+        splitTokens(ptr, -1);
         free(ptr);
 	}
 
@@ -222,7 +222,7 @@ int intermode() {
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitFile(ptr, -2);
+        	splitTokens(ptr, -2);
         }
 
 		if (token != NULL) {
