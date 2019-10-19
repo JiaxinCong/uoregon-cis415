@@ -15,6 +15,7 @@ int checkCommand(char *token) {
     	return 1;
    	}
     else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) { // 0 args
+    	for (int i=0; i<strlen(token); i++) { printf("char: %c\n", token[i]); }
     	return 1;
     }
     else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) { // 1 arg
