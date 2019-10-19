@@ -90,24 +90,9 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 }
 
 void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
-	FILE *fpSrc = fopen(sourcePath, "r");
-	if (fpSrc == NULL) {
-		printf("Error: Source file not found: %s\n", sourcePath);		
-	}
-	else {
-		FILE *fpDst = fopen(destinationPath, "w");
-
-		char *buffer = NULL;
-		size_t bufsize = 0;
-
-		while (getline(&buffer, &bufsize, fpSrc) != -1) {
-			fprintf(fpDst, "%s", buffer);
-		}
-
-		fclose(fpSrc);
-		unlink(sourcePath);
-		fclose(fpDst);
-		free(buffer);
+	int check = rename(sourcePath, destinationPath);
+	if (check == -1) {
+		printf("Error! File not found.\n");
 	}
 }
 
