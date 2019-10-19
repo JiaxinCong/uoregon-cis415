@@ -178,7 +178,6 @@ int filemode(char filename[]) {
         i++;
     }   
 
-//    printf("\n");
     parseCommand_File(ptr, ptrSize);
 
     free(ptr);
@@ -399,7 +398,7 @@ int main(int argc, char *argv[]) {
 			filemode(file);
 		}
 		else{
-			printf("Error! Command unknown.\n");
+			printf("Error! Unrecognized command\n");
 			exit(0);
 		}
 	}
