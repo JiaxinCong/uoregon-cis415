@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <limits.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include "command.h"
 
@@ -120,19 +122,17 @@ void deleteFile(char *filename) { /*for the rm command*/
 }
 
 void displayFile(char *filename) { /*for the cat command*/
-	FILE * fp = fopen(filename, "r");
-	if (fp == NULL) {
-		printf("Error: File not found: %s\n", filename);
+	char *buffer = (char *)calloc(300, sizeof(char));
+	int file = open(filename, O_RDONLY);
+	
+	if (file == -1) {
+		printf("Error! File not found.\n");
 	}
 	else {
-		char *buffer = NULL;
-		size_t bufsize = 100;
-
-		while (getline(&buffer, &bufsize, fp) != -1) {
-			printf("%s", buffer);			
-		}
-		
-		fclose(fp);
-		free(buffer);
+		read(file, buffer, 300);
+		printf("%s\n", buffer);
 	}
+
+	close(file);
+	free(buffer);
 }

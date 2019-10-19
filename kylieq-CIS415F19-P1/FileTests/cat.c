@@ -26,5 +26,6 @@ int main(int argc, char *argv[]) {
     sz = read(fd, c, 300);
     c[sz] = '\0';
     printf("%s\n", c);
+    close(fd);
     free(c);
 }
