@@ -248,7 +248,6 @@ int makeCall_Interactive(char** arr) { /* for interactive mode */
 	}
 	else {
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
-			if (mode == -1) { printf(">>> %s\n", command); }
 			listDir();
 		}
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
