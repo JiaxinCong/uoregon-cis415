@@ -137,12 +137,12 @@ int getline_File(char *filename, char *buffer, size_t bufferSize){
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
-        printf("Error: unable to open file '%s'\n", filename);
+        printf("Error: Unable to open file '%s'\n", filename);
         return -1;
     }
 
     if (read(file, buffer, bufferSize) == -1) {
-        printf("Error: unable to read file '%s'\n", filename);
+        printf("Error: Unable to read file '%s'\n", filename);
         return -1;
     }
 
@@ -327,7 +327,7 @@ int intermode() {
 	/* Allocate memory for the input buffer. */
 	buffer = (char *)malloc(bufsize * sizeof(char));
 	if (buffer == NULL) {
-		printf("Error: Unable to allocate input buffer.\n");
+		printf("Error! Unable to allocate input buffer.\n");
 		exit(1);
 	}
 	
@@ -388,7 +388,7 @@ int main(int argc, char *argv[]) {
 			intermode();
 		}
 		else{
-			printf("Error! Unrecognized command.\n");
+			printf("Error! Unrecognized command: %s\n", argv[1]);
 			exit(0);
 		}
 	}
@@ -399,12 +399,12 @@ int main(int argc, char *argv[]) {
 			filemode(file);
 		}
 		else{
-			printf("Error! Unrecognized command.\n");
+			printf("Error! Unrecognized command: %s %s\n", argv[1], argv[2]);
 			exit(0);
 		}
 	}
 	else {
-		printf("Error! Command unknown.\n");
+		printf("Error! Unrecognized command.\n");
 		exit(0);
 	}
 
