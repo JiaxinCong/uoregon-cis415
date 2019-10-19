@@ -36,6 +36,7 @@ int checkCommand(char *token) {
     	return 2;
     }
     else {
+    	for (int i=0; i<strlen(token); i++) { printf("char: %c\n", token[i]); }
         return 0; 
     }
 }
