@@ -178,7 +178,7 @@ int filemode(char filename[]) {
         i++;
     }   
 
-    printf("\n");
+//    printf("\n");
     parseCommand_File(ptr, ptrSize);
 
     free(ptr);
