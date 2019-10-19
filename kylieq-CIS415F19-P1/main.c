@@ -223,7 +223,7 @@ int checkCommand_Interactive(char *token) { /* for interactive mode */
     }
 }
 
-int makeCall_Interactive(char** arr, int mode) { /* for interactive mode */
+int makeCall_Interactive(char** arr) { /* for interactive mode */
 	int ctr = 0;
 	/* Get total count of valid entries */
 	for (int i=0; i<sizeof(arr); i++) {
@@ -240,12 +240,10 @@ int makeCall_Interactive(char** arr, int mode) { /* for interactive mode */
 
 	/* If command is not recoginzed */
 	if (ctr == 1 && check == 0) {
-		if (mode == -1) { printf(">>> %s\n", command); }
 		printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unrecognized command: %s\n", command);
 	}
 	else if (check != ctr) {
-		if (mode == -1) { printf(">>> %s\n", command); }
 		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
@@ -254,43 +252,35 @@ int makeCall_Interactive(char** arr, int mode) { /* for interactive mode */
 			listDir();
 		}
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
-			if (mode == -1) { printf(">>> %s\n", command); }
 			showCurrentDir();
 		}
 		else if (strcmp(command, "pwd\n") == 0 || strcmp(command, "pwd\n") == 13) {
-			if (mode == -1) { printf(">>> %s\n", command); }
 			showCurrentDir();
 		}
 		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
 			char *newDir = arr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
 			makeDir(newDir);
 		}
 		else if (strcmp(command, "cd") == 0 || strcmp(command, "cd") == 13) {
 			char *newDir = arr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
 			changeDir(newDir);
 		}
 		else if (strcmp(command, "cp") == 0 || strcmp(command, "cp") == 13) {
 			char *fileSrc = arr[1];
 			char *fileDst = arr[2];
-			if (mode == -1) { printf(">>> %s %s %s\n", command, fileSrc, fileDst); }
 			copyFile(fileSrc, fileDst);
 		}
 		else if (strcmp(command, "mv") == 0 || strcmp(command, "mv") == 13) {
 			char *fpSrc = arr[1];
 			char *fpDst = arr[2];
-			if (mode == -1) { printf(">>> %s %s %s\n", command, fpSrc, fpDst); }
 			moveFile(fpSrc, fpDst);
 		}
 		else if (strcmp(command, "rm") == 0 || strcmp(command, "rm") == 13) {
 			char *filename = arr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
 			deleteFile(filename);
 		}
 		else if (strcmp(command, "cat") == 0 || strcmp(command, "cat") == 13) {
 			char *filename = arr[1];
-			if (mode == -1) { printf(">>> %s %s\n", command, filename); }
 			displayFile(filename);
 		}
 	}
