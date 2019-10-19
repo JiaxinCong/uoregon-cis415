@@ -240,6 +240,7 @@ int main() {
 		exit(1);
 	}
 
+
 	char *buffer = NULL;
 	size_t bufsize = 100;
 	size_t num_char = 0;
@@ -264,7 +265,7 @@ int main() {
           	ptr[ctr++] = token;
         }
 
-        while (ctr<sizeof(ptr)) {
+/*        while (ctr<sizeof(ptr)) {
         	ptr[ctr++] = NULL;
         }
         //ptr[ctr-1] = "NULL";
@@ -273,6 +274,8 @@ int main() {
         char **send;
         int i = 0;
         while(strcmp(ptr[i], "\n") != 0) {
+        	printf("token: %s\n", ptr[i]);
+        	i++;
         	send = (char**)malloc(10*sizeof(char*));
         	int count = 0;
         	while (strcmp(ptr[i], ";") != 0) {
@@ -286,9 +289,10 @@ int main() {
         	}
         	i++;
         	free(send);
+      
         }
-
-        free(ptr);
+*/
+        //free(ptr);
 	}
 
 	/*Free the allocated memory*/

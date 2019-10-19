@@ -236,65 +236,40 @@ int intermode() {
 	return 1;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 
-	/* Main function variables */
-	char *buffer = NULL;
-	size_t bufsize = 100;
-	size_t num_char = 0;
+	char check2[] = "-command";
+	char check3[] = "-f";
 
-	const char *s = " \n";
-	char *token = NULL;
+	char *command = NULL;
+	char *file = NULL;
 
-	char check1[] = "./pseudu-shell";
-	char check2[] = "-f";
-	char check3[] = "-command";
-
-	/* Allocate memory for the input buffer */
-	buffer = (char *)malloc(bufsize * sizeof(char));
-
-	/* print >>> then get the input string */
-	printf(">>> ");
-	num_char = getline(&buffer, &bufsize, stdin);
-
-	/* Tokenize the input string */
-	token = strtok(buffer, s);
-
-	/* Check that token is not a null pointer before proceeding */
-	if (token == NULL) {
-		printf("Error: Command unknown\n");
-		exit(1);
-	}
-
-	/* Check if first argument is "./pseudu-shell" */
-	if (strcmp(token, check1) != 0) {
-		printf("Error: Command unknown\n");
-		exit(1);
-	}
-
-	int ctr = 0;
-	while (token != NULL) {
-		token = strtok(NULL, s);
-		ctr++;
-		if (ctr == 1) {
-			if (strcmp(token, check2) == 0) {
-				token = strtok(NULL, s);
-				filemode(token);
-				break;
-			}
-			else if (strcmp(token, check3) == 0) {
-				token = strtok(NULL, s);
-				intermode();
-				break;
-			}
-			else {
-				printf("Error: Command unknown\n");
-				exit(1);
-			}
+	/* Check command */
+	if (argc == 2) {
+		if (strcmp(argv[1], check2) == 0) {
+			command = argv[1];
+			intermode();
+		}
+		else{
+			printf("Error! Command unknown.\n");
+			exit(0);
 		}
 	}
- 
-	/*Free the allocated memory*/
-	free(buffer);
+	else if (argc == 3) {
+		if (strcmp(argv[1], check3) == 0) {
+			command = argv[1];
+			file = argv[2];
+			filemode(file);
+		}
+		else{
+			printf("Error! Command unknown.\n");
+			exit(0);
+		}
+	}
+	else {
+		printf("Error! Command unknown.\n");
+		exit(0);
+	}
+
 	return 1;
 }

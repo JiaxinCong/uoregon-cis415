@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -g -Wall
 
-default: p1
+default: pseudu-shell
 
-p1: main.o command.o
-	$(CC) $(CFLAGS) -o p1 main.o command.o
+pseudu-shell: main.o command.o
+	$(CC) $(CFLAGS) -o pseudu-shell main.o command.o
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c
@@ -13,4 +13,4 @@ command.o: command.c command.h
 	$(CC) $(CFLAGS) -c command.c
 
 clean:
-	$(RM) p1 *.o *~
+	$(RM) pseudu-shell *.o *~
