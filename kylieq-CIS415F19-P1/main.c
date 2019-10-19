@@ -62,6 +62,7 @@ int makeCall(char** arr, int mode) {
 	}
 	else if (check != ctr) {
 		if (mode == -1) { printf(">>> %s\n", command); }
+		printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
