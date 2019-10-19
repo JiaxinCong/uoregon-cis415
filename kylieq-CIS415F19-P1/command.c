@@ -123,7 +123,7 @@ void deleteFile(char *filename) { /*for the rm command*/
 void displayFile(char *filename) { /*for the cat command*/
 	char *buffer = (char *)calloc(300, sizeof(char));
 	int file = open(filename, O_RDONLY);
-	
+
 	if (file == -1) {
 		printf("Error! File not found.\n");
 	}

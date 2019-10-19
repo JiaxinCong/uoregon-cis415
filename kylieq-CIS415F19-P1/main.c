@@ -287,7 +287,7 @@ int makeCall_Interactive(char** arr) { /* for interactive mode */
 	return 1;
 }
 
-int splitTokens_Interactive(char** arr, int mode) { /* for interactive mode */
+int splitTokens_Interactive(char** arr) { /* for interactive mode */
 	int i = 0;
 	char** ptr = NULL;
 	while (i < sizeof(arr)) {
@@ -300,7 +300,7 @@ int splitTokens_Interactive(char** arr, int mode) { /* for interactive mode */
 			i++;
 		}
 
-		makeCall_Interactive(ptr, mode);
+		makeCall_Interactive(ptr);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
@@ -358,7 +358,7 @@ int intermode() {
 
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
-        	splitTokens_Interactive(ptr, -2);
+        	splitTokens_Interactive(ptr);
         }
 
 		if (token != NULL) {
