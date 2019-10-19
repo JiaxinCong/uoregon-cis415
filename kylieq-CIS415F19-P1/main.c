@@ -52,17 +52,19 @@ int makeCall(char** arr, int mode) {
 	/* checkCommand returns how many strings should be in the line depending 
 	   on the command that is called. If this value does not equal ctr, the 
 	   call is invalid */
-	int check = checkCommand(arr[0]);
+	char *command = arr[0];
+	int check = checkCommand(command);
 
 	/* If command is not recoginzed */
 	if (ctr == 1 && check == 0) {
-		printf("Error! Unrecognized command: %s\n", arr[0]);
+		if (mode == -1) { printf(">>> %s\n", command); }
+		printf("Error! Unrecognized command: %s\n", command);
 	}
 	else if (check != ctr) {
-		printf("Error! Unsupported parameters found for command: %s\n", arr[0]);
+		if (mode == -1) { printf(">>> %s\n", command); }
+		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
-		char *command = arr[0];
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
 			if (mode == -1) { printf(">>> %s\n", command); }
 			listDir();
