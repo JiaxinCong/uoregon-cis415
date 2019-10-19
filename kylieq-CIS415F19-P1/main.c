@@ -170,11 +170,6 @@ int filemode(char file_name[]) {
         while (token != NULL) {
            	token = strtok(NULL, s);
           	ptr[ctr++] = token;
-          	for (int i=0; i<strlen(token); i++){
-          		if (token[i] == ' ') {
-          			printf("TOKEN W SPACE: %s\n", token);
-          		}
-          	}
         }
 
         ptr[ctr-1] = "NULL";
