@@ -222,10 +222,10 @@ int checkCommand_Interactive(char *token) { /* for interactive mode */
     }
 }
 
-int makeCall_Interactive(char** arr) { /* for interactive mode */
+int makeCall_Interactive(char** arr, size_t arrSize) { /* for interactive mode */
 	int ctr = 0;
 	/* Get total count of valid entries */
-	for (int i=0; i<sizeof(arr); i++) {
+	for (int i=0; i<arrSize; i++) {
 		if (arr[i] != NULL) {
 			ctr++;
 		}
@@ -239,10 +239,10 @@ int makeCall_Interactive(char** arr) { /* for interactive mode */
 
 	/* If command is not recoginzed */
 	if (ctr == 1 && check == 0) {
-		printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unrecognized command: %s\n", command);
 	}
 	else if (check != ctr) {
+		printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
@@ -289,9 +289,10 @@ int makeCall_Interactive(char** arr) { /* for interactive mode */
 int splitTokens_Interactive(char** arr) { /* for interactive mode */
 	int i = 0;
 	char** ptr = NULL;
+	size_t ptrSize = 10;
 	while (i < sizeof(arr)) {
 		int ctr = 0;
-		ptr = (char**)malloc(10*sizeof(char*));
+		ptr = (char**)malloc(ptrSize * sizeof(char*));
 
 		while ((strcmp(arr[i], ";") != 0) && (strcmp(arr[i], "NULL") != 0)) {
 			ptr[ctr] = arr[i];
@@ -299,7 +300,7 @@ int splitTokens_Interactive(char** arr) { /* for interactive mode */
 			i++;
 		}
 
-		makeCall_Interactive(ptr);
+		makeCall_Interactive(ptr, ptrSize);
 
 		if (strcmp(arr[i], "NULL") == 0) {
 			break;
@@ -387,7 +388,7 @@ int main(int argc, char *argv[]) {
 			intermode();
 		}
 		else{
-			printf("Error! Command unknown.\n");
+			printf("Error! Unrecognized command.\n");
 			exit(0);
 		}
 	}
@@ -398,7 +399,7 @@ int main(int argc, char *argv[]) {
 			filemode(file);
 		}
 		else{
-			printf("Error! Unrecognized command\n");
+			printf("Error! Unrecognized command.\n");
 			exit(0);
 		}
 	}
