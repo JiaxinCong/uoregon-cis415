@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 	char *sourcePath = argv[1];
 	char *destinationPath = argv[2];
 
-	FILE *fpSrc = fopen(sourcePath, "r");
+/*	FILE *fpSrc = fopen(sourcePath, "r");
 	if (fpSrc == NULL) {
 		printf("Error: Source file not found: %s\n", sourcePath);		
 	}
@@ -26,6 +26,11 @@ int main(int argc, char *argv[]) {
 		unlink(sourcePath);
 		fclose(fpDst);
 		free(buffer);
+	}
+*/
+	int check = rename(sourcePath, destinationPath);
+	if (check == -1) {
+		printf("Error! File not found\n");
 	}
 }
 
