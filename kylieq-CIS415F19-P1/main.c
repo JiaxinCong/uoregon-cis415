@@ -73,6 +73,10 @@ int makeCall(char** arr, int mode) {
 			if (mode == -1) { printf(">>> %s\n", command); }
 			showCurrentDir();
 		}
+		else if (strcmp(command, "pwd\n") == 0 || strcmp(command, "pwd\n") == 13) {
+			if (mode == -1) { printf(">>> %s\n", command); }
+			showCurrentDir();
+		}
 		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
 			char *newDir = arr[1];
 			if (mode == -1) { printf(">>> %s %s\n", command, newDir); }
