@@ -53,14 +53,15 @@ int makeCall(char** arr, int mode) {
 	   on the command that is called. If this value does not equal ctr, the 
 	   call is invalid */
 	int check = checkCommand(arr[0]);
-	if (check != ctr) {
-		printf("Error: Command not valid: ");
-		for (int i=0; i<ctr; i++){
-			printf("%s ", arr[i]);
-		}
-		printf("\n");
+
+	/* If command is not recoginzed */
+	if (ctr == 1 && check == 0) {
+		printf("Error! Unrecognized command: %s\n", arr[0]);
 	}
-	else{
+	else if (check != ctr) {
+		printf("Error! Unsupported parameters found for command: %s\n", arr[0]);
+	}
+	else {
 		char *command = arr[0];
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
 			if (mode == -1) { printf(">>> %s\n", command); }
