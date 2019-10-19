@@ -155,8 +155,6 @@ int filemode(char file_name[]) {
 		int ctr = 0;
 		ptr = (char**)malloc(20*sizeof(char*));
 
-		printf("\n%s\n", buffer);
-
 		token = strtok(buffer, s);
 
 		ptr[0] = token;
