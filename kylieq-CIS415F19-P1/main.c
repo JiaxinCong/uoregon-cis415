@@ -15,7 +15,6 @@ int checkCommand(char *token) {
     	return 1;
    	}
     else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) { // 0 args
-    	for (int i=0; i<strlen(token); i++) { printf("char: %c\n", token[i]); }
     	return 1;
     }
     else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) { // 1 arg
@@ -37,7 +36,6 @@ int checkCommand(char *token) {
     	return 2;
     }
     else {
-    	for (int i=0; i<strlen(token); i++) { printf("char: %c\n", token[i]); }
         return 0; 
     }
 }
@@ -172,6 +170,11 @@ int filemode(char file_name[]) {
         while (token != NULL) {
            	token = strtok(NULL, s);
           	ptr[ctr++] = token;
+          	for (int i=0; i<strlen(token); i++){
+          		if (token[i] == ' ') {
+          			printf("TOKEN W SPACE: %s\n", token);
+          		}
+          	}
         }
 
         ptr[ctr-1] = "NULL";
