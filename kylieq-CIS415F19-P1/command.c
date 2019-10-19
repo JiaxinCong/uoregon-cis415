@@ -51,6 +51,12 @@ void changeDir(char *dirName) { /*for the cd command*/
 void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	char newSrc[strlen(sourcePath)-1];
 
+	char cwd[PATH_MAX];
+	getcwd(cwd, sizeof(cwd));
+	
+	/* check signals whether to change directory back */
+	int check;
+
 	// First check if working directory needs to be changed.
 	// Get rid of unneccesary white-space characters at end of string.
 	if (sourcePath[0] == '.' && sourcePath[1] == '.') {
@@ -61,6 +67,8 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 		}
 		newSrc[i] = '\0';
 		memmove(newSrc, newSrc+3, strlen(newSrc));
+
+		check = 0;
 	}
 	else {
 		int i;
@@ -68,6 +76,8 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 			newSrc[i] = sourcePath[i];
 		}
 		newSrc[i] = '\0';
+
+		check = 1;
 	}
 
 	FILE *fpSrc = fopen(newSrc, "r");
@@ -86,6 +96,10 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 		}
 		fclose(fpSrc);
 		fclose(fpDst);
+	}
+
+	if (check == 0) {
+		chdir(cwd);
 	}
 }
 
