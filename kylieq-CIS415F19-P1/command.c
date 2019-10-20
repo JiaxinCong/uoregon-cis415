@@ -31,6 +31,7 @@ void showCurrentDir() {/*for the pwd command*/
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
 		write(1, cwd, strlen(cwd));
+		write(1, "\n", 1);
 		//printf("%s\n", cwd);
 	}
 	else {
