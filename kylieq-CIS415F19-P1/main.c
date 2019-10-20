@@ -91,7 +91,7 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     return 1;
 }
 
-/* Split line read from file into individual commands */
+/* Categorize call by its one command and corresponding arguments */
 int parseCommand_File(char **arr, size_t arrSize) {
 
     const char *s = " ";
