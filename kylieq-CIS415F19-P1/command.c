@@ -106,7 +106,8 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 	int check = rename(sourcePath, destinationPath);
 	if (check == -1) {
-		printf("Error! File not found: '%s'\n", sourcePath);
+		char *error = "Error! File not found.\n";
+		write(1, error, strlen(error));
 	}
 }
 
@@ -115,12 +116,10 @@ void deleteFile(char *filename) { /*for the rm command*/
     if (check == 0) {
     	char *message = "File deleted successfully.\n";
     	write(1, message, strlen(message));
-		//printf("File deleted successfully: '%s'\n", filename);
     }
     else {
     	char *error = "Error! File not found.\n";
     	write(1, error, strlen(error));
-    	//printf("Error! File not found: '%s'\n", filename);
     }
 }
 
