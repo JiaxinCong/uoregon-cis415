@@ -1,3 +1,13 @@
+/*
+* Description: Project 1 file that is referenced from the main file in order to
+* implement a number of UNIX system commands.
+*
+* Author: Kylie Quan
+*
+* Date: 10/20/2019
+*/
+
+/*-----------------------------Preprocessor Directives----------------------------*/
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,15 +20,7 @@
 #include <fcntl.h>
 
 #include "command.h"
-
-/*
-* Description: Project 1 file that is referenced from the main file in order
-* implement a numbr of UNIX system commands.
-*
-* Author: Kylie Quan
-*
-* Date: 10/20/2019
-*/
+/*--------------------------------------------------------------------------------*/
 
 void listDir() { /*for the ls command*/
 	DIR *dir = opendir(".");

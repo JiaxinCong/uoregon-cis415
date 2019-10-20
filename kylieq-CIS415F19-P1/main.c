@@ -1,3 +1,14 @@
+/*
+* Description: Project 1 main file. Contains functionality to parse text files or 
+* input manually entered by the user on the command line. After parsing is complete, 
+* calls are referenced from the command header file 'command.h'
+*
+* Author: Kylie Quan
+*
+* Date: 10/20/2019
+*/
+
+/*-----------------------------Preprocessor Directives----------------------------*/
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,16 +19,7 @@
 #include <sys/stat.h>
 
 #include "command.h"
-
-/*
-* Description: Project 1 main file. Contains functionality to parse text files or 
-* input manually entered by the user on the command line. After parsing is complete, 
-* calls are referenced from the command header file 'command.h'
-*
-* Author: Kylie Quan
-*
-* Date: 10/20/2019
-*/
+/*--------------------------------------------------------------------------------*/
 
 /*--------------------------Start of File Mode Functions--------------------------*/
 int checkCommand_File(char *token) {
