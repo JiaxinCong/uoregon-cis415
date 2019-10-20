@@ -125,11 +125,12 @@ void displayFile(char *filename) { /*for the cat command*/
 	int file = open(filename, O_RDONLY);
 
 	if (file == -1) {
-		printf("Error! File not found: '%s'\n", filename);
+		char *error = "Error! File not found.\n";
+		write(1, error, strlen(error));
+		//printf("Error! File not found: '%s'\n", filename);
 	}
 	else {
 		read(file, buffer, 300);
-		//printf("%s\n", buffer);
 		write(1, buffer, 300);
 	}
 
