@@ -55,6 +55,8 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     	write(1, command, strlen(command));
     	write(1, "\n", 1);
 
+        printf(">>> %s\n", command); 
+
         listDir();
     }
     else if (strcmp(command, "pwd") == 0) {
