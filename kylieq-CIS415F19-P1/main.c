@@ -62,7 +62,7 @@ int checkCommand(char *token) {
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
-//	char *output = "output.txt";
+	char *output = "output.txt";
 	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
 
 	if (file < 0) {
