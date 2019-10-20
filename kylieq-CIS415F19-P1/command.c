@@ -117,6 +117,9 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 	if (check == 0) {
 		chdir(cwd);
 	}
+
+	fclose(fpSrc);
+	fclose(fpDst);
 }
 
 void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
