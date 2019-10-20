@@ -162,13 +162,20 @@ int filemode(char filename[]) {
     buffer = (char *)malloc(bufferSize * sizeof(char));
     inputSize = getline_File(filename, buffer, bufferSize);
 
+    if (inputSize > 0) {
+    	buffer[inputSize] = '\0';
+    }
+    else{
+    	buffer[0] = '\0';
+    }
+
     char *token;
 
     size_t ptrSize = 300;
     char **ptr = (char **)malloc(ptrSize*sizeof(char*));
     for (int i=0; i<ptrSize; i++) {
         ptr[i] = NULL;
-    }
+    }  
 
     token = strtok(buffer, ";\n");
     ptr[0] = token;
