@@ -136,7 +136,7 @@ int parseCommand_File(char **arr, size_t arrSize) {
 }
 
 /* Read file */
-int getline_File(char *filename, char *buffer, size_t bufferSize){
+int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
