@@ -389,6 +389,7 @@ int intermode() {
 		free(ptr);
 	}
 
+	free(ptr);
 	free(buffer);
 	return 1;
 }
