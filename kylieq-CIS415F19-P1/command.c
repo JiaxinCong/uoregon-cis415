@@ -21,9 +21,8 @@ void listDir() { /*for the ls command*/
 
 	while ((dirEntry = readdir(dir)) != NULL) {
 		write(1, dirEntry->d_name, strlen(dirEntry->d_name));
-		//printf("%s ", dirEntry->d_name);
+		write(1, " ", 1);
 	}
-	//printf("\n");
 	write(1, "\n", 1);
 
 	closedir(dir);
