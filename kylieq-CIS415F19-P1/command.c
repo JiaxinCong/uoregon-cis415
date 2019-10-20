@@ -76,16 +76,17 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 			newSrc[i] = sourcePath[i];
 		}
 		newSrc[i] = '\0';
-
 		check = 1;
 	}
 
 	FILE *fpSrc = fopen(newSrc, "r");
 	if (fpSrc == NULL) {
-		printf("Error! Source file not found: '%s'\n", newSrc);
+		char *error = "Error! Source file not found.\n";
+		write(1, error, strlen(error));
 	}
 	else if (strcmp(destinationPath, ".") == 0) {
-		printf("Error! Destination file not valid: '%s'\n", destinationPath);
+		char *error = "Error! Destination file not valid.\n";
+		write(1, error, strlen(error));
 	}
 	else {
 		FILE *fpDst = fopen(destinationPath, "w");
