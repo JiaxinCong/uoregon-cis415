@@ -30,10 +30,12 @@ void listDir() { /*for the ls command*/
 void showCurrentDir() {/*for the pwd command*/
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
-		printf("%s\n", cwd);
+		write(1, cwd, sizeof(cwd));
+		//printf("%s\n", cwd);
 	}
 	else {
-		printf("Error! Directory not valid.\n");
+		char *error = "Error! Directory not valid.\n";
+		write(1, error, strlen(error));
 	}
 }
 
