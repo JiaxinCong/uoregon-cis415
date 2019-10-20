@@ -62,10 +62,6 @@ int checkCommand(char *token) {
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
-	char *output = "output.txt";
-	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
-	close(file);
-
 	if (file < 0) {
 		char *error = "Error2: Unable to open file '";
     	write(1, error, strlen(error));
@@ -194,7 +190,6 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
         close(file);
         displayFile(filename);
     }
-    //close(file);
     return 1;
 }
 
@@ -270,6 +265,10 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 /* File Mode */
 int filemode(char filename[]) {
+
+	char *output = "output.txt";
+	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
+	close(file);
 
     char *buffer = NULL;
     size_t bufferSize = 300;
