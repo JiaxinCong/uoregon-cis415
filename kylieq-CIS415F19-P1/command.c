@@ -30,7 +30,7 @@ void listDir() { /*for the ls command*/
 void showCurrentDir() {/*for the pwd command*/
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
-		write(1, cwd, sizeof(cwd));
+		write(1, cwd, strlen(cwd));
 		//printf("%s\n", cwd);
 	}
 	else {
