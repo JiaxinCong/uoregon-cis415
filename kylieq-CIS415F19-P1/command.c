@@ -54,6 +54,8 @@ void showCurrentDir() {/*for the pwd command*/
 		char *error = "Error! Directory not valid.\n";
 		write(file, error, strlen(error));
 	}
+
+	close(file);
 }
 
 void makeDir(char *dirName) { /*for the mkdir command*/
