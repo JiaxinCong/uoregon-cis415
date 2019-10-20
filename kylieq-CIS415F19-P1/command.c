@@ -113,10 +113,14 @@ void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 void deleteFile(char *filename) { /*for the rm command*/
     int check = unlink(filename);
     if (check == 0) {
-		printf("File deleted successfully: '%s'\n", filename);
+    	char *message = "File deleted successfully.\n";
+    	write(1, message, strlen(message));
+		//printf("File deleted successfully: '%s'\n", filename);
     }
     else {
-    	printf("Error! File not found: '%s'\n", filename);
+    	char *error = "Error! File not found.\n";
+    	write(1, error, strlen(error));
+    	//printf("Error! File not found: '%s'\n", filename);
     }
 }
 
@@ -127,7 +131,6 @@ void displayFile(char *filename) { /*for the cat command*/
 	if (file == -1) {
 		char *error = "Error! File not found.\n";
 		write(1, error, strlen(error));
-		//printf("Error! File not found: '%s'\n", filename);
 	}
 	else {
 		read(file, buffer, 300);
