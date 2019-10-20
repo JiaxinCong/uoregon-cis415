@@ -343,15 +343,19 @@ int intermode() {
 	//buffer = (char *)malloc(bufsize * sizeof(char));
 
 	/* Check if buffer contains (null) value before proceeding */
-	if (buffer == NULL) {
-		printf("Error! Unable to allocate input buffer.\n");
-		exit(1);
-	}
+//	if (buffer == NULL) {
+//		printf("Error! Unable to allocate input buffer.\n");
+//		exit(1);
+//	}
 	
 	char **ptr = NULL;
 	while(1) {
 
 		buffer = (char *)malloc(bufsize * sizeof(char));
+		if (buffer == NULL) {
+			printf("Error! Unable to allocate input buffer.\n");
+			exit(1);
+		}
 
 		int ctr = 0;
 		ptr = (char**)malloc(20 * sizeof(char*));
