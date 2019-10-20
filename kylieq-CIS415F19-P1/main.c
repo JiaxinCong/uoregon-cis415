@@ -118,7 +118,7 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
         char *filename = arr[0];
 
         write(1, wait, strlen(wait));
-        write(1, command, srtlen(command));
+        write(1, command, strlen(command));
         write(1, " ", 1);
         write(1, filename, strlen(filename));
         write(1, "\n", 1);
