@@ -45,7 +45,7 @@ int checkCommand_File(char *token) {
     }
 }
 
-int print_File(char *command, char **arr, size_t arrSize) {
+int makeCall_File(char *command, char **arr, size_t arrSize) {
 
     if (strcmp(command, "ls") == 0) {
         printf(">>> %s\n", command); 
@@ -90,6 +90,7 @@ int print_File(char *command, char **arr, size_t arrSize) {
     return 1;
 }
 
+/* */
 int parseCommand_File(char **arr, size_t arrSize) {
 
     const char *s = " ";
@@ -125,7 +126,7 @@ int parseCommand_File(char **arr, size_t arrSize) {
             }
             
             if (ctr == check) {
-                print_File(command, args, argSize);
+                makeCall_File(command, args, argSize);
 
             }
         }
@@ -133,6 +134,7 @@ int parseCommand_File(char **arr, size_t arrSize) {
     return 1;
 }
 
+/* Read file */
 int getline_File(char *filename, char *buffer, size_t bufferSize){
 
     int file = open(filename, O_RDONLY);
@@ -326,6 +328,8 @@ int intermode() {
 
 	/* Allocate memory for the input buffer. */
 	buffer = (char *)malloc(bufsize * sizeof(char));
+
+	/* Check if buffer contains (null) value before proceeding */
 	if (buffer == NULL) {
 		printf("Error! Unable to allocate input buffer.\n");
 		exit(1);
@@ -361,6 +365,7 @@ int intermode() {
         	splitTokens_Interactive(ptr);
         }
 
+        /* Check if user wants to exit program */
 		if (token != NULL) {
 			if (strcmp(exitStr, buffer) == 0) {
 				break;
