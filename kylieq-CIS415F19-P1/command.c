@@ -11,6 +11,15 @@
 
 #include "command.h"
 
+/*
+* Description: Project 1 file that is referenced from the main file in order
+* implement a numbr of UNIX system commands.
+*
+* Author: Kylie Quan
+*
+* Date: 10/20/2019
+*/
+
 void listDir() { /*for the ls command*/
 	DIR *dir = opendir(".");
 	struct dirent *dirEntry;

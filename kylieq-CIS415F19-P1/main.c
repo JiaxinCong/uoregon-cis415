@@ -9,6 +9,16 @@
 
 #include "command.h"
 
+/*
+* Description: Project 1 main file. Contains functionality to parse text files or 
+* input manually entered by the user on the command line. After parsing is complete, 
+* calls are referenced from the command header file 'command.h'
+*
+* Author: Kylie Quan
+*
+* Date: 10/20/2019
+*/
+
 /*--------------------------Start of File Mode Functions--------------------------*/
 int checkCommand_File(char *token) {
     // If command requires 0 args, return 1
@@ -204,7 +214,7 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
     	write(1, error, strlen(error));
     	write(1, filename, strlen(filename));
     	write(1, "'\n", 2);
-    	
+
         return -1;
     }
 
