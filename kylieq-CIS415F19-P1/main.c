@@ -247,7 +247,7 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 		printf("Error! Unrecognized command: %s\n", command);
 	}
 	else if (check != ctr) {
-		printf("command: %s check: %d ctr: %d\n", command, check, ctr);
+		//printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
