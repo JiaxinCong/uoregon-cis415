@@ -129,8 +129,7 @@ void displayFile(char *filename) { /*for the cat command*/
 	}
 	else {
 		read(file, buffer, 300);
-		write(stdout, buffer, 300);
-		//printf("%s\n", buffer);
+		printf("%s\n", buffer);
 	}
 
 	free(buffer);
