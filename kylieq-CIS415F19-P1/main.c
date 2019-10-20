@@ -318,7 +318,8 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 	   on the command that is called. If this value does not equal ctr, the 
 	   call is invalid */
 	char *command = arr[0];
-	int check = checkCommand_Interactive(command);
+	//int check = checkCommand_Interactive(command);
+	int check = checkCommand_File(command);
 
 	/* Check whether command is recoginzed */
 	if (ctr == 1 && check == 0) {
