@@ -355,7 +355,9 @@ int intermode() {
 		ptr = (char**)malloc(20 * sizeof(char*));
 
 		/* Print >>> then get the input string */
-		printf(">>> ");
+		char *wait = ">>> ";
+		write(1, wait, strlen(wait));
+		//printf(">>> ");
 		getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
