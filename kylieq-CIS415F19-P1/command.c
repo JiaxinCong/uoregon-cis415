@@ -16,7 +16,8 @@ void listDir() { /*for the ls command*/
 	struct dirent *dirEntry;
 
 	if (dir == NULL) {
-		printf("Error! Directory not valid.\n");
+		char *error = "Error! Directory not valid.\n";
+		write(1, error, strlen(error));
 	}
 
 	while ((dirEntry = readdir(dir)) != NULL) {
