@@ -41,10 +41,6 @@ void listDir() { /*for the ls command*/
 }
 
 void showCurrentDir() {/*for the pwd command*/
-
-	char *output = "output.txt";
-	int file = open(output, O_WRONLY | O_APPEND);
-
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
 		write(file, cwd, strlen(cwd));
@@ -54,8 +50,6 @@ void showCurrentDir() {/*for the pwd command*/
 		char *error = "Error! Directory not valid.\n";
 		write(file, error, strlen(error));
 	}
-
-	close(file);
 }
 
 void makeDir(char *dirName) { /*for the mkdir command*/
