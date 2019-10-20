@@ -76,121 +76,89 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 	char *wait = ">>> ";
 
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
-    	char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
+        write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, "\n", 1);
 
-        write(file, wait, strlen(wait));
-    	write(file, command, strlen(command));
-    	write(file, "\n", 1);
-
-    	close(file);
         listDir();
     }
     else if (strcmp(command, "pwd") == 0 || strstr(command, "pwd")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, "\n", 1);
 
-    	write(file, wait, strlen(wait));
-    	write(file, command, strlen(command));
-    	write(file, "\n", 1);
-
-    	close(file);
         showCurrentDir();
     }
     else if (strcmp(command, "mkdir") == 0 || strstr(command, "mkdir")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *newDir = arr[0];
 
-        write(file, wait, strlen(wait));
-        write(file, command, strlen(command));
-        write(file, " ", 1);
-        write(file, newDir, strlen(newDir));
-        write(file, "\n", 1);
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, newDir, strlen(newDir));
+        write(1, "\n", 1);
 
-        close(file);
         makeDir(newDir);
     }
     else if (strcmp(command, "cd") == 0 || strstr(command, "cd")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *newDir = arr[0];
 
-    	write(file, wait, strlen(wait));
-    	write(file, command, strlen(command));
-    	write(file, " ", 1);
-    	write(file, newDir, strlen(newDir));
-    	write(file, "\n", 1);
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, newDir, strlen(newDir));
+    	write(1, "\n", 1);
 
-    	close(file);
         changeDir(newDir);
     }
     else if (strcmp(command, "cp") == 0 || strstr(command, "cp")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
 
-    	write(file, wait, strlen(wait));
-    	write(file, command, strlen(command));
-    	write(file, " ", 1);
-    	write(file, fileSrc, strlen(fileSrc));
-    	write(file, " ", 1);
-    	write(file, fileDst, strlen(fileDst));
-    	write(file, "\n", 1);
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, fileSrc, strlen(fileSrc));
+    	write(1, " ", 1);
+    	write(1, fileDst, strlen(fileDst));
+    	write(1, "\n", 1);
 
-    	close(file);
         copyFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "mv") == 0 || strstr(command, "mv")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
 
-    	write(file, wait, strlen(wait));
-    	write(file, command, strlen(command));
-    	write(file, " ", 1);
-    	write(file, fileSrc, strlen(fileSrc));
-    	write(file, " ", 1);
-    	write(file, fileDst, strlen(fileDst));
-    	write(file, "\n", 1);
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, fileSrc, strlen(fileSrc));
+    	write(1, " ", 1);
+    	write(1, fileDst, strlen(fileDst));
+    	write(1, "\n", 1);
 
-    	close(file);
         moveFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "rm") == 0 || strstr(command, "rm")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *filename = arr[0];
 
-        write(file, wait, strlen(wait));
-        write(file, command, strlen(command));
-        write(file, " ", 1);
-        write(file, filename, strlen(filename));
-        write(file, "\n", 1);
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, filename, strlen(filename));
+        write(1, "\n", 1);
  
- 		close(file);
         deleteFile(filename);
     }
     else if (strcmp(command, "cat") == 0 || strstr(command, "cat")) {
-		char *output = "output.txt";
-		int file = open(output, O_WRONLY | O_APPEND);
-
         char *filename = arr[0];
 
-        write(file, wait, strlen(wait));
-        write(file, command, strlen(command));
-        write(file, " ", 1);
-        write(file, filename, strlen(filename));
-        write(file, "\n", 1);
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, filename, strlen(filename));
+        write(1, "\n", 1);
 
-        close(file);
         displayFile(filename);
     }
     return 1;
@@ -268,19 +236,8 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 /* File Mode */
 int filemode(char filename[]) {
-
-	char *output = "output.txt";
-	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
-
-	if (file < 0) {
-		char *error = "Error2: Unable to open file '";
-    	write(1, error, strlen(error));
-    	write(1, output, strlen(output));
-    	write(1, "'\n", 2);
-    	exit(1);
-	}
-
-	close(file);
+	/* Connect open stream to output.txt in file mode only */
+	freopen("output.txt", "a", stdout);
 
     char *buffer = NULL;
     size_t bufferSize = 300;
