@@ -414,7 +414,6 @@ int main(int argc, char *argv[]) {
 			write(1, error, strlen(error));
 			write(1, argv[1], strlen(argv[1]));
 			write(1, "\n", 1);
-			//printf("Error! Unrecognized command: %s\n", argv[1]);
 			exit(0);
 		}
 	}
@@ -429,9 +428,8 @@ int main(int argc, char *argv[]) {
 			write(1, error, strlen(error));
 			write(1, argv[1], strlen(argv[1]));
 			write(1, " ", 1);
-			write(1, argv[1], strlen(argv[1]));
+			write(1, argv[1], strlen(argv[2]));
 			write(1, "\n", 1);
-			//printf("Error! Unrecognized command: %s %s\n", argv[1], argv[2]);
 			exit(0);
 		}
 	}
