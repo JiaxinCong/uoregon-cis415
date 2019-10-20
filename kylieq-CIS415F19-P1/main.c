@@ -405,11 +405,8 @@ int main(int argc, char *argv[]) {
 
 	/* Check command */
 	if (argc == 2) {
-		char *input = argv[1];
-		//if (strcmp(argv[1], check2) == 0) {
-		if (strcmp(input, check2) == 0) {
-			command = input;
-			//command = argv[1];
+		if (strcmp(argv[1], check2) == 0) {
+			command = argv[1];
 			intermode();
 		}
 		else{
@@ -418,14 +415,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	else if (argc == 3) {
-		char *input1 = argv[1];
-		char *input2 = argv[2];
-		//if (strcmp(argv[1], check3) == 0) {
-		if (strcmp(input1, check3) == 0) {
-			//command = argv[1];
-			//file = argv[2];
-			command = input1;
-			file = input2;
+		if (strcmp(argv[1], check3) == 0) {
+			command = argv[1];
+			file = argv[2];
 			filemode(file);
 		}
 		else{
