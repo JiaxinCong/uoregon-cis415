@@ -62,14 +62,6 @@ int checkCommand(char *token) {
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
-	if (file < 0) {
-		char *error = "Error2: Unable to open file '";
-    	write(1, error, strlen(error));
-    	write(1, output, strlen(output));
-    	write(1, "'\n", 2);
-    	exit(1);
-	}
-
 	char *wait = ">>> ";
 
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
@@ -268,6 +260,15 @@ int filemode(char filename[]) {
 
 	char *output = "output.txt";
 	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
+
+	if (file < 0) {
+		char *error = "Error2: Unable to open file '";
+    	write(1, error, strlen(error));
+    	write(1, output, strlen(output));
+    	write(1, "'\n", 2);
+    	exit(1);
+	}
+
 	close(file);
 
     char *buffer = NULL;
