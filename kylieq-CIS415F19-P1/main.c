@@ -128,7 +128,6 @@ int parseCommand_File(char **arr, size_t arrSize) {
             
             if (ctr == check) {
                 makeCall_File(command, args, argSize);
-
             }
         }
     }
