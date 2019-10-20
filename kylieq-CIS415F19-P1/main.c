@@ -49,44 +49,93 @@ int checkCommand_File(char *token) {
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
+	char *wait = ">>> ";
+
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
-        printf(">>> %s\n", command); 
+        write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, "\n", 1);
+
         listDir();
     }
     else if (strcmp(command, "pwd") == 0 || strstr(command, "pwd")) {
-        printf(">>> %s\n", command); 
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, "\n", 1);
+
         showCurrentDir();
     }
     else if (strcmp(command, "mkdir") == 0 || strstr(command, "mkdir")) {
         char *newDir = arr[0];
-        printf(">>> %s %s\n", command, newDir); 
+
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, newDir, strlen(newDir));
+        write(1, "\n", 1);
+
         makeDir(newDir);
     }
     else if (strcmp(command, "cd") == 0 || strstr(command, "cd")) {
         char *newDir = arr[0];
-        printf(">>> %s %s\n", command, newDir); 
+
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, newDir, strlen(newDir));
+    	write(1, "\n", 1);
+
+
         changeDir(newDir);
     }
     else if (strcmp(command, "cp") == 0 || strstr(command, "cp")) {
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
-        printf(">>> %s %s %s\n", command, fileSrc, fileDst); 
+
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, fileSrc, strlen(fileSrc));
+    	write(1, " ", 1);
+    	write(1, fileDst, strlen(fileDst));
+    	write(1, "\n", 1);
+
         copyFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "mv") == 0 || strstr(command, "mv")) {
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
-        printf(">>> %s %s %s\n", command, fileSrc, fileDst); 
+
+    	write(1, wait, strlen(wait));
+    	write(1, command, strlen(command));
+    	write(1, " ", 1);
+    	write(1, fileSrc, strlen(fileSrc));
+    	write(1, " ", 1);
+    	write(1, fileDst, strlen(fileDst));
+    	write(1, "\n", 1);
+
         moveFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "rm") == 0 || strstr(command, "rm")) {
         char *filename = arr[0];
-        printf(">>> %s %s\n", command, filename); 
+
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, filename, strlen(filename));
+        write(1, "\n", 1);
+ 
         deleteFile(filename);
     }
     else if (strcmp(command, "cat") == 0 || strstr(command, "cat")) {
         char *filename = arr[0];
-        printf(">>> %s %s\n", command, filename); 
+
+        write(1, wait, strlen(wait));
+        write(1, command, strlen(command));
+        write(1, " ", 1);
+        write(1, filename, strlen(filename));
+        write(1, "\n", 1);
+
         displayFile(filename);
     }
     return 1;
@@ -142,12 +191,20 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
-        printf("Error: Unable to open file '%s'\n", filename);
+    	char *error = "Error: Unable to open file '";
+    	write(1, error, strlen(error));
+    	write(1, filename, strlen(filename));
+    	write(1, "'\n", 2);
+
         return -1;
     }
 
     if (read(file, buffer, bufferSize) == -1) {
-        printf("Error: Unable to read file '%s'\n", filename);
+    	char *error = "Error: Unable to read file '";
+    	write(1, error, strlen(error));
+    	write(1, filename, strlen(filename));
+    	write(1, "'\n", 2);
+    	
         return -1;
     }
 
