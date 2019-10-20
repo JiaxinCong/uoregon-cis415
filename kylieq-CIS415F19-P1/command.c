@@ -20,9 +20,11 @@ void listDir() { /*for the ls command*/
 	}
 
 	while ((dirEntry = readdir(dir)) != NULL) {
-		printf("%s ", dirEntry->d_name);
+		write(1, dirEntry->d_name, strlen(dirEntry->d_name));
+		//printf("%s ", dirEntry->d_name);
 	}
-	printf("\n");
+	//printf("\n");
+	write(1, "\n", 1);
 
 	closedir(dir);
 }
@@ -32,7 +34,6 @@ void showCurrentDir() {/*for the pwd command*/
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
 		write(1, cwd, strlen(cwd));
 		write(1, "\n", 1);
-		//printf("%s\n", cwd);
 	}
 	else {
 		char *error = "Error! Directory not valid.\n";
