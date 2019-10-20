@@ -21,8 +21,8 @@
 #include "command.h"
 /*--------------------------------------------------------------------------------*/
 
-/*--------------------------Start of File Mode Functions--------------------------*/
-int checkCommand_File(char *token) {
+/*------------Start of Functions Shared Between File & Interactive Mode-----------*/
+int checkCommand(char *token) {
     // If command requires 0 args, return 1
     // If command requires 1 arg, return 2
     // If commmand requires 2 args, return 3
@@ -56,7 +56,9 @@ int checkCommand_File(char *token) {
         return 0; 
     }
 }
+/*----------------------------End of Shared Functions-----------------------------*/
 
+/*--------------------------Start of File Mode Functions--------------------------*/
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
@@ -170,7 +172,7 @@ int parseCommand_File(char **arr, size_t arrSize) {
             char *token = strtok(line, s);
             char *command = token;
 
-            int check = checkCommand_File(command);
+            int check = checkCommand(command);
 
             size_t argSize = 2;
             args = (char**)malloc(argSize * sizeof(char*));
@@ -268,41 +270,6 @@ int filemode(char filename[]) {
 /*---------------------------End of File Mode Functions---------------------------*/
 
 /*-----------------------Start of Interactive Mode Functions----------------------*/
-int checkCommand_Interactive(char *token) { /* for interactive mode */
-	// If command requires 0 args, return 1
-	// If command requires 1 arg, return 2
-	// If commmand requires 2 args, return 3
-	// If command not valid, return 0
-
-    if (strcmp(token, "ls") == 0 || strcmp(token, "ls") == 13) { // 0 args
-    	return 1;
-   	}
-    else if (strcmp(token, "pwd") == 0 || strcmp(token, "pwd") == 13) { // 0 args
-    	return 1;
-    }
-    else if (strcmp(token, "mkdir") == 0 || strcmp(token, "mkdir") == 13) { // 1 arg
-    	return 2;
-    }
-    else if (strcmp(token, "cd") == 0 || strcmp(token, "cd") == 13) { // 1 arg
-    	return 2;
-    }
-    else if (strcmp(token, "cp") == 0 || strcmp(token, "cp") == 13) { // 2 args
-    	return 3;
-    }
-    else if (strcmp(token, "mv") == 0 || strcmp(token, "mv") == 13) { // 2 args
-    	return 3;
-    }
-    else if (strcmp(token, "rm") == 0 || strcmp(token, "rm") == 13) { // 1 arg
-    	return 2;
-    }
-    else if (strcmp(token, "cat") == 0 || strcmp(token, "cat") == 13) { // 1 arg
-    	return 2;
-    }
-    else {
-        return 0; 
-    }
-}
-
 /* Make call based on command given by user */
 int makeCall_Interactive(char** arr, size_t arrSize) {
 
@@ -318,8 +285,7 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 	   on the command that is called. If this value does not equal ctr, the 
 	   call is invalid */
 	char *command = arr[0];
-	//int check = checkCommand_Interactive(command);
-	int check = checkCommand_File(command);
+	int check = checkCommand(command);
 
 	/* Check whether command is recoginzed */
 	if (ctr == 1 && check == 0) {
