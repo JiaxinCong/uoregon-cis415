@@ -262,12 +262,12 @@ int filemode(char filename[]) {
         ptr[i] = NULL;
     }  
 
-    token = strtok(buffer, ";\n");
+    token = strtok(buffer, ";\n\r");
     ptr[0] = token;
     int i = 1;
 
     while (token != NULL) {
-        token = strtok(NULL, ";\n");
+        token = strtok(NULL, ";\n\r");
         ptr[i] = token;
         i++;
     }   
