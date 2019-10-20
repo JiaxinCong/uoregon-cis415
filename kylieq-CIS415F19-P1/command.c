@@ -16,7 +16,7 @@ void listDir() { /*for the ls command*/
 	struct dirent *dirEntry;
 
 	if (dir == NULL) {
-		printf("Error: Directory not valid\n");
+		printf("Error! Directory not valid.\n");
 	}
 
 	while ((dirEntry = readdir(dir)) != NULL) {
@@ -33,7 +33,7 @@ void showCurrentDir() {/*for the pwd command*/
 		printf("%s\n", cwd);
 	}
 	else {
-		printf("Error: Directory not valid\n");
+		printf("Error! Directory not valid.\n");
 	}
 }
 
@@ -82,10 +82,10 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 
 	FILE *fpSrc = fopen(newSrc, "r");
 	if (fpSrc == NULL) {
-		printf("Error: Source file not found: %s\n", newSrc);
+		printf("Error! Source file not found: '%s'\n", newSrc);
 	}
 	else if (strcmp(destinationPath, ".") == 0) {
-		printf("Error: Destination file name not valid.\n");
+		printf("Error! Destination file not valid: '%s'\n", destinationPath);
 	}
 	else {
 		FILE *fpDst = fopen(destinationPath, "w");
@@ -106,17 +106,17 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 void moveFile(char *sourcePath, char *destinationPath) { /*for the mv command*/
 	int check = rename(sourcePath, destinationPath);
 	if (check == -1) {
-		printf("Error! File not found.\n");
+		printf("Error! File not found: '%s'\n", sourcePath);
 	}
 }
 
 void deleteFile(char *filename) { /*for the rm command*/
     int check = unlink(filename);
     if (check == 0) {
-		printf("File deleted successfully\n");
+		printf("File deleted successfully: '%s'\n", filename);
     }
     else {
-    	printf("Error: File not found: %s\n", filename);
+    	printf("Error! File not found: '%s'\n", filename);
     }
 }
 
@@ -125,7 +125,7 @@ void displayFile(char *filename) { /*for the cat command*/
 	int file = open(filename, O_RDONLY);
 
 	if (file == -1) {
-		printf("Error! File not found.\n");
+		printf("Error! File not found: '%s'\n", filename);
 	}
 	else {
 		read(file, buffer, 300);
