@@ -63,7 +63,7 @@ int checkCommand(char *token) {
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
 //	char *output = "output.txt";
-	int file = open("output.txt", O_WRONLY | O_APPEND);
+	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
 
 	if (file < 0) {
 		char *error = "Error2: Unable to open file '";
@@ -238,20 +238,6 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 /* File Mode */
 int filemode(char filename[]) {
-
-	/* Open file to overwrite possible existing output.txt */
-	char *output = "output.txt";
-	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
-
-	if (file < 0) {
-		char *error = "Error1: Unable to open file '";
-    	write(1, error, strlen(error));
-    	write(1, output, strlen(output));
-    	write(1, "'\n", 2);
-    	exit(1);
-	}
-
-	close(file);
 
     char *buffer = NULL;
     size_t bufferSize = 300;
