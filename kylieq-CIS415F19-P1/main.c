@@ -45,6 +45,7 @@ int checkCommand_File(char *token) {
     }
 }
 
+/* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
     if (strcmp(command, "ls") == 0) {
@@ -90,7 +91,7 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     return 1;
 }
 
-/* */
+/* Split line read from file into individual commands */
 int parseCommand_File(char **arr, size_t arrSize) {
 
     const char *s = " ";
@@ -224,7 +225,9 @@ int checkCommand_Interactive(char *token) { /* for interactive mode */
     }
 }
 
-int makeCall_Interactive(char** arr, size_t arrSize) { /* for interactive mode */
+/* Make call based on command given by user */
+int makeCall_Interactive(char** arr, size_t arrSize) {
+
 	int ctr = 0;
 	/* Get total count of valid entries */
 	for (int i=0; i<arrSize; i++) {
@@ -288,10 +291,13 @@ int makeCall_Interactive(char** arr, size_t arrSize) { /* for interactive mode *
 	return 1;
 }
 
-int splitTokens_Interactive(char** arr) { /* for interactive mode */
+/* Split line read from file into individual commands */
+int splitTokens_Interactive(char** arr) { 
+
 	int i = 0;
 	char** ptr = NULL;
 	size_t ptrSize = 10;
+
 	while (i < sizeof(arr)) {
 		int ctr = 0;
 		ptr = (char**)malloc(ptrSize * sizeof(char*));
@@ -317,7 +323,7 @@ int splitTokens_Interactive(char** arr) { /* for interactive mode */
 
 /* Interactive Mode */
 int intermode() {
-	/* Main Function Variables */
+
 	char *buffer = NULL;
 	size_t bufsize = 100;
 
