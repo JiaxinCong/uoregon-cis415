@@ -43,12 +43,12 @@ void listDir() { /*for the ls command*/
 void showCurrentDir() {/*for the pwd command*/
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL) {
-		write(file, cwd, strlen(cwd));
-		write(file, "\n", 1);
+		write(1, cwd, strlen(cwd));
+		write(1, "\n", 1);
 	}
 	else {
 		char *error = "Error! Directory not valid.\n";
-		write(file, error, strlen(error));
+		write(1, error, strlen(error));
 	}
 }
 
