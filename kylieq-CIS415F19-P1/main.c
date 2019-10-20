@@ -377,7 +377,6 @@ int intermode() {
 		/* Check if user entered anything on the command line at all */
 		if (strcmp(ptr[0], "NULL") != 0) {
         	splitTokens_Interactive(ptr);
-        	free(ptr);
         }
 
         /* Check if user wants to exit program */
