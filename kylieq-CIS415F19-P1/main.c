@@ -250,12 +250,11 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 	char *command = arr[0];
 	int check = checkCommand_Interactive(command);
 
-	/* If command is not recoginzed */
+	/* Check whether command is recoginzed */
 	if (ctr == 1 && check == 0) {
 		printf("Error! Unrecognized command: %s\n", command);
 	}
 	else if (check != ctr) {
-		//printf("command: %s check: %d ctr: %d\n", command, check, ctr);
 		printf("Error! Unsupported parameters found for command: %s\n", command);
 	}
 	else {
@@ -341,7 +340,7 @@ int intermode() {
 	char *exitStr = "exit";
 
 	/* Allocate memory for the input buffer. */
-	buffer = (char *)malloc(bufsize * sizeof(char));
+	//buffer = (char *)malloc(bufsize * sizeof(char));
 
 	/* Check if buffer contains (null) value before proceeding */
 	if (buffer == NULL) {
@@ -351,6 +350,9 @@ int intermode() {
 	
 	char **ptr = NULL;
 	while(1) {
+
+		buffer = (char *)malloc(bufsize * sizeof(char));
+
 		int ctr = 0;
 		ptr = (char**)malloc(20 * sizeof(char*));
 
@@ -386,8 +388,9 @@ int intermode() {
 			}
 		}
 		free(ptr);
+		free(buffer);
 	}
-	free(buffer);
+	//free(buffer);
 	return 1;
 }
 /*------------------------End of Interactive Mode Functions-----------------------*/
