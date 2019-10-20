@@ -16,28 +16,29 @@ int checkCommand_File(char *token) {
     // If commmand requires 2 args, return 3
     // If command not valid, return 0
 
-    if (strcmp(token, "ls") == 0) { // 0 args
+	//CHANGE
+    if (strcmp(token, "ls") == 0 || strstr(token, "ls")) { // 0 args
         return 1;
     }
-    else if (strcmp(token, "pwd") == 0) { // 0 args
+    else if (strcmp(token, "pwd") == 0 || strstr(token, "pwd")) { // 0 args
         return 1;
     }
-    else if (strcmp(token, "mkdir") == 0) { // 1 arg
+    else if (strcmp(token, "mkdir") == 0 || strstr(token, "mkdir")) { // 1 arg
         return 2;
     }
-    else if (strcmp(token, "cd") == 0) { // 1 arg
+    else if (strcmp(token, "cd") == 0 || strstr(token, "cd")) { // 1 arg
         return 2;
     }
-    else if (strcmp(token, "cp") == 0) { // 2 args
+    else if (strcmp(token, "cp") == 0 || strstr(token, "cp")) { // 2 args
         return 3;
     }
-    else if (strcmp(token, "mv") == 0) { // 2 args
+    else if (strcmp(token, "mv") == 0 || strstr(token, "mv")) { // 2 args
         return 3;
     }
-    else if (strcmp(token, "rm") == 0) { // 1 arg
+    else if (strcmp(token, "rm") == 0 || strstr(token, "rm")) { // 1 arg
         return 2;
     }
-    else if (strcmp(token, "cat") == 0) { // 1 arg
+    else if (strcmp(token, "cat") == 0 || strstr(token, "cat")) { // 1 arg
         return 2;
     }
     else {
@@ -48,100 +49,50 @@ int checkCommand_File(char *token) {
 /* Make call based on command retrieved from file */
 int makeCall_File(char *command, char **arr, size_t arrSize) {
 
-	char *wait = ">>> ";
-
-    if (strcmp(command, "ls") == 0) {
-    	write(1, wait, strlen(wait));
-    	write(1, command, strlen(command));
-    	write(1, "\n", 1);
-
+    if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
         printf(">>> %s\n", command); 
-
         listDir();
     }
-    else if (strcmp(command, "pwd") == 0) {
-    	write(1, wait, strlen(wait));
-    	write(1, command, strlen(command));
-    	write(1, "\n", 1);
- 
+    else if (strcmp(command, "pwd") == 0 || strstr(command, "pwd")) {
+        printf(">>> %s\n", command); 
         showCurrentDir();
     }
-    else if (strcmp(command, "mkdir") == 0) {
+    else if (strcmp(command, "mkdir") == 0 || strstr(command, "mkdir")) {
         char *newDir = arr[0];
-
-        write(1, wait, strlen(wait));
-        write(1, command, strlen(command));
-        write(1, " ", 1);
-        write(1, newDir, strlen(newDir));
-        write(1, "\n", 1);
-
+        printf(">>> %s %s\n", command, newDir); 
         makeDir(newDir);
     }
-    else if (strcmp(command, "cd") == 0) {
+    else if (strcmp(command, "cd") == 0 || strstr(command, "cd")) {
         char *newDir = arr[0];
-
-    	write(1, wait, strlen(wait));
-    	write(1, command, strlen(command));
-    	write(1, " ", 1);
-    	write(1, newDir, strlen(newDir));
-    	write(1, "\n", 1);
-
+        printf(">>> %s %s\n", command, newDir); 
         changeDir(newDir);
     }
-    else if (strcmp(command, "cp") == 0) {
+    else if (strcmp(command, "cp") == 0 || strstr(command, "cp")) {
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
-
-    	write(1, wait, strlen(wait));
-    	write(1, command, strlen(command));
-    	write(1, " ", 1);
-    	write(1, fileSrc, strlen(fileSrc));
-    	write(1, " ", 1);
-    	write(1, fileDst, strlen(fileDst));
-    	write(1, "\n", 1);
-
+        printf(">>> %s %s %s\n", command, fileSrc, fileDst); 
         copyFile(fileSrc, fileDst);
     }
-    else if (strcmp(command, "mv") == 0) {
+    else if (strcmp(command, "mv") == 0 || strstr(command, "mv")) {
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
-
-    	write(1, wait, strlen(wait));
-    	write(1, command, strlen(command));
-    	write(1, " ", 1);
-    	write(1, fileSrc, strlen(fileSrc));
-    	write(1, " ", 1);
-    	write(1, fileDst, strlen(fileDst));
-    	write(1, "\n", 1);
-
+        printf(">>> %s %s %s\n", command, fileSrc, fileDst); 
         moveFile(fileSrc, fileDst);
     }
-    else if (strcmp(command, "rm") == 0) {
+    else if (strcmp(command, "rm") == 0 || strstr(command, "rm")) {
         char *filename = arr[0];
-
-        write(1, wait, strlen(wait));
-        write(1, command, strlen(command));
-        write(1, " ", 1);
-        write(1, filename, strlen(filename));
-        write(1, "\n", 1);
-
+        printf(">>> %s %s\n", command, filename); 
         deleteFile(filename);
     }
-    else if (strcmp(command, "cat") == 0) {
+    else if (strcmp(command, "cat") == 0 || strstr(command, "cat")) {
         char *filename = arr[0];
-
-        write(1, wait, strlen(wait));
-        write(1, command, strlen(command));
-        write(1, " ", 1);
-        write(1, filename, strlen(filename));
-        write(1, "\n", 1);
-
+        printf(">>> %s %s\n", command, filename); 
         displayFile(filename);
     }
     return 1;
 }
 
-/* Categorize call by its one command and corresponding arguments */
+/* Split line read from file into individual commands */
 int parseCommand_File(char **arr, size_t arrSize) {
 
     const char *s = " ";
@@ -191,18 +142,12 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
-    	char *error = "Error: Unable to open file '";
-    	write(1, error, strlen(error));
-    	write(1, filename, strlen(filename));
-    	write(1, "'\n", 2);
+        printf("Error: Unable to open file '%s'\n", filename);
         return -1;
     }
 
     if (read(file, buffer, bufferSize) == -1) {
-    	char *error = "Error: Unable to read file '";
-    	write(1, error, strlen(error));
-    	write(1, filename, strlen(filename));
-    	write(1, "'\n", 2);
+        printf("Error: Unable to read file '%s'\n", filename);
         return -1;
     }
 
@@ -213,6 +158,7 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 /* File Mode */
 int filemode(char filename[]) {
+
     char *buffer = NULL;
     size_t bufferSize = 300;
     ssize_t inputSize = 0;
@@ -221,9 +167,9 @@ int filemode(char filename[]) {
     inputSize = getline_File(filename, buffer, bufferSize);
 
     if (inputSize > 0) {
-    	buffer[inputSize] = '\0';
+   		buffer[bufferSize] = '\0';
     }
-    else{
+    else {
     	buffer[0] = '\0';
     }
 
