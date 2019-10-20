@@ -28,7 +28,6 @@ int checkCommand_File(char *token) {
     // If commmand requires 2 args, return 3
     // If command not valid, return 0
 
-	//CHANGE
     if (strcmp(token, "ls") == 0 || strstr(token, "ls")) { // 0 args
         return 1;
     }
