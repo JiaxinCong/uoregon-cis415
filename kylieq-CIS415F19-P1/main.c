@@ -409,8 +409,12 @@ int main(int argc, char *argv[]) {
 			command = argv[1];
 			intermode();
 		}
-		else{
-			printf("Error! Unrecognized command: %s\n", argv[1]);
+		else {
+			char *error = "Error! Unrecognized command: ";
+			write(1, error, strlen(error));
+			write(1, argv[1], strlen(argv[1]));
+			write(1, "\n", 1);
+			//printf("Error! Unrecognized command: %s\n", argv[1]);
 			exit(0);
 		}
 	}
@@ -421,12 +425,19 @@ int main(int argc, char *argv[]) {
 			filemode(file);
 		}
 		else{
-			printf("Error! Unrecognized command: %s %s\n", argv[1], argv[2]);
+			char *error = "Error! Unrecognized command: ";
+			write(1, error, strlen(error));
+			write(1, argv[1], strlen(argv[1]));
+			write(1, " ", 1);
+			write(1, argv[1], strlen(argv[1]));
+			write(1, "\n", 1);
+			//printf("Error! Unrecognized command: %s %s\n", argv[1], argv[2]);
 			exit(0);
 		}
 	}
 	else {
-		printf("Error! Unrecognized command.\n");
+		char *error = "Error! Unrecognized command.\n";
+		write(1, error, strlen(error));
 		exit(0);
 	}
 
