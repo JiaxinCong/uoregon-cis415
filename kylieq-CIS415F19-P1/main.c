@@ -345,6 +345,7 @@ int intermode() {
 	/* Check if buffer contains (null) value before proceeding */
 	if (buffer == NULL) {
 		printf("Error! Unable to allocate input buffer.\n");
+		free(buffer);
 		exit(1);
 	}
 	
@@ -388,7 +389,7 @@ int intermode() {
 
 		free(ptr);
 	}
-	
+
 	free(buffer);
 	return 1;
 }
