@@ -21,6 +21,17 @@
 #include "command.h"
 /*--------------------------------------------------------------------------------*/
 
+/*----------------------------------Declarations----------------------------------*/
+int checkCommand(char *token);
+int makeCall_File(char *command, char **arr, size_t arrSize);
+int parseCommand_File(char **arr, size_t arrSize);
+int getline_File(char *filename, char *buffer, size_t bufferSize);
+int filemode(char filename[]);
+int makeCall_Interactive(char** arr, size_t arrSize);
+int splitTokens_Interactive(char** arr);
+int intermode();
+/*--------------------------------------------------------------------------------*/
+
 /*------------Start of Functions Shared Between File & Interactive Mode-----------*/
 int checkCommand(char *token) {
     // If command requires 0 args, return 1
@@ -477,6 +488,7 @@ int intermode() {
 }
 /*------------------------End of Interactive Mode Functions-----------------------*/
 
+/*----------------------------------Program Main----------------------------------*/
 int main(int argc, char *argv[]) {
 
 	char check2[] = "-command";
@@ -522,3 +534,4 @@ int main(int argc, char *argv[]) {
 	}
 	return 1;
 }
+/*----------------------------------Program End-----------------------------------*/
