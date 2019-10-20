@@ -264,9 +264,9 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 		else if (strcmp(command, "pwd") == 0 || strcmp(command, "pwd") == 13) {
 			showCurrentDir();
 		}
-		else if (strcmp(command, "pwd\n") == 0 || strcmp(command, "pwd\n") == 13) {
-			showCurrentDir();
-		}
+//		else if (strcmp(command, "pwd\n") == 0 || strcmp(command, "pwd\n") == 13) {
+//			showCurrentDir();
+//		}
 		else if (strcmp(command, "mkdir") == 0 || strcmp(command, "mkdir") == 13) {
 			char *newDir = arr[1];
 			makeDir(newDir);
