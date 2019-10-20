@@ -65,14 +65,14 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 //	char *output = "output.txt";
 	int file = open("output.txt", O_WRONLY | O_APPEND);
 
-/*	if (file < 0) {
+	if (file < 0) {
 		char *error = "Error2: Unable to open file '";
     	write(1, error, strlen(error));
     	write(1, output, strlen(output));
     	write(1, "'\n", 2);
     	exit(1);
 	}
-*/
+
 	char *wait = ">>> ";
 
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
