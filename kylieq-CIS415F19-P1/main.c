@@ -64,6 +64,7 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 
 	char *output = "output.txt";
 	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
+	close(file);
 
 	if (file < 0) {
 		char *error = "Error2: Unable to open file '";
@@ -76,17 +77,25 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 	char *wait = ">>> ";
 
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
+    	char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
+
         write(file, wait, strlen(wait));
     	write(file, command, strlen(command));
     	write(file, "\n", 1);
 
+    	close(file);
         listDir();
     }
     else if (strcmp(command, "pwd") == 0 || strstr(command, "pwd")) {
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
+
     	write(file, wait, strlen(wait));
     	write(file, command, strlen(command));
     	write(file, "\n", 1);
 
+    	close(file);
         showCurrentDir();
     }
     else if (strcmp(command, "mkdir") == 0 || strstr(command, "mkdir")) {
@@ -162,7 +171,6 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 
         displayFile(filename);
     }
-    close(file);
     return 1;
 }
 
