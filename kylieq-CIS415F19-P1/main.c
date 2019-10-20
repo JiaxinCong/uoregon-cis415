@@ -64,6 +64,7 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 
 	char *output = "output.txt";
 	int file = open("output.txt", O_RDWR | O_CREAT, S_IRWXU);
+	close(file);
 
 	if (file < 0) {
 		char *error = "Error2: Unable to open file '";
@@ -76,30 +77,30 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 	char *wait = ">>> ";
 
     if (strcmp(command, "ls") == 0 || strstr(command, "ls")) {
-    	//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+    	char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         write(file, wait, strlen(wait));
     	write(file, command, strlen(command));
     	write(file, "\n", 1);
 
-    	//close(file);
+    	close(file);
         listDir();
     }
     else if (strcmp(command, "pwd") == 0 || strstr(command, "pwd")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
     	write(file, wait, strlen(wait));
     	write(file, command, strlen(command));
     	write(file, "\n", 1);
 
-    	//close(file);
+    	close(file);
         showCurrentDir();
     }
     else if (strcmp(command, "mkdir") == 0 || strstr(command, "mkdir")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *newDir = arr[0];
 
@@ -109,12 +110,12 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
         write(file, newDir, strlen(newDir));
         write(file, "\n", 1);
 
-        //close(file);
+        close(file);
         makeDir(newDir);
     }
     else if (strcmp(command, "cd") == 0 || strstr(command, "cd")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *newDir = arr[0];
 
@@ -124,12 +125,12 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     	write(file, newDir, strlen(newDir));
     	write(file, "\n", 1);
 
-    	//close(file);
+    	close(file);
         changeDir(newDir);
     }
     else if (strcmp(command, "cp") == 0 || strstr(command, "cp")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
@@ -142,12 +143,12 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     	write(file, fileDst, strlen(fileDst));
     	write(file, "\n", 1);
 
-    	//close(file);
+    	close(file);
         copyFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "mv") == 0 || strstr(command, "mv")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *fileSrc = arr[0];
         char *fileDst = arr[1];
@@ -160,12 +161,12 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
     	write(file, fileDst, strlen(fileDst));
     	write(file, "\n", 1);
 
-    	//close(file);
+    	close(file);
         moveFile(fileSrc, fileDst);
     }
     else if (strcmp(command, "rm") == 0 || strstr(command, "rm")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *filename = arr[0];
 
@@ -175,12 +176,12 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
         write(file, filename, strlen(filename));
         write(file, "\n", 1);
  
- 		//close(file);
+ 		close(file);
         deleteFile(filename);
     }
     else if (strcmp(command, "cat") == 0 || strstr(command, "cat")) {
-		//char *output = "output.txt";
-		//int file = open(output, O_WRONLY | O_APPEND);
+		char *output = "output.txt";
+		int file = open(output, O_WRONLY | O_APPEND);
 
         char *filename = arr[0];
 
@@ -190,10 +191,10 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
         write(file, filename, strlen(filename));
         write(file, "\n", 1);
 
-        //close(file);
+        close(file);
         displayFile(filename);
     }
-    close(file);
+    //close(file);
     return 1;
 }
 
