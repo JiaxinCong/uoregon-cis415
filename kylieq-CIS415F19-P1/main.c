@@ -252,10 +252,16 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 
 	/* Check whether command is recoginzed */
 	if (ctr == 1 && check == 0) {
-		printf("Error! Unrecognized command: %s\n", command);
+		char *error = "Error! Unrecognized command: ";
+		write(1, error, strlen(error));
+		write(1, command, strlen(command));
+		write(1, "\n", 1);
 	}
 	else if (check != ctr) {
-		printf("Error! Unsupported parameters found for command: %s\n", command);
+		char *error = "Error! Unsupported parameters found for command: ";
+		write(1, error, strlen(error));
+		write(1, command, strlen(command));
+		write(1, "\n", 1);
 	}
 	else {
 		if (strcmp(command, "ls") == 0 || strcmp(command, "ls") == 13) {
@@ -344,7 +350,8 @@ int intermode() {
 
 	/* Check if buffer contains (null) value before proceeding */
 	if (buffer == NULL) {
-		printf("Error! Unable to allocate input buffer.\n");
+		char *error = "Error! Unable to allocate input buffer.\n";
+		write(1, error, strlen(error));
 		exit(1);
 	}
 	
@@ -357,7 +364,6 @@ int intermode() {
 		/* Print >>> then get the input string */
 		char *wait = ">>> ";
 		write(1, wait, strlen(wait));
-		//printf(">>> ");
 		getline(&buffer, &bufsize, stdin);
 
 		/* Tokenize the input string */
