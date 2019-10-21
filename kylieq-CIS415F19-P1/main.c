@@ -168,6 +168,10 @@ int makeCall_File(char *command, char **arr, size_t arrSize) {
 int parseCommand_File(char **arr, size_t arrSize) {
 
     const char *s = " ";
+
+    /* The purpose of args is to store the arguments corrresponding to the 
+       command that was given. This will be sent to makeCall_File along with
+       the string containing the actual function call (e.g. mkdir). */ 
     char **args;
 
     for (int i=0; i<arrSize; i++) {
@@ -180,17 +184,27 @@ int parseCommand_File(char **arr, size_t arrSize) {
             int ctr = 0;
             char *line = arr[i];
             char *token = strtok(line, s);
+
+            /* Save the first token in the variable command, because it will be
+               used to indicate which UNIX system call is being referenced. */
             char *command = token;
 
+            /* checkCommand ensures the command is a valid UNIX system 
+               command. */
             int check = checkCommand(command);
 
+            /* Allocate memory for the arguments. */
             size_t argSize = 2;
             args = (char**)malloc(argSize * sizeof(char*));
 
+            /* Initialize values of args to NULL in case there are not enough 
+               arguments given to occupy all of the allocated memory. */
             for (int i=0; i<argSize; i++) {
                 args[i] = NULL;
             }
 
+            /* Remove white space from the arguments of the call and then assign 
+            the pointer 'args' */
             int idx = 0;
             while (token != NULL) {
                 token = strtok(NULL, s);
@@ -199,6 +213,9 @@ int parseCommand_File(char **arr, size_t arrSize) {
                 idx++;
             }
             
+            /* If ctr == check, then the given command and its arguments make a
+            valid function call. Send to makeCall_File to actually provoke relative
+            functionality */
             if (ctr == check) {
                 makeCall_File(command, args, argSize);
             }
@@ -244,9 +261,14 @@ int filemode(char filename[]) {
     size_t bufferSize = 300;
     ssize_t inputSize = 0;
 
+    /* Allocate memory for the input buffer. */
     buffer = (char *)malloc(bufferSize * sizeof(char));
+
+    /* Read text file given by the user. */
     inputSize = getline_File(filename, buffer, bufferSize);
 
+    /* Place '\0' at the end of the string held in the input buffer 
+       to signify the end of the string. */
     if (inputSize > 0) {
    		buffer[bufferSize] = '\0';
     }
@@ -258,10 +280,15 @@ int filemode(char filename[]) {
 
     size_t ptrSize = 300;
     char **ptr = (char **)malloc(ptrSize*sizeof(char*));
+ 
+    /* Initialize values of the ptr to NULL */
     for (int i=0; i<ptrSize; i++) {
         ptr[i] = NULL;
     }  
 
+    /* Tokenize the input string with the delimiters ';', newline character '\n'
+       and carriage return '\r', and place each token in ptr. This collection of
+       tokens represents a single command and its arguments. */
     token = strtok(buffer, ";\n\r");
     ptr[0] = token;
     int i = 1;
@@ -272,6 +299,7 @@ int filemode(char filename[]) {
         i++;
     }   
 
+    /* Send the command and its arguments (held in ptr) to parseCommand_File */
     parseCommand_File(ptr, ptrSize);
 
     free(ptr);
@@ -298,7 +326,7 @@ int makeCall_Interactive(char** arr, size_t arrSize) {
 	char *command = arr[0];
 	int check = checkCommand(command);
 
-	/* Check whether command is recoginzed */
+	/* Check whether command is valid */
 	if (ctr == 1 && check == 0) {
 		char *error = "Error! Unrecognized command: ";
 		write(1, error, strlen(error));
@@ -355,6 +383,10 @@ int splitTokens_Interactive(char** arr) {
 	char** ptr = NULL;
 	size_t ptrSize = 10;
 
+    /* Check if the user entered multiple commands on one line separated by a
+       a semicolon. If so, split the commands based on the location of the 
+       delimiter ';'. Each command with its corresponding arguments is stored 
+       in ptr to be sent to makeCall_Interactive. */
 	while (i < sizeof(arr)) {
 		int ctr = 0;
 		ptr = (char**)malloc(ptrSize * sizeof(char*));
@@ -400,6 +432,8 @@ int intermode() {
 	}
 	
 	char **ptr = NULL;
+    /* The while loop should run as long as the user does not type 'exit'
+       on the command line */
 	while(1) {
 
 		int ctr = 0;
@@ -426,7 +460,10 @@ int intermode() {
 
 		ptr[ctr-1] = "NULL";
 
-		/* Check if user entered anything on the command line at all */
+		/* Check if user entered anything on the command line at all
+           by ensuring that the first value in ptr is not a null value.
+           If user input exists, send command to splitTokens_Interactive
+           for further parsing. */
 		if (strcmp(ptr[0], "NULL") != 0) {
         	splitTokens_Interactive(ptr);
         }
@@ -455,7 +492,7 @@ int main(int argc, char *argv[]) {
 	char *command = NULL;
 	char *file = NULL;
 
-	/* Check command */
+	/* Check if first command called with executable is valid */
 	if (argc == 2) {
 		if (strcmp(argv[1], check2) == 0) {
 			command = argv[1];

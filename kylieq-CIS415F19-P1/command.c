@@ -94,7 +94,10 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 		check = 1;
 	}
 
+	/* Open source file*/
 	FILE *fpSrc = fopen(newSrc, "r");
+
+	/* Check that given source/destination files are valid */
 	if (fpSrc == NULL) {
 		char *error = "Error! Source file not found.\n";
 		write(1, error, strlen(error));
@@ -104,6 +107,11 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 		write(1, error, strlen(error));
 	}
 	else {
+		/* The else statement is entered into if the given files make
+		   valid source and destination files. */
+
+		/* Open destination file and copy every string of text from source 
+		   file into it. */
 		FILE *fpDst = fopen(destinationPath, "w");
 		char input;
 
@@ -114,6 +122,10 @@ void copyFile(char *sourcePath, char *destinationPath) { /*for the cp command*/
 		fclose(fpDst);
 	}
 
+	/* This changes the directory back to the cwd the console was in prior 
+	   to executing this function. For example, if 'cp ../input.txt del.txt'
+	   was called, the program would need to switch directories in order to 
+	   access input.txt and then switch back again after finishing execution. */
 	if (check == 0) {
 		chdir(cwd);
 	}
