@@ -3,7 +3,12 @@
 #include <unistd.h>
 
 int main(int argc, char** argv) {
-	execvp(argv[1], NULL);
+	pid_t pid = fork();
+	printf("pid: %d\n", getpid());
+	if (pid == 0) { 
+		execvp(argv[1], NULL);
+		exit(-1);
+	}
 	printf("Done\n");
 	return 0;
 }
