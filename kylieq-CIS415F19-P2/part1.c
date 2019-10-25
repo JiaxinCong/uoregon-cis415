@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	char *filename = argv[1];
 
 	char *buffer = NULL;
-	size_t bufferSize = 300;
+	size_t bufferSize = 100;
 	ssize_t inputSize = 0;
 
 	buffer = (char *)malloc(bufferSize * sizeof(char));
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
 	char *token;
 
-	size_t ptrSize = 300;
+	size_t ptrSize = 100;
 	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
 
 	for (int i=0; i<ptrSize; i++) {
