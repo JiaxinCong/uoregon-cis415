@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
 	while (token != NULL) {
 		token = strtok(NULL, "/\n\r");
-		if (strstr(token, "exe")== 0) {
+		if (strstr(token, "exe")) {
 			ptr[ctr] = token;
 			ctr++;
 		}
