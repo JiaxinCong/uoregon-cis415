@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
 	while (token != NULL) {
 		token = strtok(NULL, "/\n\r");
-		if (strcmp(token, ".") != 0) {
+		if (strcmp(token, ".") == 0) {
 			token = strtok(NULL, "/\n\r");
 		}
 		ptr[ctr] = token;
