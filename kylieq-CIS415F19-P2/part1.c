@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	char *filename = argv[1];
 
 	char *buffer = NULL;
-	size_t bufferSize = 100;
+	size_t bufferSize = 300;
 	ssize_t inputSize = 0;
 
 	buffer = (char *)malloc(bufferSize * sizeof(char));
@@ -54,27 +54,35 @@ int main(int argc, char *argv[]) {
 
 	char *token;
 
-//	size_t ptrSize = 100;
-//	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
+	size_t ptrSize = 300;
+	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
 
-//	for (int i=0; i<ptrSize; i++) {
-//		ptr[i] = NULL;
-//	}
+	for (int i=0; i<ptrSize; i++) {
+		ptr[i] = NULL;
+	}
+
+	int ctr = 0; /* keep track of how many commands there are in file */
 
 	token = strtok(buffer, "/");
-	if (token != NULL) {
-		token = strtok(NULL, " \n");
-	}
-	else {
-		/* No valid command was given */
-		exit(1);
+
+	while (token != NULL) {
+		token = strtok(NULL, "/\n\r");
+//		if (strcmp(token, ".") != 0) {
+			ptr[ctr] = token;
+			ctr++;
+//		}
 	}
 
-	pid_t pid = fork();
-	if (pid == 0) {
-		execvp(token, NULL);
-		exit(-1);
+	for (int i=0; i<ctr; i++) {
+		printf("token: %s\n", ptr[i]);
 	}
-	printf("Done\n");
+
+//	pid_t pid = fork();
+//	if (pid == 0) {
+//		execvp(token, NULL);
+//		exit(-1);
+//	}
+//	printf("Done\n");
+
 	return 0;
 }
