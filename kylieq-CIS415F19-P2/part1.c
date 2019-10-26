@@ -79,8 +79,8 @@ int main(int argc, char *argv[]) {
 	if (buffer == NULL) {
 		exit(1);
 	}
-	
-	token = strtok(buffer, "/");
+
+	token = strtok(buffer, "/\n\r");
 
 	int ctr = 0; /* keep track of how many commands there are in file */
 	while (token != NULL) {
