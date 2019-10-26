@@ -75,12 +75,6 @@ int parseCommand_File(char **arr, size_t arrSize, struct ProcessControlBlock **P
         	PCBS[PCBS_pos] = pcb;
         	PCBS_pos++;
 
-            /* If ctr == check, then the given command and its arguments make a
-            valid function call. Send to makeCall_File to actually provoke relative
-            functionality */
-//            if (ctr == check) {
-//                makeCall_File(command, args, argSize);
-//            }
         	free(pcb);
             free(args);
         }
