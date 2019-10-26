@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 	char *filename = argv[1];
 
 	char *buffer = NULL;
-	size_t bufferSize = 100;
+	size_t bufferSize = 300;
 	ssize_t inputSize = 0;
 
 	buffer = (char *)malloc(bufferSize * sizeof(char));
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
 	if (inputSize > 0) {
-		buffer[bufferSize-1] = '\0';
+		buffer[bufferSize] = '\0';
 	}
 	else {
 		buffer[0] = '\0';
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
 	char *token;
 
-	size_t ptrSize = 100;
+	size_t ptrSize = 300;
 	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
 
     /* Initialize values of the ptr to NULL */
@@ -64,13 +64,16 @@ int main(int argc, char *argv[]) {
 		ptr[i] = NULL;
 	}
 
-	int ctr = 0; /* keep track of how many commands there are in file */
-
     /* Tokenize the input string with the delimiters '/', newline character '\n'
        and carriage return '\r', and place each token in ptr. This will be a 
        collection of executable files. */
+
+	/* Assuming user entered valid call to run executable, this should string
+	   should be "."
+	   Ignore it and move on to next token in the following while loop. */
 	token = strtok(buffer, "/");
 
+	int ctr = 0; /* keep track of how many commands there are in file */
 	while (token != NULL) {
 		token = strtok(NULL, "/\n\r");
 		ptr[ctr] = token;
