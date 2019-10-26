@@ -7,6 +7,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+struct ProcessControlBlock {
+	pid_t pid;
+	char *executable;
+	char **args;
+}
 
 /* Read file */
 int getline_File(char *filename, char *buffer, size_t bufferSize) {
@@ -84,15 +89,14 @@ int main(int argc, char *argv[]) {
 		printf("token: %s\n", ptr[i]);
 	}
 
-//	for (int i=0; i<ctr-1; i++) {
-		pid_t pid = fork();
-		char *exe = ptr[0];
-		if (pid == 0) {
-			execvp(exe, NULL);
-			exit(-1);
-		}
-		printf("Done\n");
-//	}
+	pid_t pid = fork();
+	struct ProcessControlBlock pcb1 = {pid, ptr[0]};
+	char *exe = ptr[0];
+	if (pcb1.pid == 0) {
+		execvp(exe, NULL);
+		exit(-1);
+	}
+	printf("Done\n");
 
 	free(ptr);
 	free(buffer);
