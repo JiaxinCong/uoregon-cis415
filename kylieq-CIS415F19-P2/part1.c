@@ -16,6 +16,31 @@ struct ProcessControlBlock {
 	int count;
 };
 
+/* Read file */
+int get_line(char *filename, char *buffer, size_t bufferSize) {
+
+    int file = open(filename, O_RDONLY);
+    if (file == -1) {
+    	char *error = "Error: Unable to open file '";
+    	write(1, error, strlen(error));
+    	write(1, filename, strlen(filename));
+    	write(1, "'\n", 2);
+
+        return -1;
+    }
+
+    if (read(file, buffer, bufferSize) == -1) {
+    	char *error = "Error: Unable to read file '";
+    	write(1, error, strlen(error));
+    	write(1, filename, strlen(filename));
+    	write(1, "'\n", 2);
+
+        return -1;
+    }
+    close(file);
+    return 1;
+}
+
 /* Split line read from file into individual commands */
 int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
 
@@ -82,29 +107,19 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
     return 1;
 }
 
-/* Read file */
-int get_line(char *filename, char *buffer, size_t bufferSize) {
+int makeCall(struct ProcessControlBlock **PCBS) {
+	for (int i=0; i<=PCBS_pos; i++) {
+		struct ProcessControlBlock *PCB = PCBS[i];
+		pid_t pid = fork();
+		PCB->pid = pid;
 
-    int file = open(filename, O_RDONLY);
-    if (file == -1) {
-    	char *error = "Error: Unable to open file '";
-    	write(1, error, strlen(error));
-    	write(1, filename, strlen(filename));
-    	write(1, "'\n", 2);
-
-        return -1;
-    }
-
-    if (read(file, buffer, bufferSize) == -1) {
-    	char *error = "Error: Unable to read file '";
-    	write(1, error, strlen(error));
-    	write(1, filename, strlen(filename));
-    	write(1, "'\n", 2);
-
-        return -1;
-    }
-    close(file);
-    return 1;
+		if (PCB->pid == 0) {
+			execvp(pcb1.executable, NULL);
+			exit(-1);
+		}
+		printf("Done\n");
+	}
+	return 1;
 }
 
 int main(int argc, char *argv[]) {
@@ -162,7 +177,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
- //   make
+ 	makeCall(PCBS);
 
     free(PCBS);
     free(ptr);
