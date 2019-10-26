@@ -76,6 +76,10 @@ int main(int argc, char *argv[]) {
 	/* Assuming user entered valid call to run executable, this should string
 	   should be "."
 	   Ignore it and move on to next token in the following while loop. */
+	if (buffer == NULL) {
+		exit(1);
+	}
+	
 	token = strtok(buffer, "/");
 
 	int ctr = 0; /* keep track of how many commands there are in file */
