@@ -86,8 +86,9 @@ int main(int argc, char *argv[]) {
 
 //	for (int i=0; i<ctr-1; i++) {
 		pid_t pid = fork();
+		char *exe = ptr[0];
 		if (pid == 0) {
-			execvp(ptr[0], NULL);
+			execvp(exe, NULL);
 			exit(-1);
 		}
 		printf("Done\n");
