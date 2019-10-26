@@ -17,7 +17,7 @@ struct ProcessControlBlock {
 };
 
 /* Split line read from file into individual commands */
-int parseCommand_File(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
+int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
 
     const char *s = " ";
 
@@ -83,7 +83,7 @@ int parseCommand_File(char **arr, size_t arrSize, struct ProcessControlBlock **P
 }
 
 /* Read file */
-int getline_File(char *filename, char *buffer, size_t bufferSize) {
+int get_line(char *filename, char *buffer, size_t bufferSize) {
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
     buffer = (char *)malloc(bufferSize * sizeof(char));
 
     /* Read text file given by the user. */
-    inputSize = getline_File(filename, buffer, bufferSize);
+    inputSize = get_line(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
@@ -159,7 +159,10 @@ int main(int argc, char *argv[]) {
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
-    parseCommand_File(ptr, ptrSize, PCBS);
+    parseCommand(ptr, ptrSize, PCBS);
+
+    /* Make calls */
+ //   make
 
     free(PCBS);
     free(ptr);
