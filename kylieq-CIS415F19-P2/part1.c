@@ -42,8 +42,8 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 int main(int argc, char *argv[]) {
 
-	char *filename = argv[1];
-
+//	char *filename = argv[1];
+	char *filename = "input.txt";
 	char *buffer = NULL;
 	size_t bufferSize = 300;
 	ssize_t inputSize = 0;
