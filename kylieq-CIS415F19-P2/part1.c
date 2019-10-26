@@ -90,17 +90,17 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
             char *split_command = strtok(command, "/");
 			command = strtok(NULL, "");
        	
-/*       		int pcbSize = idx + 1;
+       		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->command = command;
         	pcb->args = args;
         	pcb->count = idx;
-*/
-        	/* Assign new PCB to PCBS & increment PCBS position */
-//        	PCBS[PCBS_pos] = pcb;
-//        	PCBS_pos++;
 
-        	//free(pcb);
+        	/* Assign new PCB to PCBS & increment PCBS position */
+        	PCBS[PCBS_pos] = pcb;
+        	PCBS_pos++;
+
+        	free(pcb);
             free(args);
         }
     }
