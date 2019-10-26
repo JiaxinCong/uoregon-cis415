@@ -48,6 +48,10 @@ int main(int argc, char *argv[]) {
 
 	buffer = (char *)malloc(bufferSize * sizeof(char));
 
+	for (int i=0; i<bufferSize; i++) {
+		buffer[i] = NULL;
+	}
+
 	inputSize = getline_File(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
