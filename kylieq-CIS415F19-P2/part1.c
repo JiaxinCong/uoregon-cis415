@@ -81,7 +81,7 @@ int parseCommand_File(char **arr, size_t arrSize, struct ProcessControlBlock **P
 //            if (ctr == check) {
 //                makeCall_File(command, args, argSize);
 //            }
-
+        	free(pcb);
             free(args);
         }
     }
