@@ -42,8 +42,8 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
 int main(int argc, char *argv[]) {
 
-//	char *filename = argv[1];
-	char *filename = "input.txt";
+	char *filename = argv[1];
+
 	char *buffer = NULL;
 	size_t bufferSize = 300;
 	ssize_t inputSize = 0;
@@ -65,13 +65,13 @@ int main(int argc, char *argv[]) {
 	char *token;
 
 	size_t ptrSize = 300;
-//	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
+	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
 
     /* Initialize values of the ptr to NULL */
-/*	for (int i=0; i<ptrSize; i++) {
+	for (int i=0; i<ptrSize; i++) {
 		ptr[i] = NULL;
 	}
-*/
+
     /* Tokenize the input string with the delimiters '/', newline character '\n'
        and carriage return '\r', and place each token in ptr. This will be a 
        collection of executable files. */
@@ -79,14 +79,14 @@ int main(int argc, char *argv[]) {
 	/* Assuming user entered valid call to run executable, this should string
 	   should be "."
 	   Ignore it and move on to next token in the following while loop. */
-/*	if (buffer == NULL) {
+	if (buffer == NULL) {
 		exit(1);
 	}
 
 	token = strtok(buffer, "/");
-*/
+
 //	int ctr = 0; /* keep track of how many commands there are in file */
-/*	while (token != NULL) {
+	while (token != NULL) {
 		token = strtok(NULL, "/\n\r");
 		ptr[ctr] = token;
 		ctr++;
@@ -108,6 +108,6 @@ int main(int argc, char *argv[]) {
 	printf("Done\n");
 
 	free(ptr);
-*/	free(buffer);
+	free(buffer);
 	return 0;
 }
