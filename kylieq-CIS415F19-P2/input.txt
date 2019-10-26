@@ -1,2 +1,1 @@
 ./file.exe
-./which.exe hello
