@@ -45,6 +45,8 @@ int main(int argc, char *argv[]) {
 
 	inputSize = getline_File(filename, buffer, bufferSize);
 
+    /* Place '\0' at the end of the string held in the input buffer 
+       to signify the end of the string. */
 	if (inputSize > 0) {
 		buffer[bufferSize] = '\0';
 	}
@@ -57,12 +59,16 @@ int main(int argc, char *argv[]) {
 	size_t ptrSize = 100;
 	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
 
+    /* Initialize values of the ptr to NULL */
 	for (int i=0; i<ptrSize; i++) {
 		ptr[i] = NULL;
 	}
 
 	int ctr = 0; /* keep track of how many commands there are in file */
 
+    /* Tokenize the input string with the delimiters '/', newline character '\n'
+       and carriage return '\r', and place each token in ptr. This will be a 
+       collection of executable files. */
 	token = strtok(buffer, "/");
 
 	while (token != NULL) {
@@ -75,12 +81,14 @@ int main(int argc, char *argv[]) {
 		printf("token: %s\n", ptr[i]);
 	}
 
-//	pid_t pid = fork();
-//	if (pid == 0) {
-//		execvp(token, NULL);
-//		exit(-1);
-//	}
-//	printf("Done\n");
+	for (int i=0; i<ctr-1; i++) {
+		pid_t pid = fork();
+		if (pid == 0 && strstr(ptr[i], "exe")) {
+			execvp(ptr[i], NULL);
+			exit(-1);
+		}
+		printf("Done\n");
+	}
 
 	free(ptr);
 	free(buffer);
