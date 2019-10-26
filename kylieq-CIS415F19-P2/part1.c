@@ -7,11 +7,86 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+int PCBS_pos;
+
 struct ProcessControlBlock {
 	pid_t pid;
-	char *executable;
+	char *command;
 	char **args;
+	int count;
 };
+
+/* Split line read from file into individual commands */
+int parseCommand_File(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
+
+    const char *s = " ";
+
+    /* The purpose of args is to store the arguments corrresponding to the 
+       command that was given. This will be sent to makeCall_File along with
+       the string containing the actual function call (e.g. mkdir). */ 
+    char **args;
+
+    for (int i=0; i<arrSize; i++) {
+
+        if (arr[i] == NULL) {
+            continue;
+        }
+
+        else {
+        	/* Process Control Block made for each command */
+        	struct ProcessControlBlock *pcb;
+
+            char *line = arr[i];
+            char *token = strtok(line, s);
+
+            /* Save the first token in the variable command, because it will be
+               used to indicate which UNIX system call is being referenced. */
+            char *command = token;
+
+            /* Allocate memory for the arguments. */
+            size_t argSize = 5;
+            args = (char**)malloc(argSize * sizeof(char*));
+
+            /* Initialize values of args to NULL in case there are not enough 
+               arguments given to occupy all of the allocated memory. */
+            for (int i=0; i<argSize; i++) {
+                args[i] = NULL;
+            }
+
+            /* Remove white space from the arguments of the call and then assign 
+            the pointer 'args' */
+            int idx = 0;
+            while (token != NULL) {
+                token = strtok(NULL, s);
+              	args[idx++] = token;
+            }
+
+            /* Get rid of './' characters from command string */
+            char *split_command = strtok(command, "/");
+			command = strtok(NULL, "");
+       	
+       		int pcbSize = idx + 1;
+        	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
+        	pcb->command = command;
+        	pcb->args = args;
+        	pcb->count = idx;
+
+        	/* Assign new PCB to PCBS & increment PCBS position */
+        	PCBS[PCBS_pos] = pcb;
+        	PCBS_pos++;
+
+            /* If ctr == check, then the given command and its arguments make a
+            valid function call. Send to makeCall_File to actually provoke relative
+            functionality */
+//            if (ctr == check) {
+//                makeCall_File(command, args, argSize);
+//            }
+
+            free(args);
+        }
+    }
+    return 1;
+}
 
 /* Read file */
 int getline_File(char *filename, char *buffer, size_t bufferSize) {
@@ -34,8 +109,6 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
         return -1;
     }
-
-    printf("BUFFER: %s\n", buffer);
     close(file);
     return 1;
 }
@@ -45,68 +118,57 @@ int main(int argc, char *argv[]) {
 	char *filename = argv[1];
 
 	char *buffer = NULL;
-	size_t bufferSize = 300;
-	ssize_t inputSize = 0;
+    size_t bufferSize = 300;
+    ssize_t inputSize = 0;
 
-	buffer = (char *)malloc(bufferSize * sizeof(char));
+    /* Allocate memory for the input buffer. */
+    buffer = (char *)malloc(bufferSize * sizeof(char));
 
-	inputSize = getline_File(filename, buffer, bufferSize);
+    /* Read text file given by the user. */
+    inputSize = getline_File(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
-	if (inputSize > 0) {
-		buffer[bufferSize] = '\0';
-	}
-	else {
-		buffer[0] = '\0';
-	}
+    if (inputSize > 0) {
+   		buffer[bufferSize] = '\0';
+    }
+    else {
+    	buffer[0] = '\0';
+    }
 
-	char *token;
+    char *token;
 
-	size_t ptrSize = 300;
-	char **ptr = (char **)malloc(ptrSize * sizeof(char *));
-
+    size_t ptrSize = 300;
+    char **ptr = (char **)malloc(ptrSize * sizeof(char*));
+ 
     /* Initialize values of the ptr to NULL */
-	for (int i=0; i<ptrSize; i++) {
-		ptr[i] = NULL;
-	}
+    for (int i=0; i<ptrSize; i++) {
+        ptr[i] = NULL;
+    }  
 
-    /* Tokenize the input string with the delimiters '/', newline character '\n'
-       and carriage return '\r', and place each token in ptr. This will be a 
-       collection of executable files. */
+    /* Tokenize the input string with the delimiters ';', newline character '\n'
+       and carriage return '\r', and place each token in ptr. This collection of
+       tokens represents a single command and its arguments. */
+    token = strtok(buffer, ";\n\r");
+    ptr[0] = token;
+    int line_ctr = 1;
 
-	/* Assuming user entered valid call to run executable, this should string
-	   should be "."
-	   Ignore it and move on to next token in the following while loop. */
-	if (buffer == NULL) {
-		exit(1);
-	}
+    while (token != NULL) {
+        token = strtok(NULL, ";\n\r");
+        ptr[line_ctr] = token;
+        line_ctr++;
+    }   
 
-	token = strtok(buffer, "/");
+    /* Collection of PCB's */
+    PCBS_pos = 0;
+	int pcbsSize = line_ctr;
+	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
-	int ctr = 0; /* keep track of how many commands there are in file */
-	while (token != NULL) {
-		token = strtok(NULL, "/\n\r");
-		ptr[ctr] = token;
-		ctr++;
-	}
+    /* Send the command and its arguments (held in ptr) to parseCommand_File */
+    parseCommand_File(ptr, ptrSize, PCBS);
 
-	for (int i=0; i<ctr; i++) {
-		printf("token: %s\n", ptr[i]);
-	}
-
-	pid_t pid = fork();
-	struct ProcessControlBlock pcb1 = {pid, ptr[0]};
-	char *exe = ptr[0];
-	if (pcb1.pid == 0) {
-		execvp(pcb1.executable, NULL);
-		free(ptr);
-		free(buffer);
-		exit(-1);
-	}
-	printf("Done\n");
-
-	free(ptr);
-	free(buffer);
-	return 1;
+    free(PCBS);
+    free(ptr);
+    free(buffer);
+    return 0;
 }
