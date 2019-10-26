@@ -100,7 +100,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
         	PCBS[PCBS_pos] = pcb;
         	PCBS_pos++;
 
-        	free(pcb);
+        	//free(pcb);
             free(args);
         }
     }
@@ -114,7 +114,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		PCB->pid = pid;
 
 		if (PCB->pid == 0) {
-			execvp(pcb1.executable, NULL);
+			execvp(PCB->command, PCB->args);
 			exit(-1);
 		}
 		printf("Done\n");
@@ -178,6 +178,10 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
  	makeCall(PCBS);
+
+ 	for (int i=0; i<=PCBS_pos; i++) {
+ 		free(PCBS[i]);
+ 	}
 
     free(PCBS);
     free(ptr);
