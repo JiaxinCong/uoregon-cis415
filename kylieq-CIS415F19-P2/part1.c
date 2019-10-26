@@ -87,10 +87,6 @@ int main(int argc, char *argv[]) {
 		token = strtok(NULL, " /\n\r");
 		ptr[ctr] = token;
 		ctr++;
-
-		if (strstr(".", token) == NULL){
-			printf("delete: %s\n", token);
-		}
 	}
 
 	for (int i=0; i<ctr; i++) {
