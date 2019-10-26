@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 
 	int ctr = 0; /* keep track of how many commands there are in file */
 	while (token != NULL) {
-		token = strtok(NULL, " /\n\r");
+		token = strtok(NULL, "/\n\r");
 		ptr[ctr] = token;
 		ctr++;
 	}
