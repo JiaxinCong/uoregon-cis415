@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
  		free(PCBS[i]);
  	}
 
-    //free(PCBS);
+    free(PCBS);
     free(ptr);
     free(buffer);
     return 0;
