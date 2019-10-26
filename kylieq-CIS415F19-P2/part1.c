@@ -59,7 +59,6 @@ int main(int argc, char *argv[]) {
 	}
 	else {
 		buffer[0] = '\0';
-		exit(1);
 	}
 
 	char *token;
