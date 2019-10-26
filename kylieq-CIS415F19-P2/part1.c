@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 		pid_t pid = fork();
 		if (pid == 0) {
 			execvp(ptr[0], NULL);
-			exit(-1);
+			//exit(-1);
 		}
 		printf("Done\n");
 //	}
