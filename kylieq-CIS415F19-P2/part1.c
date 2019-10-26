@@ -34,6 +34,8 @@ int getline_File(char *filename, char *buffer, size_t bufferSize) {
 
         return -1;
     }
+
+    printf("BUFFER: %s\n", buffer);
     close(file);
     return 1;
 }
