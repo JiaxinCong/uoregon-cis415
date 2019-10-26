@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	token = strtok(buffer, " /\n\r");
+	token = strtok(buffer, "/");
 
 	int ctr = 0; /* keep track of how many commands there are in file */
 	while (token != NULL) {
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 		ptr[ctr] = token;
 		ctr++;
 
-		if (strcmp(token, ".") == 0){
+		if (strstr(".", token) == NULL){
 			printf("delete: %s\n", token);
 		}
 	}
