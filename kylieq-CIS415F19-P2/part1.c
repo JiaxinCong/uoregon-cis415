@@ -81,14 +81,14 @@ int main(int argc, char *argv[]) {
 		printf("token: %s\n", ptr[i]);
 	}
 
-	for (int i=0; i<ctr-1; i++) {
+//	for (int i=0; i<ctr-1; i++) {
 		pid_t pid = fork();
 		if (pid == 0) {
-			execvp(ptr[i], NULL);
+			execvp(ptr[0], NULL);
 			//exit(-1);
 		}
 		printf("Done\n");
-	}
+//	}
 
 	free(ptr);
 	free(buffer);
