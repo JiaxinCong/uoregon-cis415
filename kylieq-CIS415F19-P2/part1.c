@@ -115,14 +115,14 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			exit(1);
 		}
 		else if (PCBS[i]->pid == 0) {
-			if (PCBS[i]->count > 1) {
+		//	if (PCBS[i]->count > 1) {
 				execvp(PCBS[i]->cmd, PCBS[i]->args);
 				exit(-1);
-			}
-			else {
-				execvp(PCBS[i]->cmd, NULL);
-				exit(-1);
-			}
+		//	}
+		//	else {
+		//		execvp(PCBS[i]->cmd, NULL);
+		//		exit(-1);
+		//	}
 		}
 		else {
 			printf("Child process %d started.\n", PCBS[i]->pid);
@@ -192,7 +192,6 @@ int main(int argc, char *argv[]) {
 
     /* Collection of PCB's */
     PCBS_pos = 0;
-//	int pcbsSize = line_ctr;
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
