@@ -180,6 +180,7 @@ int main(int argc, char *argv[]) {
        and carriage return '\r', and place each token in ptr. This collection of
        tokens represents a single command and its arguments. */
     token = strtok(buffer, "\n\r");
+    printf("token: %s\n", token);
     ptr[0] = token;
     int line_ctr = 1;
 
