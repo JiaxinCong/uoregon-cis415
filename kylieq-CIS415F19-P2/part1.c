@@ -106,7 +106,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
-	for (int i=0; i<=PCBS_pos; i++) {
+	for (int i=0; i<PCBS_pos; i++) {
 		printf("cmd%d: %s\n", i, PCBS[i]->cmd);
 		for (int j=0; j<PCBS[i]->count; j++) {
 			printf("arg%d: %s\n", j, PCBS[i]->args[j]);
