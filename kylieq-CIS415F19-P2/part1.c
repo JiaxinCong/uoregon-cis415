@@ -94,6 +94,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
        		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
+        	printf("command: %d\n", pcb->cmd);
         	pcb->args = args;
         	pcb->count = idx;
         	printf("count: %d\n", idx);
@@ -180,13 +181,11 @@ int main(int argc, char *argv[]) {
        and carriage return '\r', and place each token in ptr. This collection of
        tokens represents a single command and its arguments. */
     token = strtok(buffer, "\n\r");
-    printf("token: %s\n", token);
     ptr[0] = token;
     int line_ctr = 1;
 
     while (token != NULL) {
         token = strtok(NULL, "\n\r");
-        printf("token: %s\n", token);
         ptr[line_ctr] = token;
         line_ctr++;
     }   
