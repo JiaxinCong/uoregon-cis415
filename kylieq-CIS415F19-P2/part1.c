@@ -198,10 +198,10 @@ int main(int argc, char *argv[]) {
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
-    parseCommand(ptr, ptrSize, PCBS);
+//    parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
- 	makeCall(PCBS);
+// 	makeCall(PCBS);
 
  	for (int i=0; i<=PCBS_pos; i++) {
  		free(PCBS[i]);
