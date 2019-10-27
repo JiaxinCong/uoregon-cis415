@@ -112,7 +112,6 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
 		if (PCBS[0]->pid < 0) {
 			printf("Unable to fork process.\n");
-			status = -1;
 			exit(1);
 		}
 		else if (PCBS[0]->pid == 0) {
