@@ -90,12 +90,13 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
             /* Get rid of './' characters from command string */
             char *split_command = strtok(command, "/");
 			command = strtok(NULL, "");
+			printf("command1: %d\n", command);
        	
        		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
-        	printf("command: %d\n", pcb->cmd);
-        	printf("command: %d\n", command);
+        	printf("command2: %d\n", pcb->cmd);
+        	printf("command3: %d\n", command);
         	pcb->args = args;
         	pcb->count = idx;
         	printf("count: %d\n", idx);
