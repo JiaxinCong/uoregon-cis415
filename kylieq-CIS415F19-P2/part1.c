@@ -125,9 +125,10 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			exit(-1);
 		}
 		else {
-			if (waitpid(pid, &status, 0) != pid) {
-				status = -1;
-			}
+			wait(NULL);
+			//if (waitpid(pid, &status, 0) != pid) {
+			//	status = -1;
+			//}
 		}
 		printf("Done\n");
 	}
