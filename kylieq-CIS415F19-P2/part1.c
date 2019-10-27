@@ -89,18 +89,13 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 
             /* Get rid of './' characters from command string */
             char *split_command = strtok(command, "/");
-            printf("command0: %d\n", split_command);
 			command = strtok(NULL, "");
-			printf("command1: %d\n", command);
        	
        		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
-        	printf("command2: %d\n", pcb->cmd);
-        	printf("command3: %d\n", command);
         	pcb->args = args;
         	pcb->count = idx;
-        	printf("count: %d\n", idx);
 
         	/* Assign new PCB to PCBS & increment PCBS position */
         	PCBS[PCBS_pos] = pcb;
@@ -197,6 +192,10 @@ int main(int argc, char *argv[]) {
     PCBS_pos = 0;
 	int pcbsSize = line_ctr;
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
+
+	for(int i=0; i<ptrSize; i++) {
+		printf("str: %s\n", ptr[i]);
+	}
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
     parseCommand(ptr, ptrSize, PCBS);
