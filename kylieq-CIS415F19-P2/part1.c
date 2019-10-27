@@ -179,12 +179,12 @@ int main(int argc, char *argv[]) {
     /* Tokenize the input string with the delimiters ';', newline character '\n'
        and carriage return '\r', and place each token in ptr. This collection of
        tokens represents a single command and its arguments. */
-    token = strtok(buffer, "/\n\r");
+    token = strtok(buffer, "\n\r");
     ptr[0] = token;
     int line_ctr = 1;
 
     while (token != NULL) {
-        token = strtok(NULL, "/\n\r");
+        token = strtok(NULL, "\n\r");
         printf("token: %s\n", token);
         ptr[line_ctr] = token;
         line_ctr++;
