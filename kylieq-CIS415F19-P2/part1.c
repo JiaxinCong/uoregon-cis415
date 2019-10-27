@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
- 	makeCall(PCBS);
+// 	makeCall(PCBS);
 
  	for (int i=0; i<=PCBS_pos; i++) {
  		free(PCBS[i]);
