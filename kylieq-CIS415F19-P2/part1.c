@@ -120,9 +120,14 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			exit(1);
 		}
 		else if (pid == 0) {
-			if (PCBS[i]->count > 1)
-			printf("Child process %d started.\n", pid);
-			execvp(PCBS[i]->cmd, PCBS[i]->args);
+			if (PCBS[i]->count > 1) {
+				printf("Child process %d started.\n", pid);
+				execvp(PCBS[i]->cmd, PCBS[i]->args);
+			}
+			else {
+				printf("Child process %d started.\n", pid);
+				execvp(PCBS[i]->cmd, NULL);
+			}
 			exit(-1);
 		}
 		else {
@@ -200,7 +205,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
-// 	makeCall(PCBS);
+ 	makeCall(PCBS);
 
  	for (int i=0; i<=PCBS_pos; i++) {
  		free(PCBS[i]);
