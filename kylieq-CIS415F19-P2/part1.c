@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
        to signify the end of the string. */
     if (inputSize > 0) {
     	int len = strlen(buffer);
-   		buffer[len-1] = '\0';
+   		buffer[len] = '\0';
     }
     else {
     	buffer[0] = '\0';
