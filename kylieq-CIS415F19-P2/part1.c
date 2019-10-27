@@ -168,6 +168,7 @@ int main(int argc, char *argv[]) {
     else {
     	buffer[0] = '\0';
     }
+    printf("buffer: %s\n", buffer);
 
     char *token;
 
