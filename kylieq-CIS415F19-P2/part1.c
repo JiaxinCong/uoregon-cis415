@@ -100,8 +100,6 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
         	/* Assign new PCB to PCBS & increment PCBS position */
         	PCBS[PCBS_pos] = pcb;
         	PCBS_pos++;
-
-//            free(args);
         }
     }
     return 1;
