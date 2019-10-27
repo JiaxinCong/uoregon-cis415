@@ -212,9 +212,9 @@ int main(int argc, char *argv[]) {
     /* Make calls */
 // 	makeCall(PCBS);
 
- 	for (int i=0; i<ptrSize; i++) {
- 		free(ptr[i]);
- 	}
+// 	for (int i=0; i<ptrSize; i++) {
+ //		free(ptr[i]);
+ 	//}
 
  	freePCB(PCBS);
     free(PCBS);
