@@ -88,7 +88,6 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
             }
 
             /* Get rid of './' characters from command string */
-            //char *split_command = strtok(command, "/");
             strtok(command, "/");
 			command = strtok(NULL, "");
        	
