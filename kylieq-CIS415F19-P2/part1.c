@@ -162,13 +162,13 @@ int main(int argc, char *argv[]) {
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
-/*    if (inputSize > 0) {
-   		buffer[bufferSize] = '\0';
+    if (inputSize > 0) {
+   		buffer[bufferSize-1] = '\0';
     }
     else {
     	buffer[0] = '\0';
     }
-*/
+
     char *token;
 
     size_t ptrSize = 300;
