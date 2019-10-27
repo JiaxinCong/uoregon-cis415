@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
 
     /* Collection of PCB's */
     PCBS_pos = 0;
-	int pcbsSize = line_ctr;
+//	int pcbsSize = line_ctr;
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
