@@ -149,8 +149,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 int freePCB(struct ProcessControlBlock **PCBS) {
 	for (int i=0; i<=PCBS_pos; i++) {
 		free(PCBS[i]->args);
+		free(PCBS[i]);
 	}
-	free(PCBS[i]);
 	return 1;
 }
 
