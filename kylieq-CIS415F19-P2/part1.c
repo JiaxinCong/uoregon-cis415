@@ -151,6 +151,7 @@ int freePCB(struct ProcessControlBlock **PCBS) {
 		free(PCBS[i]->args);
 		free(PCBS[i]);
 	}
+	free(PCBS);
 	return 1;
 }
 
@@ -212,12 +213,7 @@ int main(int argc, char *argv[]) {
     /* Make calls */
 // 	makeCall(PCBS);
 
-// 	for (int i=0; i<ptrSize; i++) {
- //		free(ptr[i]);
- 	//}
-
  	freePCB(PCBS);
-    free(PCBS);
     free(ptr);
     free(buffer);
     return 0;
