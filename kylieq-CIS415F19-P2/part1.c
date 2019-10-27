@@ -95,6 +95,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
         	pcb->cmd = command;
         	pcb->args = args;
         	pcb->count = idx;
+        	printf("count: %d\n", idx);
 
         	/* Assign new PCB to PCBS & increment PCBS position */
         	PCBS[PCBS_pos] = pcb;
@@ -107,11 +108,10 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
-/*	for (int i=0; i<=PCBS_pos; i++) {
+	for (int i=0; i<=PCBS_pos; i++) {
 		int status;
-		struct ProcessControlBlock *PCB = PCBS[i];
 		pid_t pid = fork();
-		PCB->pid = pid;
+		PCBS[i]->pid = pid;
 
 		if (pid < 0) {
 			printf("Unable to fork process.\n");
@@ -119,8 +119,9 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			exit(1);
 		}
 		else if (pid == 0) {
+			if (PCBS[i]->count > 1)
 			printf("Child process %d started.\n", pid);
-			execvp(PCB->command, PCB->args);
+			execvp(PCBS[i]->cmd, PCBS[i]->args);
 			exit(-1);
 		}
 		else {
@@ -130,8 +131,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		}
 		printf("Done\n");
 	}
-	return 1;
-*/
+/*	return 1;
+
 	pid_t pid = fork();
 	PCBS[0]->pid = pid;
 	if (PCBS[0]->pid  == 0) {
@@ -139,7 +140,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		exit(-1);
 	}
 	printf("Done\n");
-	return 1;
+*/	return 1;
 }
 
 int main(int argc, char *argv[]) {
@@ -197,7 +198,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
- 	makeCall(PCBS);
+// 	makeCall(PCBS);
 
  	for (int i=0; i<=PCBS_pos; i++) {
  		free(PCBS[i]);
