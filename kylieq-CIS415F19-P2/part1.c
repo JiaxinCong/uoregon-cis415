@@ -116,17 +116,16 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		}
 		else if (PCBS[0]->pid == 0) {
 			if (PCBS[0]->count > 1) {
-				printf("Child process %d started.\n", PCBS[0]->pid);
 				execvp(PCBS[0]->cmd, PCBS[0]->args);
 				exit(-1);
 			}
 			else {
-				printf("Child process %d started.\n", PCBS[0]->pid);
 				execvp(PCBS[0]->cmd, NULL);
 				exit(-1);
 			}
 		}
 		else {
+			printf("Child process %d started.\n", PCBS[0]->pid);
 			wait(NULL);
 			printf("Child process %d ended.\n", PCBS[0]->pid);
 		}
