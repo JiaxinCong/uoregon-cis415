@@ -95,6 +95,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
         	printf("command: %d\n", pcb->cmd);
+        	printf("command: %d\n", command);
         	pcb->args = args;
         	pcb->count = idx;
         	printf("count: %d\n", idx);
