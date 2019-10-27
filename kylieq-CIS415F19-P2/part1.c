@@ -146,6 +146,14 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 	return 1;
 }
 
+int freePCB(struct ProcessControlBlock **PCBS) {
+	for (int i=0; i<=PCBS_pos; i++) {
+		free(PCBS[i]->args);
+	}
+	free(PCBS[i]);
+	return 1;
+}
+
 int main(int argc, char *argv[]) {
 
 	char *filename = argv[1];
@@ -204,10 +212,11 @@ int main(int argc, char *argv[]) {
     /* Make calls */
  	makeCall(PCBS);
 
- 	for (int i=0; i<PCBS_pos; i++) {
- 		free(PCBS[i]);
- 	}
+// 	for (int i=0; i<PCBS_pos; i++) {
+// 		free(PCBS[i]);
+// 	}
 
+ 	freePCB(PCBS);
     free(PCBS);
     free(ptr);
     free(buffer);
