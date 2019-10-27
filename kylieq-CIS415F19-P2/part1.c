@@ -101,6 +101,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
         	PCBS_pos++;
 
             free(args);
+            free(pcb);
         }
     }
     return 1;
