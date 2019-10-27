@@ -94,9 +94,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
        		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
-        	printf("cmd: %s\n", pcb->cmd);
         	pcb->args = args;
-        	for (int i=0; i<=idx; i++) { printf("arg: %s\n", pcb->args[i]); }
         	pcb->count = idx;
 
         	/* Assign new PCB to PCBS & increment PCBS position */
@@ -111,7 +109,11 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 
 int makeCall(struct ProcessControlBlock **PCBS) {
 	for (int i=0; i<=PCBS_pos; i++) {
-		int status;
+		printf("cmd%d: %s\n", i, PCBS[i]->cmd);
+		for (int i=0; i<=PCBS[i]->count; i++) {
+			printf("arg%d: %s\n", i, PCBS[i]->args[i]);
+		}
+/*		int status;
 		pid_t pid = fork();
 		PCBS[i]->pid = pid;
 
@@ -139,7 +141,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			//}
 		}
 		printf("Done\n");
-	}
+*/	}
 
 	return 1;
 }
@@ -199,7 +201,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
-// 	makeCall(PCBS);
+ 	makeCall(PCBS);
 
  	for (int i=0; i<=PCBS_pos; i++) {
  		free(PCBS[i]);
