@@ -110,8 +110,8 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 int makeCall(struct ProcessControlBlock **PCBS) {
 	for (int i=0; i<=PCBS_pos; i++) {
 		printf("cmd%d: %s\n", i, PCBS[i]->cmd);
-		for (int i=0; i<PCBS[i]->count; i++) {
-			printf("arg%d: %s\n", i, PCBS[i]->args[i]);
+		for (int j=0; j<PCBS[i]->count; j++) {
+			printf("arg%d: %s\n", j, PCBS[i]->args[j]);
 		}
 /*		int status;
 		pid_t pid = fork();
@@ -202,7 +202,7 @@ int main(int argc, char *argv[]) {
     parseCommand(ptr, ptrSize, PCBS);
 
     /* Make calls */
-// 	makeCall(PCBS);
+ 	makeCall(PCBS);
 
  	for (int i=0; i<PCBS_pos; i++) {
  		free(PCBS[i]);
