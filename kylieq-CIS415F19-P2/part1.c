@@ -94,7 +94,9 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
        		int pcbSize = idx + 1;
         	pcb = malloc(pcbSize * sizeof(struct ProcessControlBlock));
         	pcb->cmd = command;
+        	printf("cmd: %s\n", command);
         	pcb->args = args;
+        	for (int i=0; i<=idx; i++) { printf("arg: %s\n", args[i]); }
         	pcb->count = idx;
 
         	/* Assign new PCB to PCBS & increment PCBS position */
@@ -192,10 +194,6 @@ int main(int argc, char *argv[]) {
     PCBS_pos = 0;
 	int pcbsSize = line_ctr;
 	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
-
-	for(int i=0; i<ptrSize; i++) {
-		printf("str: %s\n", ptr[i]);
-	}
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
     parseCommand(ptr, ptrSize, PCBS);
