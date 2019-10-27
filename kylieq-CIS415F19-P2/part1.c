@@ -123,12 +123,13 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			if (PCBS[i]->count > 1) {
 				printf("Child process %d started.\n", pid);
 				execvp(PCBS[i]->cmd, PCBS[i]->args);
+				exit(-1);
 			}
 			else {
 				printf("Child process %d started.\n", pid);
 				execvp(PCBS[i]->cmd, NULL);
+				exit(-1);
 			}
-			exit(-1);
 		}
 		else {
 			wait(NULL);
@@ -138,16 +139,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		}
 		printf("Done\n");
 	}
-/*	return 1;
 
-	pid_t pid = fork();
-	PCBS[0]->pid = pid;
-	if (PCBS[0]->pid  == 0) {
-		execvp(PCBS[0]->cmd, NULL);
-		exit(-1);
-	}
-	printf("Done\n");
-*/	return 1;
+	return 1;
 }
 
 int main(int argc, char *argv[]) {
