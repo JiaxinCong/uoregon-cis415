@@ -107,12 +107,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 
 int makeCall(struct ProcessControlBlock **PCBS) {
 /*	for (int i=0; i<PCBS_pos; i++) {
-		printf("cmd%d: %s\n", i, PCBS[i]->cmd);
-		for (int j=0; j<PCBS[i]->count; j++) {
-			printf("arg%d: %s\n", j, PCBS[i]->args[j]);
-		}
-*/		int status;
-		//pid_t pid = fork();
+*/
 		PCBS[0]->pid = fork();
 
 		if (PCBS[0]->pid < 0) {
@@ -120,7 +115,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			status = -1;
 			exit(1);
 		}
-		else if (PCBS[0]->pid== 0) {
+		else if (PCBS[0]->pid == 0) {
 			if (PCBS[0]->count > 1) {
 				printf("Child process %d started.\n", PCBS[0]->pid);
 				execvp(PCBS[0]->cmd, PCBS[0]->args);
@@ -134,11 +129,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		}
 		else {
 			wait(NULL);
-			//if (waitpid(pid, &status, 0) != pid) {
-			//	status = -1;
-			//}
+			printf("Child process %d ended.\n", PCBS[0]->pid);
 		}
-		printf("Done\n");
 //	}
 
 	return 1;
