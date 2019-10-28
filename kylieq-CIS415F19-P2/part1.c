@@ -111,7 +111,9 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 		PCBS[i]->pid = fork();
 
 		if (PCBS[i]->pid < 0) {
-			printf("Unable to fork process.\n");
+			//printf("Unable to fork process.\n");
+			char *error = "Unable to fork process.\n";
+    		write(1, error, strlen(error));
 			exit(1);
 		}
 		else if (PCBS[i]->pid == 0) {
@@ -119,7 +121,12 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			exit(-1);
 		}
 		else {
-			printf("Child process %d started.\n", PCBS[i]->pid);
+			char *print1 = "Child process ";
+			char *print2 = " started.\n";
+			write(1, print1, strlen(print1));
+			write(1, &PCBS[i]->pid, sizeof(PCBS[i]->pid));
+			write(1, print2, strlen(print2));
+			//printf("Child process %d started.\n", PCBS[i]->pid);
 			wait(NULL);
 			printf("Child process %d ended.\n", PCBS[i]->pid);
 		}
@@ -159,7 +166,6 @@ int main(int argc, char *argv[]) {
     else {
     	buffer[0] = '\0';
     }
-    printf("buffer: %s\n", buffer);
 
     char *token;
 
