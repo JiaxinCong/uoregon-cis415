@@ -124,7 +124,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 			char *print1 = "Child process ";
 			char *print2 = " started.\n";
 			write(1, print1, strlen(print1));
-			write(1, &PCBS[i]->pid, sizeof(PCBS[i]->pid));
+			write(1, PCBS[i]->pid, sizeof(PCBS[i]->pid));
 			write(1, print2, strlen(print2));
 			//printf("Child process %d started.\n", PCBS[i]->pid);
 			wait(NULL);
