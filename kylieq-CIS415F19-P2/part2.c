@@ -132,6 +132,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) {
 
         PCBS[i]->pid = fork();
+        int sig;
 
         /* Set signal handler for SIGUSR1 */
         if (sigaction(SIGUSR1, &act, NULL) < 0) {
@@ -147,8 +148,6 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             exit(1);
         }
         else if (PCBS[i]->pid == 0) {
-            int sig;
-
             /* SIGUSR1 is blocked and pending. sigwait will return 0 immediately
                after receiving signal */
             sigwait(&set, &sig);
@@ -166,7 +165,10 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         }
         else {
             printf("Child process %d started.\n", PCBS[i]->pid);
+
+            /* Wait for child process to terminate */
             wait(NULL);
+            
             printf("Child process %d ended.\n", PCBS[i]->pid);
         }
     }
