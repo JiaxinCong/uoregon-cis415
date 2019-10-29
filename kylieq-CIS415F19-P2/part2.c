@@ -107,10 +107,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 }
 
 void handler(signo) {
-    static int first = 1;
-
-    if (first) {
-        first = 0;
+    if (signo == SIGUSR1) {
         printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
     }
 }
@@ -161,6 +158,10 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             sigprocmask(SIG_UNBLOCK, &set, NULL);
 
             execvp(PCBS[i]->cmd, PCBS[i]->args);
+
+            //kill(PCBS[i]->pid, SIGSTOP);
+            //kill(PCBS[i]->pid, SIGCONT);
+
             exit(-1);
         }
         else {
