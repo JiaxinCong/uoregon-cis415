@@ -67,7 +67,10 @@ int	main() {
 	for (int i=0; i<5; i++) {
 		pids[i] = fork();
 		if (pids[i] == 0) {
+			sigaction(SIGUSR1, &act, NULL);
+
 			printf("	Child Process: %i - Starting infinite loop...\n", getpid());
+
 			while(1) {
 				i++;
 				if(i%10000) {
@@ -75,6 +78,8 @@ int	main() {
 					i = 0;
 				}
 			}
+
+			exit(-1);
 		} 
 		else {
 			//else this is an existing proc i.e. the parent
