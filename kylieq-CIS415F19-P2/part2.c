@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 
 int PCBS_pos;
+int CHECK = 0;
 
 struct ProcessControlBlock {
     pid_t pid;
@@ -109,6 +110,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 void handler(int sig_num) {
     if (sig_num == SIGUSR1) {
         printf("Process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+        CHECK = 1;
     }
 }
 
@@ -133,24 +135,11 @@ void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
 void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) { /* Terminate processes */
         wait(NULL);
-        printf("Process: %d - Ended.\n", PCBS[i]->pid);
+        printf("Process: %d - Ended\n", PCBS[i]->pid);
     } 
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
-    struct sigaction act;
-    sigset_t set;
-    int sig;
-
-    /* Initialize signal set to exclude all of the defined signals.
-       Then add SIGUSR1 to the signal set */
-    sigemptyset(&set);
-    sigaddset(&set,SIGUSR1);
-
-    act.sa_flags = 0;
-    act.sa_mask = set;
-    act.sa_handler = handler;
-
     for (int i=0; i<PCBS_pos; i++) {
 
         PCBS[i]->pid = fork();
@@ -160,9 +149,10 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             exit(1);
         }
         if (PCBS[i]->pid == 0) {
-            /* Set signal handler for SIGUSR1 */
-            sigaction(SIGUSR1, &act, NULL);
-            sleep(5);
+
+            while(!CHECK) {
+                usleep(300);
+            }
 
             /* Launch workload programs */
             execvp(PCBS[i]->cmd, PCBS[i]->args);
@@ -197,6 +187,22 @@ int freePCB(struct ProcessControlBlock **PCBS) {
 }
 
 int main(int argc, char *argv[]) {
+
+    struct sigaction act;
+    sigset_t set;
+    int sig;
+
+    /* Initialize signal set to exclude all of the defined signals.
+       Then add SIGUSR1 to the signal set */
+    sigemptyset(&set);
+    sigaddset(&set,SIGUSR1);
+
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handler;
+
+    /* Set signal handler for SIGUSR1 */
+    sigaction(SIGUSR1, &act, NULL);
 
     char *filename = argv[1];
 
@@ -251,6 +257,9 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     makeCall(PCBS);
+//    SuspendAllProcesses(PCBS);
+//    ContinueAllProcesses(PCBS);
+//    TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
     free(ptr);
