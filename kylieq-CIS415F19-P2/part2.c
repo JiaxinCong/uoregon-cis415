@@ -112,6 +112,31 @@ void handler(int sig_num) {
     }
 }
 
+void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
+    for (int i=0; i<PCBS_pos; i++) { /* Stop processes */
+        if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
+            printf("Process: %d - Stopped\n", PCBS[i]->pid);
+        }
+    }
+    sleep(5);
+}
+
+void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
+    for (int i=0; i<PCBS_pos; i++) { /* Continue processes */
+        if (kill(PCBS[i]->pid, SIGCONT) == 0) {
+            printf("Process: %d - Continued\n", PCBS[i]->pid);
+        }
+    }
+    sleep(5);
+}
+
+void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
+    for (int i=0; i<PCBS_pos; i++) { /* Terminate processes */
+        wait(NULL);
+        printf("Process: %d - Ended.\n", PCBS[i]->pid);
+    } 
+}
+
 int makeCall(struct ProcessControlBlock **PCBS) {
     struct sigaction act;
     sigset_t set;
@@ -155,24 +180,9 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
     sleep(1);
 
-    for (int i=0; i<PCBS_pos; i++) { /* Stop processes */
-        if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
-            printf("Process: %d - Stopped\n", PCBS[i]->pid);
-        }
-    }
-
-    sleep(1);
-
-    for (int i=0; i<PCBS_pos; i++) { /* Continue processes */
-        if (kill(PCBS[i]->pid, SIGCONT) == 0) {
-            printf("Process: %d - Continued\n", PCBS[i]->pid);
-        }
-    }
-
-    for (int i=0; i<PCBS_pos; i++) { /* Terminate processes */
-        wait(NULL);
-        printf("Process: %d - Ended.\n", PCBS[i]->pid);
-    }
+    SuspendAllProcesses(PCBS);
+    ContinueAllProcesses(PCBS);
+    TerminateAllProcesses(PCBS);
 
     return 1;
 }
