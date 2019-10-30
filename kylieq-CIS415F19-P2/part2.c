@@ -106,8 +106,14 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
     return 1;
 }
 
-void handler(int signo) {
-    if (signo == SIGUSR1) {
+void handler(int sig_num) {
+    if (sig_num == SIGUSR1) {
+        printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+    }
+    else if (sig_num == SIGSTOP) {
+        printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+    }
+    else if (sig_num == SIGCONT) {
         printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
     }
 }
@@ -127,6 +133,12 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             sleep(5);
 
             execvp(PCBS[i]->cmd, PCBS[i]->args);
+
+            /* Is this actually working?? */
+            //signal(SIGSTOP, handler);
+            //sleep(5);
+            //signal(SIGCONT, handler);
+
             exit(-1);
         }
     }
@@ -136,13 +148,13 @@ int makeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) {
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
-        if (kill(PCBS[i]->pid, SIGSTOP) < 0) {
-            perror("sigstop");
-        }
-        sleep(1);
-        if (kill(PCBS[i]->pid, SIGCONT) < 0) {
-            perror("sigcont");
-        }
+        //if (kill(PCBS[i]->pid, SIGSTOP) < 0) {
+        //    perror("sigstop");
+        //}
+        //sleep(1);
+        //if (kill(PCBS[i]->pid, SIGCONT) < 0) {
+        //    perror("sigcont");
+        //}
     }
 
     for (int i=0; i<PCBS_pos; i++) {
