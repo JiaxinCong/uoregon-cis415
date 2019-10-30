@@ -110,15 +110,28 @@ void handler(int sig_num) {
     if (sig_num == SIGUSR1) {
         printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
     }
-    else if (sig_num == SIGSTOP) {
-        printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-    }
-    else if (sig_num == SIGCONT) {
-        printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-    }
+    //else if (sig_num == SIGSTOP) {
+    //    printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+    //}
+    //else if (sig_num == SIGCONT) {
+    //    printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+    //}
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
+    struct sigaction act;
+    sigset_t set;
+    int sig;
+
+    /* Initialize signal set to exclude all of the defined signals.
+       Then add SIGUSR1 to the signal set */
+    sigemptyset(&set);
+    sigaddset(&set,SIGUSR1);
+
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handler;
+
     for (int i=0; i<PCBS_pos; i++) {
 
         PCBS[i]->pid = fork();
@@ -128,8 +141,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             exit(1);
         }
         if (PCBS[i]->pid == 0) {
-
-            signal(SIGUSR1, handler);
+            /* Set signal handler for SIGUSR1 */
+            sigaction(SIGUSR1, &act, NULL);
             sleep(5);
 
             execvp(PCBS[i]->cmd, PCBS[i]->args);
