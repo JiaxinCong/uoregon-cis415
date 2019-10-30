@@ -106,7 +106,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
     return 1;
 }
 
-void handler(signo) {
+void handler(int signo) {
     if (signo == SIGUSR1) {
         printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
     }
