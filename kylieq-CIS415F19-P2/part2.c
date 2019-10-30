@@ -108,14 +108,8 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 
 void handler(int sig_num) {
     if (sig_num == SIGUSR1) {
-        printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+        printf("Process: %i - Received signal: %d\n", getpid(), SIGUSR1);
     }
-    //else if (sig_num == SIGSTOP) {
-    //    printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-    //}
-    //else if (sig_num == SIGCONT) {
-    //    printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-    //}
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
@@ -145,12 +139,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             sigaction(SIGUSR1, &act, NULL);
             sleep(5);
 
+            /* Launch workload programs */
             execvp(PCBS[i]->cmd, PCBS[i]->args);
-
-            /* Is this actually working?? */
-            //signal(SIGSTOP, handler);
-            //sleep(5);
-            //signal(SIGCONT, handler);
 
             exit(-1);
         }
@@ -158,21 +148,30 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
     sleep(1);
 
-    for (int i=0; i<PCBS_pos; i++) {
+    for (int i=0; i<PCBS_pos; i++) { /* SIGUSR1 signal */
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
-        //if (kill(PCBS[i]->pid, SIGSTOP) < 0) {
-        //    perror("sigstop");
-        //}
-        //sleep(1);
-        //if (kill(PCBS[i]->pid, SIGCONT) < 0) {
-        //    perror("sigcont");
-        //}
     }
 
-    for (int i=0; i<PCBS_pos; i++) {
+    sleep(1);
+
+    for (int i=0; i<PCBS_pos; i++) { /* Stop processes */
+        if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
+            printf("Process: %d - Stopped\n", PCBS[i]->pid);
+        }
+    }
+
+    sleep(1);
+
+    for (int i=0; i<PCBS_pos; i++) { /* Continue processes */
+        if (kill(PCBS[i]->pid, SIGCONT) == 0) {
+            printf("Process: %d - Continued\n", PCBS[i]->pid);
+        }
+    }
+
+    for (int i=0; i<PCBS_pos; i++) { /* Terminate processes */
         wait(NULL);
-        printf("Process %d - Ended.\n", PCBS[i]->pid);
+        printf("Process: %d - Ended.\n", PCBS[i]->pid);
     }
 
     return 1;

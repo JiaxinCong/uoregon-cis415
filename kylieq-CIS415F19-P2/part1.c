@@ -114,7 +114,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             printf("Unable to fork process.\n");
             exit(1);
         }
-        if (PCBS[i]->pid == 0) {
+        if (PCBS[i]->pid == 0) { /* child */
+            /* Launch workload programs */
             execvp(PCBS[i]->cmd, PCBS[i]->args);
             exit(-1);
         }
