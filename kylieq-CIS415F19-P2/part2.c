@@ -115,7 +115,7 @@ void handler(int sig_num) {
 void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
-            printf("Process: %d - Stopped\n", PCBS[i]->pid);
+            printf("Process: %d - Suspended\n", PCBS[i]->pid);
         }
     }
     sleep(5);
