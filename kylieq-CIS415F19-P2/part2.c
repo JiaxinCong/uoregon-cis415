@@ -136,6 +136,13 @@ int makeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) {
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
+        if (kill(PCBS[i]->pid, SIGSTOP) < 0) {
+            perror("sigstop");
+        }
+        sleep(1);
+        if (kill(PCBS[i]->pid, SIGCONT) < 0) {
+            perror("sigcont");
+        }
     }
 
     for (int i=0; i<PCBS_pos; i++) {
