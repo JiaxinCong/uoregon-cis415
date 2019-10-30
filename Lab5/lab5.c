@@ -20,13 +20,27 @@
 /*---------------------------------------------------------------------------*/
 
 /*-----------------------------Program Main----------------------------------*/
-void handler(signo) {
-	static int first = 1;
+void handler(int sig_num) {
+    if (sig_num == SIGUSR1) {
+        printf("Process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+    }
+    sleep(1);
+}
 
-	if (first) {
-		first = 0;
-		printf("Child process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-	}
+void signaler(pid_t *pids, int sig_num) {
+    for (int i=0; i<5; i++) { /* SIGUSR1 signal */
+        kill(pids[i], sig_num);
+    }
+    sleep(1);
+    for (int i=0; i<5; i++) { /* SIGUSR1 signal */
+        kill(pids[i], sig_num);
+    }
+    sleep(1);
+    for (int i=0; i<5; i++) { /* Stop processes */
+        if (kill(pids[i], SIGINT) == 0) {
+            printf("Process: %d - Received signal: %d\n", pids[i], SIGINT);
+        }
+    }
 }
 
 int	main() {
@@ -35,63 +49,41 @@ int	main() {
 	int wstatus, i;
 	i=0;
 
-	extern void handler();
-	struct sigaction act;
-	sigset_t set;
+    struct sigaction act;
+    sigset_t set;
+    int sig;
 
     /* Initialize signal set to exclude all of the defined signals.
        Then add SIGUSR1 to the signal set */
-	sigemptyset(&set);
-	sigaddset(&set, SIGUSR1);
+    sigemptyset(&set);
+    sigaddset(&set,SIGUSR1);
 
-    /* Block SIGUSR1 to prevent interrupts */
-    sigprocmask(SIG_BLOCK, &set, NULL);
+    act.sa_flags = 0;
+    act.sa_mask = set;
+    act.sa_handler = handler;
 
-	act.sa_flags = 0;
-	act.sa_mask = set;
-	act.sa_handler = &handler;
-	sigaction(SIGUSR1, &act, NULL);
-
-	//kill(getpid(), SIGUSR1);
-
-	for (i=0; i<5; i++) {
+	int *pids = (int *)malloc(5 * sizeof(int));
 	
-		pid = fork();
-
-		/* Send signal */
-        kill(pid, SIGUSR1);
-
-		if (pid == 0) {
+	for (int i=0; i<5; i++) {
+		pids[i] = fork();
+		if (pids[i] == 0) {
 			printf("	Child Process: %i - Starting infinite loop...\n", getpid());
 			while(1) {
 				i++;
-				int sig;
-
-				/* SIGUSR1 is blocked and pending. sigwait will return 0 immediately
-                   after receiving signal */
-				sigwait(&set, &sig);
-
-	            /* SIGUSR1 no longer pending. Send signal again and then unblock it */
-            	kill(pid, SIGUSR1);
-
 				if(i%10000) {
 					printf("	Child Process: %i - Running infinite loop...\n", getpid());
-	
-					//if (sigwait(&set, &sig) == 0) { 
-					//	break; 
-					//}
-	            	//kill(pid, SIGUSR1);
-
-					i=0;
+					i = 0;
 				}
-				sigprocmask(SIG_UNBLOCK, &set, NULL);
 			}
-		} else {
+		} 
+		else {
 			//else this is an existing proc i.e. the parent
 			printf("Parent Process: %i, Waiting for child to finish...\n", getpid());
+			signaler(pids, SIGUSR1);
 			w = waitpid(pid, &wstatus, WUNTRACED | WCONTINUED);
 			printf("All child processes joined. Exiting.\n");
 		}
 	}
+	free(pids);
 }
 /*-----------------------------Program End-----------------------------------*/
