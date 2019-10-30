@@ -68,6 +68,7 @@ int	main() {
 		pids[i] = fork();
 		if (pids[i] == 0) {
 			sigaction(SIGUSR1, &act, NULL);
+			sigwait(&set, &sig);
 
 			printf("	Child Process: %i - Starting infinite loop...\n", getpid());
 
