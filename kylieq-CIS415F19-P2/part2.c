@@ -141,7 +141,6 @@ void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
 
 int makeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) {
-
         PCBS[i]->pid = fork();
 
         if (PCBS[i]->pid < 0) {
@@ -150,6 +149,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         }
         if (PCBS[i]->pid == 0) {
 
+            /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
                 usleep(300);
             }
@@ -167,12 +167,6 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
     }
-
-    sleep(1);
-
-    SuspendAllProcesses(PCBS);
-    ContinueAllProcesses(PCBS);
-    TerminateAllProcesses(PCBS);
 
     return 1;
 }
@@ -257,9 +251,10 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     makeCall(PCBS);
-//    SuspendAllProcesses(PCBS);
-//    ContinueAllProcesses(PCBS);
-//    TerminateAllProcesses(PCBS);
+    sleep(1);
+    SuspendAllProcesses(PCBS);
+    ContinueAllProcesses(PCBS);
+    TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
     free(ptr);
