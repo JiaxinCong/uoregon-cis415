@@ -21,25 +21,24 @@
 
 /*-----------------------------Program Main----------------------------------*/
 void handler(int sig_num) {
-    if (sig_num == SIGUSR1) {
-        printf("Process: %i - Received signal: %d\n", getpid(), SIGUSR1);
-    }
-    sleep(1);
-}
 
-void signaler(pid_t *pids, int sig_num) {
-    for (int i=0; i<5; i++) { /* SIGUSR1 signal */
-        kill(pids[i], sig_num);
+    sigset_t set;
+    int sig;
+
+    /* Initialize signal set to exclude all of the defined signals.
+       Then add SIGUSR1 to the signal set */
+    sigemptyset(&set);
+    sigaddset(&set,SIGUSR1);
+    //sigprocmask(SIG_BLOCK, &set, NULL);
+
+    printf("Process: %i - Received signal: %d\n", getpid(), SIGUSR1);
+
+    if (sigwait(&set, &sig) == 0) {
+    	printf("Process: %i - Restart\n", getpid());
     }
-    sleep(1);
-    for (int i=0; i<5; i++) { /* SIGUSR1 signal */
-        kill(pids[i], sig_num);
-    }
-    sleep(1);
-    for (int i=0; i<5; i++) { /* Stop processes */
-        if (kill(pids[i], SIGINT) == 0) {
-            printf("Process: %d - Received signal: %d\n", pids[i], SIGINT);
-        }
+
+    if (SIGINT == sig_num) {
+    	exit(1);
     }
 }
 
@@ -64,32 +63,42 @@ int	main() {
 
 	int *pids = (int *)malloc(5 * sizeof(int));
 	
-	for (int i=0; i<5; i++) {
+	for (int i=0; i<1; i++) {
 		pids[i] = fork();
 		if (pids[i] == 0) {
 			sigaction(SIGUSR1, &act, NULL);
-			sigwait(&set, &sig);
-
 			printf("	Child Process: %i - Starting infinite loop...\n", getpid());
 
 			while(1) {
-				i++;
-				if(i%10000) {
-					printf("	Child Process: %i - Running infinite loop...\n", getpid());
-					i = 0;
-				}
+				printf("	Child Process: %i - Running infinite loop...\n", getpid());
+				sleep(1);
 			}
-
 			exit(-1);
-		} 
+		}
 		else {
 			//else this is an existing proc i.e. the parent
 			printf("Parent Process: %i, Waiting for child to finish...\n", getpid());
-			signaler(pids, SIGUSR1);
-			w = waitpid(pid, &wstatus, WUNTRACED | WCONTINUED);
-			printf("All child processes joined. Exiting.\n");
+			sleep(1);
 		}
 	}
+
+    for (int i=0; i<1; i++) { /* SIGUSR1 signal */
+       	kill(pids[i], SIGUSR1);
+       	sleep(3);
+       	kill(pids[i], SIGUSR1);
+   	}
+
+	for (int i=0; i<1; i++) {
+		w = waitpid(pid, &wstatus, WUNTRACED | WCONTINUED);
+	}
+
+	for (int i=0; i<1; i++) { /* Stop processes */
+        kill(pids[i], SIGINT);
+        sleep(3);
+    }
+
+	printf("All child processes joined. Exiting.\n");
+
 	free(pids);
 }
 /*-----------------------------Program End-----------------------------------*/
