@@ -116,14 +116,14 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         }
         if (PCBS[i]->pid == 0) { /* child */
             /* Launch workload programs */
+            printf("Process: %d - Joined\n", getpid());
             execvp(PCBS[i]->cmd, PCBS[i]->args);
             exit(-1);
         }
     }
     for (int i=0; i<PCBS_pos; i++) {
-        printf("Process: %d - Joined\n", PCBS[i]->pid);
         wait(NULL);
-        printf("Process %d - Ended.\n", PCBS[i]->pid);
+        printf("Process %d - Ended\n", PCBS[i]->pid);
     }
 
     return 1;
