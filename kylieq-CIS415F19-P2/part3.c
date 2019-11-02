@@ -15,8 +15,8 @@ int CHECK = 0;
 int COUNTER = 0;
 
 void handler(int sig_num) {
-    pid_t w;
-    int wstatus;
+//    pid_t w;
+//    int wstatus;
     switch(sig_num) {
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
@@ -179,6 +179,8 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses(PCBS);
 
+    pid_t w;
+    int wstatus;
     w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
     while(w == 0) {
         if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
