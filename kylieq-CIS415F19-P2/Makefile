@@ -27,3 +27,4 @@ command.o: command.c command.h
 clean:
 	$(RM) part1 *.o *~
 	$(RM) part2 *.o *~
+	$(RM) part3 *.o *~

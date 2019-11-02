@@ -15,6 +15,7 @@ int CHECK = 0;
 int COUNTER = 0;
 
 void handler(int sig_num) {
+    pid_t w;
     int wstatus;
     switch(sig_num) {
         case SIGUSR1: 
@@ -22,7 +23,7 @@ void handler(int sig_num) {
             CHECK = 1;
             break;
         case SIGALRM:
-            pid_t w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+            w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(w == 0) {
                 if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                     printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
