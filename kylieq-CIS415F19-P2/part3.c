@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses(PCBS);
 
     pid_t w;
-    int wstatus;
+//    int wstatus;
     w = wait(NULL);
     while(w <= 0) {
         if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
