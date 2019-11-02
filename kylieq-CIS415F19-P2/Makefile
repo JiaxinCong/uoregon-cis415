@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc -std=c99
 CFLAGS = -g -Wall
 
 all: part1 part2
