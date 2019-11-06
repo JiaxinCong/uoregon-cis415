@@ -14,6 +14,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_pos; i++) {
 
         PCBS[i]->pid = fork();
+        sleep(1);
 
         if (PCBS[i]->pid < 0) {
             printf("Unable to fork process.\n");
@@ -27,6 +28,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         }
     }
     for (int i=0; i<PCBS_pos; i++) {
+        sleep(1);
         wait(NULL);
         printf("Process %d - Ended\n", PCBS[i]->pid);
     }
