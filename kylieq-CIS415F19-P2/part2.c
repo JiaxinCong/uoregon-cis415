@@ -81,7 +81,6 @@ int main(int argc, char *argv[]) {
 
     struct sigaction act;
     sigset_t set;
-    int sig;
 
     /* Initialize signal set to exclude all of the defined signals.
        Then add SIGUSR1 to the signal set */
