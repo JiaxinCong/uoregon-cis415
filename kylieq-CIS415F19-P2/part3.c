@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     sigset_t set;
 
     /* Initialize signal set to exclude all of the defined signals.
-       Then add SIGUSR1 & SIGALRM to the signal set */
+       Then add SIGUSR1 to the signal set */
     sigemptyset(&set);
     sigaddset(&set,SIGUSR1);
     sigaddset(&set,SIGALRM);
@@ -160,6 +160,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses(PCBS);
     ContinueAllProcesses(PCBS);
+    alarm(3);
     TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
