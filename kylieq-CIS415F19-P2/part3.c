@@ -14,9 +14,13 @@
 int CHECK = 0;
 
 void handler(int sig_num) {
-    if (sig_num == SIGUSR1) {
-        printf("Process: %i - Received signal: SIGUSR1\n", getpid());
-        CHECK = 1;
+    switch(sig_num) {
+        case SIGUSR1: 
+            printf("Process: %i - Received signal: SIGUSR1\n", getpid());
+            CHECK = 1;
+            break;
+        case SIGALRM:
+            break;
     }
 }
 
@@ -83,9 +87,10 @@ int main(int argc, char *argv[]) {
     sigset_t set;
 
     /* Initialize signal set to exclude all of the defined signals.
-       Then add SIGUSR1 to the signal set */
+       Then add SIGUSR1 & SIGALRM to the signal set */
     sigemptyset(&set);
     sigaddset(&set,SIGUSR1);
+    sigaddset(&set,SIGALRM);
 
     act.sa_flags = 0;
     act.sa_mask = set;
@@ -93,6 +98,7 @@ int main(int argc, char *argv[]) {
 
     /* Set signal handler for SIGUSR1 */
     sigaction(SIGUSR1, &act, NULL);
+    sigaction(SIGALRM, &act, NULL);
 
     char *filename = argv[1];
 
