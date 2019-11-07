@@ -20,6 +20,7 @@ void handler(int sig_num) {
             CHECK = 1;
             break;
         case SIGALRM:
+            printf("Process: %i - Received signal: SIGALRM\n", getpid());
             break;
     }
 }
