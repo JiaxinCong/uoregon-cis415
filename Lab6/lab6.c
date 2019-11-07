@@ -22,6 +22,7 @@ void send_sig(pid_t pid) {
     if (kill(pid, SIGCONT) == 0) {
         printf("    Child process: %d - Continued...\n", pid);
     }
+    sleep(1);
 }
 /*---------------------------------------------------------------------------*/
 
@@ -61,7 +62,6 @@ int main(void)
         sleep(1);
         while (w == 0) {
             send_sig(pid);
-            sleep(1);
             w = waitpid(pid, &wstatus, WNOHANG);
 
         }
