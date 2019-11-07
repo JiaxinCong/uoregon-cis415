@@ -11,6 +11,7 @@ Author: Kylie Quan
 #include <stdio.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/types.h>
 /*---------------------------------------------------------------------------*/
 
 /*---------------------------------Functions---------------------------------*/
