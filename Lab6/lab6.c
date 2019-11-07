@@ -10,7 +10,6 @@ Author: Kylie Quan
 #include <unistd.h>
 #include <stdio.h>
 #include <signal.h>
-#include <time.h>
 #include <sys/types.h>
 /*---------------------------------------------------------------------------*/
 
