@@ -49,7 +49,7 @@ int main(void)
     } 
     else if(pid > 0) {
         //This code runs in the parent process only
-        //sleep(1);
+        sleep(1);
         printf("Parent process: %d - Sending signals to child...\n", getpid());
 	    //Add code to send your signals  in a loop here
         printf("Parent process: %d - Waiting for child to complete...\n", getpid());
