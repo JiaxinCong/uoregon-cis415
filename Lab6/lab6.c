@@ -14,7 +14,7 @@ Author: Kylie Quan
 /*---------------------------------------------------------------------------*/
 
 /*---------------------------------Functions---------------------------------*/
-void signaler(pid_t pid) {
+void signal(pid_t pid) {
     printf("    Child process: %d - Stopped...\n", pid);
     kill(pid, SIGSTOP);
     sleep(3);
@@ -64,7 +64,7 @@ int main(void)
 
         sleep(1);
         while (w == 0) {
-            signaler(pid);
+            signal(pid);
             sleep(1);
             w = waitpid(pid, &wstatus, WNOHANG);
 
