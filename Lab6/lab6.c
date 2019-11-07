@@ -14,6 +14,13 @@ Author: Kylie Quan
 /*---------------------------------------------------------------------------*/
 
 /*---------------------------------Functions---------------------------------*/
+void signaler(pid_t pid) {
+    printf("    Child process: %d - Stopped...\n", pid);
+    kill(pid, SIGSTOP);
+    sleep(3);
+    printf("    Child process: %d - Continued...\n", pid);
+    kill(pid, SIGCONT);
+}
 /*---------------------------------------------------------------------------*/
 
 /*--------------------------------Program Main-------------------------------*/
@@ -57,11 +64,7 @@ int main(void)
 
         sleep(1);
         while (w == 0) {
-            printf("    Child process: %d - Stopped...\n", pid);
-            kill(pid, SIGSTOP);
-            sleep(3);
-            printf("    Child process: %d - Continued...\n", pid);
-            kill(pid, SIGCONT);
+            signaler(pid);
             sleep(1);
             w = waitpid(pid, &wstatus, WNOHANG);
 
