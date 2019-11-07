@@ -14,7 +14,7 @@ Author: Kylie Quan
 /*---------------------------------------------------------------------------*/
 
 /*---------------------------------Functions---------------------------------*/
-void signal(pid_t pid) {
+void send_sig(pid_t pid) {
     printf("    Child process: %d - Stopped...\n", pid);
     kill(pid, SIGSTOP);
     sleep(3);
@@ -30,9 +30,6 @@ int main(void)
     pid_t pid, w;
     int wstatus;
 
-    clock_t start;
-    int elapsed_t;
-
     //create a child process
     pid = fork();
     if(pid < 0) {
@@ -40,9 +37,6 @@ int main(void)
         exit(EXIT_FAILURE);
     } 
     else if(pid == 0) {
-        start = clock();
-        elapsed_t = (double) start/CLOCKS_PER_SEC;
-
         //This code runs in the child process only
 	    printf("    Child process: %d - Starting...\n", getpid());
 	    //Add your while loop here
@@ -64,7 +58,7 @@ int main(void)
 
         sleep(1);
         while (w == 0) {
-            signal(pid);
+            send_sig(pid);
             sleep(1);
             w = waitpid(pid, &wstatus, WNOHANG);
 
