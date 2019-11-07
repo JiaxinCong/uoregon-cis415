@@ -15,7 +15,6 @@ Author: Kylie Quan
 
 /*---------------------------------Functions---------------------------------*/
 void send_sig(pid_t pid) {
-    //printf("    Child process: %d - Stopped...\n", pid);
     if (kill(pid, SIGSTOP) == 0) {
         printf("    Child process: %d - Stopped...\n", pid);
     }
