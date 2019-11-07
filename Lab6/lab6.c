@@ -15,11 +15,14 @@ Author: Kylie Quan
 
 /*---------------------------------Functions---------------------------------*/
 void send_sig(pid_t pid) {
-    printf("    Child process: %d - Stopped...\n", pid);
-    kill(pid, SIGSTOP);
+    //printf("    Child process: %d - Stopped...\n", pid);
+    if (kill(pid, SIGSTOP) == 0) {
+        printf("    Child process: %d - Stopped...\n", pid);
+    }
     sleep(3);
-    printf("    Child process: %d - Continued...\n", pid);
-    kill(pid, SIGCONT);
+    if (kill(pid, SIGCONT) == 0) {
+        printf("    Child process: %d - Continued...\n", pid);
+    }
 }
 /*---------------------------------------------------------------------------*/
 
