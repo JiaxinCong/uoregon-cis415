@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
-File name: Lab5.c
+File name: Lab6.c
 Description: A simple lab showing the use of signals.
-Author: Jared Hall
+Author: Kylie Quan
 -----------------------------------------------------------------------------*/
 
 /*---------------------------Preprocessor Directives-------------------------*/
@@ -21,7 +21,7 @@ int main(void)
 {
     //variable declarations
     pid_t pid, w;
-    int wstatus, eStatus;
+    int wstatus;
 
     clock_t start;
     int elapsed_t;
@@ -49,12 +49,13 @@ int main(void)
     } 
     else if(pid > 0) {
         //This code runs in the parent process only
-        sleep(1);
         printf("Parent process: %d - Sending signals to child...\n", getpid());
 	    //Add code to send your signals  in a loop here
         printf("Parent process: %d - Waiting for child to complete...\n", getpid());
 
         w = waitpid(pid, &wstatus, WNOHANG);
+
+        sleep(1);
         while (w == 0) {
             printf("    Child process: %d - Stopped...\n", pid);
             kill(pid, SIGSTOP);
