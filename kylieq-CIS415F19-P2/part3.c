@@ -15,15 +15,15 @@ int CHECK = 0;
 int COUNTER = 0;
 
 void handler(int sig_num) {
-//    pid_t w;
-//    int wstatus;
+    pid_t w;
+    int wstatus;
     switch(sig_num) {
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
             CHECK = 1;
             break;
         case SIGALRM:
-/*            w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+            w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(w == 0) {
                 if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                     printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
@@ -39,7 +39,6 @@ void handler(int sig_num) {
                     COUNTER = 0;
                 }
             }
-*/
             break;
     }
 }
@@ -179,6 +178,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses(PCBS);
     alarm(3);
+    sleep(30);
     //ContinueAllProcesses(PCBS);
     TerminateAllProcesses(PCBS);
 
