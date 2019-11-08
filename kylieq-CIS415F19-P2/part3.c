@@ -180,7 +180,6 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses(PCBS);
     for (int i=0; i<PCBS_len; i++) {
         alarm(3);
-        sleep(5);
     }
     //ContinueAllProcesses(PCBS);
     TerminateAllProcesses(PCBS);
