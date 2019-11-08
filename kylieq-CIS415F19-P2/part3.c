@@ -21,6 +21,7 @@ void handler(int sig_num) {
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
             CHECK = 1;
+            sleep(1);
             break;
         case SIGALRM:
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
