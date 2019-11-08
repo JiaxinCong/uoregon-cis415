@@ -23,7 +23,10 @@ int makeCall(struct ProcessControlBlock **PCBS) {
         if (PCBS[i]->pid == 0) { /* child */
             /* Launch workload programs */
             printf("Process: %d - Joined\n", getpid());
-            execvp(PCBS[i]->cmd, PCBS[i]->args);
+            if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
+                printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                exit(-1);
+            }
             exit(-1);
         }
     }
