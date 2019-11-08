@@ -178,27 +178,7 @@ int main(int argc, char *argv[]) {
     makeCall(PCBS);
     sleep(1);
     SuspendAllProcesses(PCBS);
-
-    pid_t w;
-//    int wstatus;
-    w = wait(NULL);
-    while(w <= 0) {
-        if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-            printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-            sleep(1);
-        }
-        if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-            printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-            sleep(1);
-        }
-        COUNTER++;
-        w = wait(NULL);
-        if (COUNTER >= PCBS_len) {
-            COUNTER = 0;
-        }
-    }
-
-    //alarm(1);
+    alarm(3);
     //ContinueAllProcesses(PCBS);
     TerminateAllProcesses(PCBS);
 
