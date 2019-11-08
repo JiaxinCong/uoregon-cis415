@@ -11,7 +11,7 @@
 #include "command.h"
 
 int makeCall(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) {
+    for (int i=0; i<PCBS_len; i++) {
 
         PCBS[i]->pid = fork();
         sleep(1);
@@ -27,7 +27,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             exit(-1);
         }
     }
-    for (int i=0; i<PCBS_pos; i++) {
+    for (int i=0; i<PCBS_len; i++) {
         sleep(1);
         wait(NULL);
         printf("Process %d - Ended\n", PCBS[i]->pid);
@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
     }   
 
     /* Collection of PCB's */
-    PCBS_pos = 0;
-	struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
+    PCBS_len = 0;
+    PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
     parseCommand(ptr, line_ctr, PCBS);

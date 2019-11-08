@@ -5,7 +5,8 @@ struct ProcessControlBlock {
 	int count;
 };
 
-int PCBS_pos;
+struct ProcessControlBlock **PCBS;
+int PCBS_len;
 
 /* Read file */
 int get_line(char *filename, char *buffer, size_t bufferSize);

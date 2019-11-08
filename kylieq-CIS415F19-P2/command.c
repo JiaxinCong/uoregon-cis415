@@ -10,7 +10,8 @@
 
 #include "command.h"
 
-int PCBS_pos;
+struct ProcessControlBlock **PCBS;
+int PCBS_len;
 
 /* Read file */
 int get_line(char *filename, char *buffer, size_t bufferSize) {
@@ -93,8 +94,8 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
             pcb->count = idx;
 
             /* Assign new PCB to PCBS & increment PCBS position */
-            PCBS[PCBS_pos] = pcb;
-            PCBS_pos++;
+            PCBS[PCBS_len] = pcb;
+            PCBS_len++;
         }
     }
     return 1;
@@ -102,7 +103,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 
 /* Free struct ProcessControlBlock */
 int freePCB(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) {
+    for (int i=0; i<PCBS_len; i++) {
         free(PCBS[i]->args);
         free(PCBS[i]);
     }

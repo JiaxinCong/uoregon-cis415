@@ -22,7 +22,7 @@ void handler(int sig_num) {
 }
 
 void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) { /* Stop processes */
+    for (int i=0; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             sleep(1);
@@ -32,7 +32,7 @@ void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
 }
 
 void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) { /* Continue processes */
+    for (int i=0; i<PCBS_len; i++) { /* Continue processes */
         if (kill(PCBS[i]->pid, SIGCONT) == 0) {
             printf("Process: %d - Continued\n", PCBS[i]->pid);
             sleep(1);
@@ -42,7 +42,7 @@ void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
 }
 
 void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) { /* Terminate processes */
+    for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
         sleep(1);
@@ -50,7 +50,7 @@ void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_pos; i++) {
+    for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->pid = fork();
 
         if (PCBS[i]->pid < 0) {
@@ -73,7 +73,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
     sleep(1);
 
-    for (int i=0; i<PCBS_pos; i++) { /* SIGUSR1 signal */
+    for (int i=0; i<PCBS_len; i++) { /* SIGUSR1 signal */
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
     }
@@ -143,8 +143,8 @@ int main(int argc, char *argv[]) {
     }   
 
     /* Collection of PCB's */
-    PCBS_pos = 0;
-    struct ProcessControlBlock **PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
+    PCBS_len = 0;
+    PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand */
     parseCommand(ptr, line_ctr, PCBS);
