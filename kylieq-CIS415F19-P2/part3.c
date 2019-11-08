@@ -26,15 +26,15 @@ void handler(int sig_num) {
         case SIGALRM:
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(w == 0) {
+                if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
+                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                    sleep(1);
+                }
                 if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                     printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                     sleep(1);
                 }
                 COUNTER++;
-                if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                    sleep(1);
-                }
                 w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
                 if (COUNTER >= PCBS_len) {
                     COUNTER = 0;
