@@ -22,7 +22,7 @@ int get_line(char *filename, char *buffer, size_t bufferSize) {
     	write(1, error, strlen(error));
     	write(1, filename, strlen(filename));
     	write(1, "'\n", 2);
-
+        exit(1);
         return -1;
     }
 
