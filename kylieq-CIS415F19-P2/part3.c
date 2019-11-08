@@ -36,9 +36,9 @@ void handler(int sig_num) {
                 }
                 COUNTER++;
                 w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
-                if (COUNTER >= PCBS_len) {
-                    COUNTER = 0;
-                }
+                //if (COUNTER >= PCBS_len) {
+                //    COUNTER = 0;
+                //}
             }
             break;
     }
