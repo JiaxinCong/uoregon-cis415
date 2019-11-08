@@ -24,8 +24,9 @@ void handler(int sig_num) {
             sleep(1);
             break;
         case SIGALRM:
-            w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
-            while(w == 0) {
+            //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+            //while(w == 0) {
+            while(wait(NULL)) {
                 if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                     printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                     sleep(1);
@@ -35,7 +36,7 @@ void handler(int sig_num) {
                     sleep(1);
                 }
                 COUNTER++;
-                w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+                //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
                 if (COUNTER >= PCBS_len) {
                     COUNTER = 0;
                 }
