@@ -12,15 +12,32 @@
 #include "command.h"
 
 int CHECK = 0;
+int COUNTER = 0;
 
 void handler(int sig_num) {
+    int wstatus;
     switch(sig_num) {
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
             CHECK = 1;
             break;
         case SIGALRM:
-            printf("Process: %i - Received signal: SIGALRM\n", getpid());
+            pid_t w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+            while(w == 0) {
+                if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
+                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                    sleep(1);
+                }
+                COUNTER++;
+                if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
+                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                    sleep(1);
+                }
+                w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+                if (COUNTER >= PCBS_len) {
+                    COUNTER = 0;
+                }
+            }
             break;
     }
 }
@@ -159,8 +176,8 @@ int main(int argc, char *argv[]) {
     makeCall(PCBS);
     sleep(1);
     SuspendAllProcesses(PCBS);
-    ContinueAllProcesses(PCBS);
-    alarm(3);
+    alarm(1);
+    //ContinueAllProcesses(PCBS);
     TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
