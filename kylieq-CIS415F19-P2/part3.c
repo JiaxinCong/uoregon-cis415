@@ -25,7 +25,7 @@ void sigusr1_handler(int sig_num) {
 void sigalrm_handler(int sig_num) {
     printf("MADE IT TO SIGALRM\n");
 
-    //while(1) {
+    while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
@@ -35,9 +35,9 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER++;
         }
-    //}
+    }
 
-    //while(1) {
+    while(1) {
         if (PCBS[COUNTER]->STATE == PAUSED) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
@@ -47,7 +47,7 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER++;
         }
-    //}
+    }
     //alarm(3);
 }
 
