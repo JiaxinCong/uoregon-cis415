@@ -32,10 +32,10 @@ void handler(int sig_num) {
                         printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                         sleep(1);
                         break;
+                    }   
+                    else {
+                        COUNTER++;
                     }
-                }   
-                else {
-                    COUNTER++;
                 }
             }
             while (1) {
@@ -45,9 +45,9 @@ void handler(int sig_num) {
                         sleep(1);
                         break;
                     }
-                }
-                else {
-                    COUNTER++;
+                    else {
+                        COUNTER++;
+                    }
                 }
             }
 
