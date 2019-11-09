@@ -198,7 +198,6 @@ int main(int argc, char *argv[]) {
     while (1) {
         alarm(3);
         while (!CHECK) {
-            printf("SLEEPING\n");
             usleep(300);
         } 
         if (TerminateAllProcesses(PCBS) == 1) {
