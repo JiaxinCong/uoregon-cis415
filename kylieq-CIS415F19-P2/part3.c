@@ -25,6 +25,7 @@ void handler(int sig_num) {
 
         case SIGALRM:
             printf("MADE IT TO SIGALRM\n");
+            printf("current process: %d\n", getpid());
             while(1) {
                 if (PCBS[COUNTER]->pid == 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
