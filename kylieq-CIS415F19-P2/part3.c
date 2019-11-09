@@ -24,7 +24,7 @@ void handler(int sig_num) {
             break;
 
         case SIGALRM:
-        printf("MADE IT TO SIGALRM\n");
+            printf("MADE IT TO SIGALRM\n");
             while(1) {
                 if (PCBS[COUNTER]->pid == 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
