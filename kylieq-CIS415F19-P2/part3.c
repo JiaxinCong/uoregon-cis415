@@ -176,10 +176,9 @@ int main(int argc, char *argv[]) {
     /* Make calls */
     makeCall(PCBS);
     sleep(1);
+
     SuspendAllProcesses(PCBS);
-    while(1) {
-        alarm(1);
-    }
+    alarm(1);
     TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
