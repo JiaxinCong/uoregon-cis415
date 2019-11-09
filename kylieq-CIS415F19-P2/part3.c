@@ -104,6 +104,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
                 printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                kill(PCBS[i]->pid, SIGQUIT);
                 exit(-1);
             }
 
