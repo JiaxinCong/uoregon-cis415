@@ -27,7 +27,6 @@ void handler(int sig_num) {
             printf("MADE IT TO SIGALRM\n");
             printf("current process: %d\n", PCBS[COUNTER]->pid);
             while(1) {
-                //if (PCBS[COUNTER]->pid == 0) {
                 if (getpid() != 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
@@ -39,7 +38,6 @@ void handler(int sig_num) {
                 }
             }
             while (1) {
-                //if (PCBS[COUNTER]->pid != 0) {
                 if (getpid() != 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
