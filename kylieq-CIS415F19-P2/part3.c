@@ -24,6 +24,7 @@ void handler(int sig_num) {
             sleep(1);
             break;
         case SIGALRM:
+            CHECK = 1;
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(1) {
                 if (w == 0) {
@@ -51,7 +52,6 @@ void handler(int sig_num) {
             }
             //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
     }
-    CHECK = 1;
 }
 
 /* Stop all processes but the first one */
