@@ -1,12 +1,12 @@
+struct ProcessControlBlock **PCBS;
+int PCBS_len;
+
 struct ProcessControlBlock {
 	pid_t pid;
 	char *cmd;
 	char **args;
 	int count;
 };
-
-struct ProcessControlBlock **PCBS;
-int PCBS_len;
 
 /* Read file */
 int get_line(char *filename, char *buffer, size_t bufferSize);
