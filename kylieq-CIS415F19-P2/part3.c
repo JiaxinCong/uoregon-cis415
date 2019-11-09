@@ -33,7 +33,6 @@ void handler(int sig_num) {
             printf("current process: %d\n", getpid());
             printf("w: %d", w);
             //while(1) {
-            if(getpid() > 0) {
             while(w>0) {
                 //if (getpid() != 0) {
                 //if (w == 0) {
@@ -62,7 +61,6 @@ void handler(int sig_num) {
                     }
                     w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
                 //}
-            }
             }
 
             break;
