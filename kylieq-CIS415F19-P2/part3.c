@@ -17,6 +17,9 @@ int COUNTER = 0;
 void handler(int sig_num) {
     switch(sig_num) {
 
+        int w;
+        int wstatus;
+
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
             CHECK = 1;
@@ -24,8 +27,6 @@ void handler(int sig_num) {
             break;
 
         case SIGALRM:
-            int w;
-            int wstatus;
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
 
             printf("MADE IT TO SIGALRM\n");
