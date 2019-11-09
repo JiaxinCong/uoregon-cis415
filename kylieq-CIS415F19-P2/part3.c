@@ -30,9 +30,8 @@ void handler(int sig_num) {
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
 
             printf("MADE IT TO SIGALRM\n");
-            //while(1) {
+
             while(w>0) {
-                //if (getpid() != 0) {
                 if (PCBS[COUNTER]->STATE == RUNNING) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
@@ -46,9 +45,8 @@ void handler(int sig_num) {
                     w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
                 }
             }
-            //while (1) {
+
             while(w>0) {
-                //if (getpid() != 0) {
                 if (PCBS[COUNTER]->STATE == PAUSED) {
                     if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
@@ -62,7 +60,7 @@ void handler(int sig_num) {
                     w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
                 }
             }
-
+            alarm(3);
             break;
     }
 }
@@ -208,11 +206,8 @@ int main(int argc, char *argv[]) {
     makeCall(PCBS);
     sleep(1);
     SuspendAllProcesses(PCBS);
-    while (1) {
-        alarm(3);
-        wait(NULL);
-        break;
-    }
+    alarm(3);
+    wait(NULL);
     TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
