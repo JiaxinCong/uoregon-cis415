@@ -24,6 +24,7 @@ void handler(int sig_num) {
             sleep(1);
             break;
         case SIGALRM:
+        printf("MADE IT\n");
             CHECK = 1;
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(1) {
@@ -98,8 +99,6 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             while(!CHECK) {
                 usleep(300);
             }
-
-            CHECK = 0;
 
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
@@ -193,6 +192,7 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     makeCall(PCBS);
+    CHECK = 0;
     sleep(1);
     SuspendAllProcesses(PCBS);
     while (1) {
