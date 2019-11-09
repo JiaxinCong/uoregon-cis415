@@ -13,7 +13,7 @@
 
 int CHECK = 0;
 
-void handler(int sig_num) {
+void sigusr1_handler(int sig_num) {
     if (sig_num == SIGUSR1) {
         printf("Process: %i - Received signal: SIGUSR1\n", getpid());
         CHECK = 1;
@@ -86,20 +86,21 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
 int main(int argc, char *argv[]) {
 
-    struct sigaction act;
-    sigset_t set;
+//    struct sigaction act;
+//    sigset_t set;
 
     /* Initialize signal set to exclude all of the defined signals.
        Then add SIGUSR1 to the signal set */
-    sigemptyset(&set);
+/*    sigemptyset(&set);
     sigaddset(&set,SIGUSR1);
 
     act.sa_flags = 0;
     act.sa_mask = set;
     act.sa_handler = handler;
-
+*/
     /* Set signal handler for SIGUSR1 */
-    sigaction(SIGUSR1, &act, NULL);
+//    sigaction(SIGUSR1, &act, NULL);
+    signal(SIGUSR1, sigusr1_handler);
 
     char *filename = argv[1];
 
