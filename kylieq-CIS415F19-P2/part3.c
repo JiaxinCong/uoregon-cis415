@@ -51,6 +51,7 @@ void handler(int sig_num) {
             }
             //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
     }
+    CHECK = 1;
 }
 
 /* Stop all processes but the first one */
@@ -97,6 +98,8 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             while(!CHECK) {
                 usleep(300);
             }
+
+            CHECK = 0;
 
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
@@ -194,7 +197,9 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses(PCBS);
     while (1) {
         alarm(3);
-        sleep(3); 
+        while (!CHECK) {
+            usleep(300);
+        } 
         if (TerminateAllProcesses(PCBS) == 1) {
             break;
         }
