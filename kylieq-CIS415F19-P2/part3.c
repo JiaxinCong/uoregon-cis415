@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses(PCBS);
     while (1) {
-        alarm(100);
+        alarm(3);
         wait(NULL);
     }
     TerminateAllProcesses(PCBS);
