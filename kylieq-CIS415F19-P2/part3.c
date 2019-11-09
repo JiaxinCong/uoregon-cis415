@@ -34,7 +34,7 @@ void handler(int sig_num) {
             printf("w: %d", w);
             //while(1) {
             if(getpid() > 0) {
-            while(w==0) {
+            while(w>0) {
                 //if (getpid() != 0) {
                 //if (w == 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
@@ -49,7 +49,7 @@ void handler(int sig_num) {
                 //}
             }
             //while (1) {
-            while(w==0) {
+            while(w>0) {
                 //if (getpid() != 0) {
                 //if (w == 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
