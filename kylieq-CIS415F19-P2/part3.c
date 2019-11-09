@@ -30,8 +30,6 @@ void handler(int sig_num) {
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
 
             printf("MADE IT TO SIGALRM\n");
-            printf("current process: %d\n", getpid());
-            printf("w: %d", w);
             //while(1) {
             while(w>0) {
                 //if (getpid() != 0) {
