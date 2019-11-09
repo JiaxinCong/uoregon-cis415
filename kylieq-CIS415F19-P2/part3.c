@@ -29,26 +29,27 @@ void sigalrm_handler(int sig_num) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-            PCBS[COUNTER]->STATE = PAUSED;
-            //break;
+            PCBS[COUNTER]->STATE = STOPPED;
+            break;
         }   
         else {
-            COUNTER++;
+            COUNTER = (COUNTER+1)%PCBS_len;
         }
     }
 
     while(1) {
-        if (PCBS[COUNTER]->STATE == PAUSED) {
+        if (PCBS[COUNTER]->STATE == STOPPED) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = RUNNING;
-            //break;
+            break;
         }
         else {
-            COUNTER++;
+            COUNTER = (COUNTER+1)%PCBS_len;
         }
     }
-    //alarm(3);
+
+    alarm(1);
 }
 
 /* Stop all processes but the first one */
@@ -56,7 +57,7 @@ void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
     for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
-            PCBS[i]->STATE = NOTSTARTED;
+            PCBS[i]->STATE = STOPPED;
             sleep(1);
         }
     }
@@ -102,7 +103,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
-                printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
             }
 
             exit(-1);
@@ -176,7 +177,6 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     makeCall(PCBS);
-    sleep(1);
 
     SuspendAllProcesses(PCBS);
     alarm(1);
