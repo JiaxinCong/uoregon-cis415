@@ -25,27 +25,37 @@ void handler(int sig_num) {
             break;
         case SIGALRM:
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
-            while(w == 0) {
-                if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                    sleep(1);
+            while(1) {
+                if (w == 0) {
+                    if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
+                        printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                        sleep(1);
+                        break;
+                    }
                 }
-                if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                    sleep(1);
+                else {
+                    COUNTER++;
                 }
-                COUNTER++;
-                w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
-                //if (COUNTER >= PCBS_len) {
-                //    COUNTER = 0;
-                //}
             }
-            break;
+            while (1) {
+                if (w == 0) {
+                    if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
+                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                        sleep(1);
+                        break;
+                    }
+                }
+                else {
+                    COUNTER++;
+                }
+            }
+            //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
     }
 }
 
+/* Stop all processes but the first one */
 void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
-    for (int i=0; i<PCBS_len; i++) { /* Stop processes */
+    for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             sleep(1);
@@ -64,12 +74,13 @@ void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
     sleep(5);
 }
 
-void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
+int TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
         sleep(1);
     } 
+    return 1;
 }
 
 int makeCall(struct ProcessControlBlock **PCBS) {
@@ -181,11 +192,13 @@ int main(int argc, char *argv[]) {
     makeCall(PCBS);
     sleep(1);
     SuspendAllProcesses(PCBS);
-    for (int i=0; i<PCBS_len; i++) {
+    while (1) {
         alarm(3);
+        sleep(3); 
+        if (TerminateAllProcesses(PCBS) == 1) {
+            break;
+        }
     }
-    //ContinueAllProcesses(PCBS);
-    TerminateAllProcesses(PCBS);
 
     freePCB(PCBS);
     free(ptr);
