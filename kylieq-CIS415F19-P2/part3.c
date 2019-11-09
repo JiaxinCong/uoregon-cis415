@@ -71,7 +71,7 @@ void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             PCBS[i]->STATE = NOTSTARTED;
-            printf("STATE: %s\n", PCBS[i]->STATE);
+            printf("STATE: %d\n", PCBS[i]->STATE);
             sleep(1);
         }
     }
@@ -83,7 +83,7 @@ void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
         if (kill(PCBS[i]->pid, SIGCONT) == 0) {
             printf("Process: %d - Continued\n", PCBS[i]->pid);
             PCBS[i]->STATE = RUNNING;
-            printf("STATE: %s\n", PCBS[i]->STATE);
+            printf("STATE: %d\n", PCBS[i]->STATE);
             sleep(1);
         }
     }
@@ -95,7 +95,7 @@ int TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
         PCBS[i]->STATE = TERMINATED;
-        printf("STATE: %s\n", PCBS[i]->STATE);
+        printf("STATE: %d\n", PCBS[i]->STATE);
         sleep(1);
     } 
     return 1;
