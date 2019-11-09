@@ -100,10 +100,9 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
                 printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
-                exit(-1);
             }
 
-            //exit(-1);
+            exit(-1);
         }
     }
 
@@ -193,11 +192,9 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses(PCBS);
     while (1) {
         alarm(3);
-        if (TerminateAllProcesses(PCBS) == 1) {
-            break;
-        }
     }
-
+    TerminateAllProcesses(PCBS);
+    
     freePCB(PCBS);
     free(ptr);
     free(buffer);
