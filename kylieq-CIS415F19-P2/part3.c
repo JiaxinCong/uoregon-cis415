@@ -31,6 +31,7 @@ void handler(int sig_num) {
 
             printf("MADE IT TO SIGALRM\n");
             printf("current process: %d\n", PCBS[COUNTER]->pid);
+            printf("w: %d", w);
             while(1) {
                 //if (getpid() != 0) {
                 if (w == 0) {
