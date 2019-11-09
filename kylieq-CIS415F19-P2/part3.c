@@ -38,6 +38,7 @@ void handler(int sig_num) {
                 if (PCBS[COUNTER]->STATE == RUNNING) {
                     if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                        PCBS[COUNTER]->STATE = PAUSED;
                         sleep(1);
                         break;
                     }   
@@ -53,6 +54,7 @@ void handler(int sig_num) {
                 if (PCBS[COUNTER]->STATE == PAUSED) {
                     if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                        PCBS[COUNTER]->STATE = RUNNING;
                         sleep(1);
                         break;
                     }
