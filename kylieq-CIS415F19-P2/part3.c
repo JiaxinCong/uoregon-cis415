@@ -93,6 +93,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
             exit(1);
         }
         if (PCBS[i]->pid == 0) {
+            PCBS[i]->STATE = RUNNING;
 
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
