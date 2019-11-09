@@ -95,7 +95,7 @@ int TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
         PCBS[i]->STATE = TERMINATED;
-        printf("STATE: %d\n", PCBS[i]->STATE==TERIMATED);
+        printf("STATE: %d\n", PCBS[i]->STATE==TERMINATED);
         sleep(1);
     } 
     return 1;
