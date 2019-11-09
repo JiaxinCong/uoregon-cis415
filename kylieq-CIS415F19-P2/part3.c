@@ -119,23 +119,6 @@ int makeCall(struct ProcessControlBlock **PCBS) {
 }
 
 int main(int argc, char *argv[]) {
-
-//    struct sigaction act;
-//    sigset_t set;
-
-    /* Initialize signal set to exclude all of the defined signals.
-       Then add SIGUSR1 to the signal set */
-/*    sigemptyset(&set);
-    sigaddset(&set,SIGUSR1);
-    sigaddset(&set,SIGALRM);
-
-    act.sa_flags = 0;
-    act.sa_mask = set;
-    act.sa_handler = handler;
-*/
-    /* Set signal handler for SIGUSR1 */
-//    sigaction(SIGUSR1, &act, NULL);
-//    sigaction(SIGALRM, &act, NULL);
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
 
