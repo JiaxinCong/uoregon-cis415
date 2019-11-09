@@ -24,7 +24,7 @@ void handler(int sig_num) {
             sleep(1);
             break;
         case SIGALRM:
-        printf("MADE IT\n");
+        printf("MADE IT TO SIGALRM\n");
             CHECK = 1;
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(1) {
@@ -198,6 +198,7 @@ int main(int argc, char *argv[]) {
     while (1) {
         alarm(3);
         while (!CHECK) {
+            printf("SLEEPING\n");
             usleep(300);
         } 
         if (TerminateAllProcesses(PCBS) == 1) {
