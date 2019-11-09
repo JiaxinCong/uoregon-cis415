@@ -15,20 +15,29 @@ int CHECK = 0;
 int COUNTER = 0;
 
 void handler(int sig_num) {
-    pid_t w;
-    int wstatus;
     switch(sig_num) {
+
         case SIGUSR1: 
             printf("Process: %i - Received signal: SIGUSR1\n", getpid());
             CHECK = 1;
             sleep(1);
             break;
+
         case SIGALRM:
         printf("MADE IT TO SIGALRM\n");
-            CHECK = 1;
-            //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             while(1) {
-                if (!wait(NULL)) {
+                if (PCBS[COUNTER]->pid == 0) {
+                    if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
+                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                        sleep(1);
+                        break;
+                }
+                else {
+                    COUNTER++;
+                }
+            }
+            while (1) {
+                if (PCBS[COUNTER]->pid != 0) {
                     if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                         sleep(1);
@@ -39,19 +48,7 @@ void handler(int sig_num) {
                     COUNTER++;
                 }
             }
-            while (1) {
-                if (!wait(NULL)) {
-                    if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                        sleep(1);
-                        break;
-                    }
-                }
-                else {
-                    COUNTER++;
-                }
-            }
-            //w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+        }
     }
 }
 
@@ -192,14 +189,10 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     makeCall(PCBS);
-    CHECK = 0;
     sleep(1);
     SuspendAllProcesses(PCBS);
     while (1) {
         alarm(3);
-        while (!CHECK) {
-            usleep(300);
-        } 
         if (TerminateAllProcesses(PCBS) == 1) {
             break;
         }
