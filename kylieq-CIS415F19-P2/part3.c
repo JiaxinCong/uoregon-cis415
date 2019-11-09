@@ -107,7 +107,7 @@ int makeCall(struct ProcessControlBlock **PCBS) {
                 exit(-1);
             }
 
-            exit(-1);
+            //exit(-1);
         }
     }
 
