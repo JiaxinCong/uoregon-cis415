@@ -1,11 +1,13 @@
 struct ProcessControlBlock **PCBS;
 int PCBS_len;
+typedef enum {NOTSTARTED, RUNNING, PAUSED, TERMINATED} STATES; 
 
 struct ProcessControlBlock {
 	pid_t pid;
 	char *cmd;
 	char **args;
 	int count;
+	STATES STATE;
 };
 
 /* Read file */
