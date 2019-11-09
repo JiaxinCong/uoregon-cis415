@@ -33,32 +33,28 @@ void handler(int sig_num) {
 
             while(w>0) {
                 if (PCBS[COUNTER]->STATE == RUNNING) {
-                    if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                        PCBS[COUNTER]->STATE = PAUSED;
-                        sleep(1);
-                        break;
-                    }   
-                    else {
-                        COUNTER++;
-                    }
-                    w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+                    kill(PCBS[COUNTER]->pid, SIGSTOP);
+                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                    PCBS[COUNTER]->STATE = PAUSED;
+                    break;
+                }   
+                else {
+                    COUNTER++;
                 }
+                w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             }
 
             while(w>0) {
                 if (PCBS[COUNTER]->STATE == PAUSED) {
-                    if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                        PCBS[COUNTER]->STATE = RUNNING;
-                        sleep(1);
-                        break;
-                    }
-                    else {
-                        COUNTER++;
-                    }
-                    w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+                    kill(PCBS[COUNTER]->pid, SIGCONT);
+                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                    PCBS[COUNTER]->STATE = RUNNING;
+                    break;
                 }
+                else {
+                    COUNTER++;
+                }
+                w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
             }
             alarm(3);
             break;
