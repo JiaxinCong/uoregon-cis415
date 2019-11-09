@@ -24,9 +24,8 @@ void handler(int sig_num) {
             break;
 
         case SIGALRM:
-            pid_t w;
+            int w;
             int wstatus;
-
             w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
 
             printf("MADE IT TO SIGALRM\n");
