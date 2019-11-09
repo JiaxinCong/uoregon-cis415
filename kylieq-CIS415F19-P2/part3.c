@@ -191,10 +191,10 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses(PCBS);
     while (1) {
-        alarm(3);
+        alarm(100);
     }
     TerminateAllProcesses(PCBS);
-    
+
     freePCB(PCBS);
     free(ptr);
     free(buffer);
