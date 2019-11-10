@@ -55,7 +55,7 @@ void sigchld_handler(int sig_num) {
 void sigalrm_handler(int sig_num) {
     printf("MADE IT TO SIGALRM\n");
     sleep(1);
-    
+
     raise(SIGCHLD);
     if (CheckAllTerminated() == 1) {
         EXIT = 1;
@@ -93,6 +93,9 @@ void sigalrm_handler(int sig_num) {
                 PCBS[COUNTER]->STATE = RUNNING;
             }
             break;
+        }
+        else if (CheckAllTerminated() == 1) {
+            EXIT = 1;
         }
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
