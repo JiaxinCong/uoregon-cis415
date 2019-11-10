@@ -71,7 +71,12 @@ void sigalrm_handler(int sig_num) {
 
     printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
-        if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
+        raise(SIGCHLD);
+        if (PCBS[COUNTER]->STATE == TERMINATED) {
+            printf("FUCK\n");
+            break;
+        }
+        else if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             printf("Proccess %d has PROPER STATES TO BE STOPPED\n", PCBS[COUNTER]->pid);
             int result = kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("RESULT OF STOP: %d\n", result);
