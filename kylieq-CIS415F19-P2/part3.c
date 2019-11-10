@@ -86,6 +86,9 @@ void sigalrm_handler(int sig_num) {
                 PCBS[COUNTER]->STATE = STOPPED;
                 sleep(1);
             }
+            else {
+                perror(result);
+            }
             COUNTER = (COUNTER+1)%PCBS_len;
             break;
         }   
