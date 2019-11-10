@@ -1,6 +1,6 @@
 struct ProcessControlBlock **PCBS;
 int PCBS_len;
-typedef enum {NOTSTARTED, RUNNING, STOPPED, TERMINATED} STATES; 
+typedef enum {READY, RUNNING, STOPPED, TERMINATED} STATES; 
 //            0           1        2        3
 
 struct ProcessControlBlock {
