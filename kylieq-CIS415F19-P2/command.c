@@ -93,6 +93,7 @@ int ParseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
             pcb->args = args;
             pcb->count = idx;
             pcb->STATE = NOTSTARTED;
+            
 
             /* Assign new PCB to PCBS & increment PCBS position */
             PCBS[PCBS_len] = pcb;

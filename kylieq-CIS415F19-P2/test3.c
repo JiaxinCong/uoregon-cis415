@@ -73,16 +73,16 @@ void idk() {
         status = 0;
 
         //check the status of all the processes
-        for (i = 0; i < count; i++){
+        for (i = 0; i < PCBS_len; i++){
 
             //check if this process is still running
             if (PCBS[i]->STATE != TERMINATED){
                 //see if we need to wake it up
-                if (PCBS[i]->STATE == CREATED)
+                if (PCBS[i]->STATE == NOTSTARTED)
                     //wake it up
                     kill(PCBS[i]->pid, SIGUSR1);
                 //see if we need to continue it
-                else if (PCBS[i]->STATE == NOTSTARTED)
+                else if (PCBS[i]->STATE == READY)
                     //continue it
                     kill(PCBS[i]->pid, SIGCONT);
 
@@ -99,18 +99,20 @@ void idk() {
 
                 //now we wait (should be 1 second)
                 //for the alarm flag to flip
-                while(!alarmed);
+                while(!alarmed) {
+                    usleep(300);
+                }
 
                 //stop the current process and get ready for next one
                 printf("killing pid: %d\n", PCBS[i]->pid);
                 kill(PCBS[i]->pid, SIGSTOP);
 
                 //get the status of the process we stopped above
-                int code;
-                waitpid(PCBS[i]->pid, &code, WUNTRACED);
+                int w;
+                waitpid(PCBS[i]->pid, &w, WUNTRACED);
 
                 //check if the process is done or not
-                if (WIFEXITED(code)){
+                if (WIFEXITED(w)){
                     //if so, terminate it
                     printf("terminating pid: %d\n", PCBS[i]->pid);
                     PCBS[i]->STATE = TERMINATED;
@@ -319,7 +321,7 @@ int main(int argc, char *argv[]) {
     //SuspendAllProcesses();
     //alarm(1);
     idk();
-    AwaitTermination();
+    //AwaitTermination();
     //TerminateAllProcesses();
 
     FreePCB(PCBS);
