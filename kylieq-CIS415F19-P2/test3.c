@@ -63,7 +63,7 @@ void sigusr1_handler(int sig_num) {
 static int alarmed = 0;
 void sigalrm_handler(int sig_num) {
     printf("Received alarm\n");
-    alarm_check = 1;
+    alarmed = 1;
 }
 
 void idk() {
@@ -131,6 +131,7 @@ void idk() {
             status |= PCBS[i]->STATE;
         }
     }
+}
 
 /*void sigalrm_handler(int sig_num) {
     sleep(5);
