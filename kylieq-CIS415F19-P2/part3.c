@@ -46,7 +46,6 @@ void sigchld_handler(int sig_num) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
                 PCBS[i]->STATE = TERMINATED; 
-                //COUNTER = (COUNTER+1)%PCBS_len; 
             }
         }
     }
