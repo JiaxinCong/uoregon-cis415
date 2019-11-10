@@ -79,10 +79,12 @@ void idk() {
             sleep(1);
             if (w == 0){
                 if (alarm_check == 1) {
-                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                    kill(PCBS[i]->pid, SIGSTOP);
-                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                    kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT);
+                    if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
+                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                    }
+                    if (kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT) == 0) {
+                        printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                    }
                     alarm_check = 0;
                 }
             }
@@ -233,7 +235,6 @@ int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
     signal(SIGCHLD, sigchld_handler);
-    signal(SIGTSTP, SIG_DFL);
 
     char *filename = argv[1];
 
