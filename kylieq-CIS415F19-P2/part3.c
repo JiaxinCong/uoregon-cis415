@@ -72,7 +72,7 @@ void sigalrm_handler(int sig_num) {
     printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
-            printf("Proccess %d has PROPER STATES TO BE STOPPED\n", getpid());
+            printf("Proccess %d has PROPER STATES TO BE STOPPED\n", PCBS[COUNTER]->pid);
             if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = STOPPED;
