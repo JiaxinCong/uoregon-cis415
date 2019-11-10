@@ -67,7 +67,7 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
-    printf("Process: %d Size: %d Counter: %d\n", PCBS[COUNTER]->pid, PCBS_len, COUNTER);
+    printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
