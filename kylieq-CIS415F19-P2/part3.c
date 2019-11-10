@@ -14,7 +14,6 @@
 int CHECK = 0;
 int COUNTER = 0;
 int EXIT = 0;
-int EXIT_CTR = 0;
 
 void AwaitTermination() {
     while(!EXIT) {
@@ -47,15 +46,12 @@ void sigchld_handler(int sig_num) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
                 PCBS[i]->STATE = TERMINATED; 
-                EXIT_CTR++;
             }
         }
     }
 }
 
 void sigalrm_handler(int sig_num) {
-    printf("MADE IT TO SIGALRM\n");
-
     raise(SIGCHLD);
     if (CheckAllTerminated() == 1) {
         EXIT = 1;
@@ -63,7 +59,7 @@ void sigalrm_handler(int sig_num) {
 
     printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
-        if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1 && PCBS[COUNTER]->STATE != TERMINATED) {
+        if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = STOPPED;
@@ -79,7 +75,7 @@ void sigalrm_handler(int sig_num) {
     }
 
     while(1) {
-        if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1 && PCBS[COUNTER]->STATE != TERMINATED) {
+        if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = RUNNING;
@@ -91,11 +87,6 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
-    }
-
-    printf("EXIT_CTR: %d\n", EXIT_CTR);
-    if (EXIT_CTR == PCBS_len-1) {
-        exit(1);
     }
 
     alarm(1);
@@ -230,7 +221,6 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses();
     alarm(1);
     AwaitTermination();
-    //TerminateAllProcesses();
 
     FreePCB(PCBS);
     free(ptr);
