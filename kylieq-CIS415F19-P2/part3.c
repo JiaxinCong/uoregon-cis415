@@ -236,6 +236,7 @@ int main(int argc, char *argv[]) {
     MakeCall();
     sleep(1);
     SuspendAllProcesses();
+    sleep(1);
     alarm(1);
     AwaitTermination();
     //TerminateAllProcesses();
