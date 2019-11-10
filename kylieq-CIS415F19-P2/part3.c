@@ -30,91 +30,7 @@ int CheckAllTerminated() {
     return 1;
 }
 
-void handler(int sig_num) {
-    switch(sig_num) {
-        int status;
-        case SIGUSR1:
-            if (sig_num == SIGUSR1) { 
-                printf("Process: %i - Received signal SIGUSR1\n", getpid());
-                CHECK = 1;
-                sleep(1);
-            }
-            break;
-        case SIGCHLD:
-            for (int i=0; i<PCBS_len; i++) {
-                if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
-                    if (WIFEXITED(status)) {
-                        printf("Process: %d - Ended\n", PCBS[i]->pid);
-                        PCBS[i]->exit_status = 1;
-                        PCBS[i]->STATE = TERMINATED; 
-                    }
-                }   
-            }
-            break;
-        case SIGALRM:
-            //sleep(5);
-            printf("MADE IT TO SIGALRM\n");
-
-            raise(SIGCHLD);
-            if (CheckAllTerminated() == 1) {
-                EXIT = 1;
-            }
-
-            while(1) {
-                if (PCBS[COUNTER]->exit_status == 1) {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-                else {
-                    break;
-                }
-            }
-
-            printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
-            while(1) {
-                if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
-                    printf("Proccess %d has PROPER STATES TO BE STOPPED\n", PCBS[COUNTER]->pid);
-                    int result = kill(PCBS[COUNTER]->pid, SIGSTOP);
-                    printf("RESULT OF STOP: %d\n", result);
-                    //if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-                    if(result == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                        PCBS[COUNTER]->STATE = STOPPED;
-                        sleep(1);
-                    }
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                    break;
-                }   
-                else if (PCBS[COUNTER]->STATE == STOPPED) {
-                    break;
-                }
-                else {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-            }
-
-            while(1) {
-                if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
-                    printf("PROPER STATES TO CONTINUE\n");
-                    if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                        PCBS[COUNTER]->STATE = RUNNING;
-                    }
-                    break;
-                }
-                else if (PCBS[COUNTER]->STATE == RUNNING) {
-                    break;
-                }
-                else {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-            }
-
-            alarm(1);
-            break;
-    }
-}
-
-/*void sigusr1_handler(int sig_num) {
+void sigusr1_handler(int sig_num) {
     if (sig_num == SIGUSR1) { 
         printf("Process: %i - Received signal SIGUSR1\n", getpid());
         CHECK = 1;
@@ -194,7 +110,7 @@ void sigalrm_handler(int sig_num) {
     }
 
     alarm(1);
-}*/
+}
 
 /* Stop all processes but the first one */
 void SuspendAllProcesses() {
@@ -264,27 +180,10 @@ int MakeCall() {
 }
 
 int main(int argc, char *argv[]) {
-    /*signal(SIGUSR1, sigusr1_handler);
+    signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
     signal(SIGCHLD, sigchld_handler);
-    signal(SIGTSTP, SIG_DFL);*/
-
-    struct sigaction act;
-    sigset_t set;
-
-    sigemptyset(&set);
-    sigaddset(&set, SIGUSR1);
-    sigaddset(&set, SIGALRM);
-    sigaddset(&set, SIGCHLD);
-    sigaddset(&set, SIGSTOP);
-
-    act.sa_flags = 0;
-    act.sa_mask = set;
-    act.sa_handler = handler;
-
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGALRM, &act, NULL);
-    sigaction(SIGCHLD, &act, NULL);
+    signal(SIGTSTP, SIG_DFL);
 
     char *filename = argv[1];
 
