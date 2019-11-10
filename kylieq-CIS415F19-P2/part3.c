@@ -130,13 +130,14 @@ int TerminateAllProcesses() {
 int MakeCall() {
     for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->pid = fork();
+        PCBS[i]->STATE = RUNNING;
 
         if (PCBS[i]->pid < 0) {
             printf("Unable to fork process.\n");
             exit(1);
         }
         if (PCBS[i]->pid == 0) {
-            PCBS[i]->STATE = RUNNING;
+            //PCBS[i]->STATE = RUNNING;
 
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
