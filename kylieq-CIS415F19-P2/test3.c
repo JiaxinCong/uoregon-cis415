@@ -60,7 +60,7 @@ void sigusr1_handler(int sig_num) {
     }
 }*/
 
-int alarm_check = 0;
+static int alarm_check = 0;
 void sigalrm_handler(int sig_num) {
     alarm_check = 1;
 }
@@ -70,13 +70,15 @@ int idk() {
     int wstatus;
     int x = 0;
 
+    signal(SIGALRM, sigalrm_handler);
+
     kill(PCBS[0]->pid, SIGCONT);
     w = waitpid(PCBS[0]->pid, &wstatus, WNOHANG);
     int check = 1;
     while(check) {
         for (int i=0; i<PCBS_len; i++) {
             alarm(1);
-            sleep(1);
+            system("sleep 1");
             if (w == 0){
                 if (alarm_check == 1) {
                     kill(PCBS[i]->pid, SIGSTOP);
@@ -237,7 +239,7 @@ int MakeCall() {
 
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
-    signal(SIGALRM, sigalrm_handler);
+    //signal(SIGALRM, sigalrm_handler);
     //signal(SIGCHLD, sigchld_handler);
 
     char *filename = argv[1];
