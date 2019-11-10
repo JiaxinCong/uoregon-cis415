@@ -32,7 +32,7 @@ int CheckAllTerminated() {
 
 void sigusr1_handler(int sig_num) {
     if (sig_num == SIGUSR1) { 
-        printf("Process: %i - Received signal: SIGUSR1\n", getpid());
+        printf("Process: %i - Received signal SIGUSR1\n", getpid());
         CHECK = 1;
         sleep(1);
     }
