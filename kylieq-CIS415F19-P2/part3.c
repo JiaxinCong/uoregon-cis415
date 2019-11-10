@@ -21,6 +21,15 @@ void AwaitTermination() {
     }
 }
 
+int CheckAllTerminated() {
+    for (int i=0; i<PCBS_len; i++) {
+        if (PCBS[i]->exit_status == 0) {
+            return 0; // There is still a process currently running.
+        }
+    }
+    return 1;
+}
+
 void sigusr1_handler(int sig_num) {
     if (sig_num == SIGUSR1) { 
         printf("Process: %i - Received signal: SIGUSR1\n", getpid());
@@ -29,8 +38,24 @@ void sigusr1_handler(int sig_num) {
     }
 }
 
+void sigchld_handler(int sig_num) {
+    int status;
+    for (int i=0; i<PCBS_len; i++) {
+        if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
+            if (WIFEXITED(status)) {
+                PCBS[i]->exit_status = 1;
+            }
+        }
+    }
+}
+
 void sigalrm_handler(int sig_num) {
     printf("MADE IT TO SIGALRM\n");
+
+    raise(SIGCHLD);
+    if (CheckAllTerminated() == 1) {
+        EXIT = 1;
+    }
 
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
@@ -60,7 +85,7 @@ void sigalrm_handler(int sig_num) {
 }
 
 /* Stop all processes but the first one */
-void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
+void SuspendAllProcesses() {
     for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
@@ -68,10 +93,9 @@ void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
             sleep(1);
         }
     }
-    sleep(5);
 }
 
-void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
+void ContinueAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Continue processes */
         if (kill(PCBS[i]->pid, SIGCONT) == 0) {
             printf("Process: %d - Continued\n", PCBS[i]->pid);
@@ -79,20 +103,20 @@ void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
             sleep(1);
         }
     }
-    sleep(5);
 }
 
-int TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
+int TerminateAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
         PCBS[i]->STATE = TERMINATED;
+        PCBS[i]->exit_status = 1;
         sleep(1);
     } 
     return 1;
 }
 
-int MakeCall(struct ProcessControlBlock **PCBS) {
+int MakeCall() {
     for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->pid = fork();
 
@@ -130,6 +154,7 @@ int MakeCall(struct ProcessControlBlock **PCBS) {
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
+    signal(SIGCHLD, sigchld_handler);
 
     char *filename = argv[1];
 
@@ -183,11 +208,11 @@ int main(int argc, char *argv[]) {
     ParseCommand(ptr, line_ctr, PCBS);
 
     /* Make calls */
-    MakeCall(PCBS);
-
-    SuspendAllProcesses(PCBS);
+    MakeCall();
+    SuspendAllProcesses();
     alarm(1);
-    TerminateAllProcesses(PCBS);
+    AwaitTermination();
+    TerminateAllProcesses();
 
     FreePCB(PCBS);
     free(ptr);

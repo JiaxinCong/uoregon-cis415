@@ -7,6 +7,7 @@ struct ProcessControlBlock {
 	char *cmd;
 	char **args;
 	int count;
+	int exit_status;
 	STATES STATE;
 };
 
