@@ -67,12 +67,12 @@ void sigalrm_handler(int sig_num) {
     }
 
     printf("Process: %d Counter: %d\n", PCBS[COUNTER]->pid, COUNTER);
-    printf("check: %d\n", STOPPED);
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = STOPPED;
+            COUNTER = (COUNTER+1)%PCBS_len;
             break;
         }   
         else {
@@ -137,8 +137,6 @@ int MakeCall() {
             exit(1);
         }
         if (PCBS[i]->pid == 0) {
-            //PCBS[i]->STATE = RUNNING;
-
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
                 usleep(300);
