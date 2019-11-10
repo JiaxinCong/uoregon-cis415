@@ -38,14 +38,6 @@ void sigusr1_handler(int sig_num) {
     }
 }
 
-void sigusr2_handler(int sig_num) {
-    if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
-        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-        PCBS[COUNTER]->STATE = STOPPED;
-        sleep(1);
-    }
-}
-
 void sigchld_handler(int sig_num) {
     int status;
     for (int i=0; i<PCBS_len; i++) {
@@ -81,12 +73,11 @@ void sigalrm_handler(int sig_num) {
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             printf("PROPER STATES TO BE STOPPED\n");
-            /*if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
+            if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = STOPPED;
                 sleep(1);
-            }*/
-            raise(SIGUSR2);
+            }
             COUNTER = (COUNTER+1)%PCBS_len;
             break;
         }   
@@ -187,7 +178,6 @@ int MakeCall() {
 
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
-    signal(SIGUSR2, sigusr2_handler);
     signal(SIGALRM, sigalrm_handler);
     signal(SIGCHLD, sigchld_handler);
 
