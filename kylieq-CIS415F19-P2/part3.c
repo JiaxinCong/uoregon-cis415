@@ -105,7 +105,7 @@ void sigalrm_handler(int sig_num) {
             }
             */
             printf("TEST3\n");
-            printf("Process: %d STATE: %d\n", PCBS[COUNTER]->pid, PCBS[COUNTER]->STATE);
+            //printf("Process: %d STATE: %d\n", PCBS[COUNTER]->pid, PCBS[COUNTER]->STATE);
         }
     }
 
