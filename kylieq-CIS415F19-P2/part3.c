@@ -60,9 +60,11 @@ void sigalrm_handler(int sig_num) {
     while(1) {
         printf("TEST1\n");
         if (PCBS[COUNTER]->exit_status == 1) {
+            printf("MOVE ON\n");
             COUNTER = (COUNTER+1)%PCBS_len;
         }
         else {
+            printf("STAY\n");
             break;
         }
     }
