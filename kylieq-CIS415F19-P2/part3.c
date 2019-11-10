@@ -46,7 +46,7 @@ void sigchld_handler(int sig_num) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
                 PCBS[i]->STATE = TERMINATED; 
-                //COUNTER = (COUNTER+1)%PCBS_len; 
+                COUNTER = (COUNTER+1)%PCBS_len; 
             }
         }
     }
@@ -68,8 +68,8 @@ void sigalrm_handler(int sig_num) {
             if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = STOPPED;
+                COUNTER = (COUNTER+1)%PCBS_len;
             }
-            COUNTER = (COUNTER+1)%PCBS_len;
             break;
         }   
         else if (PCBS[COUNTER]->STATE == STOPPED) {
