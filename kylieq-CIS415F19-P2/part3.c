@@ -52,13 +52,62 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
-    sleep(1);
     raise(SIGCHLD);
-    if (CheckAllTerminated() == 1) {
-        EXIT = 1;
+    printf("Alarm received.\n");
+
+    if (PCBS[COUNTER]->exit_status == 1) {
+        PCBS[COUNTER]->STATE = TERMINATED;
+        printf("Process: %d - Ended\n", PCBS[COUNTER]->pid);
+    }
+    else if (PCBS[COUNTER]->STATE == RUNNING) {
+        kill(PCBS[COUNTER]->pid, SIGSTOP);
+        PCBS[COUNTER]->STATE = PAUSED;
+        printf("Process: %d - Suspended\n", PCBS[COUNTER]->pid);
     }
 
-    printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
+    if (CheckAllTerminated()) {
+        printf("All processes have ended.\n");
+        EXIT = 1;
+    }
+    else {
+        int compare = COUNTER+1;
+        while(1) {
+            if (compare < PCBS_len-1) {
+                if (PCBS[compare]->STATE == PAUSED || PCBS[compare]->STATE == READY) {
+                    COUNTER = compare;
+                    break;
+                }
+                else {
+                    compare++;
+                }
+            }
+            else if (compare == (PCBS_len-1)) {
+                if(PCBS[compare]->STATE == PAUSED || PCBS[compare]->STATE == READY) {
+                    COUNTER = compare;
+                    break;
+                }
+                else {
+                    compare = 0;
+                }
+            }
+        }
+
+        if(PCBS[COUNTER]->STATE == READY) {
+            kill(PCBS[COUNTER]->pid, SIGUSR1);
+            alarm(1);
+            PCBS[COUNTER]->STATE = RUNNING;
+            printf("Process: %d - Started\n", PCBS[COUNTER]->pid);
+        }
+        else if (PCBS[COUNTER]->STATE == PAUSED) {
+            kill(PCBS[COUNTER]->pid, SIGCONT);
+            alarm(1);
+            PCBS[COUNTER]->STATE = RUNNING;
+            printf("Process: %d - Running\n", PCBS[COUNTER]->pid);
+        }
+    }
+}
+
+/*    printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
@@ -93,7 +142,7 @@ void sigalrm_handler(int sig_num) {
     }
 
     alarm(1);
-}
+}*/
 
 /* Stop all processes but the first one */
 void SuspendAllProcesses() {
@@ -135,9 +184,9 @@ int MakeCall() {
 
         if (PCBS[i]->pid < 0) {
             printf("Unable to fork process.\n");
-            exit(1);
+            exit(-1);
         }
-        if (PCBS[i]->pid == 0) {
+        else if (PCBS[i]->pid == 0) {
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
                 usleep(300);
@@ -145,7 +194,8 @@ int MakeCall() {
 
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
-                //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                exit(-1);
             }
 
             exit(-1);
@@ -220,7 +270,7 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     MakeCall();
-    SuspendAllProcesses();
+    //SuspendAllProcesses();
     alarm(1);
     AwaitTermination();
 

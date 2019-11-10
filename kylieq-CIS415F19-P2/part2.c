@@ -55,7 +55,7 @@ int MakeCall() {
             printf("Unable to fork process.\n");
             exit(1);
         }
-        if (PCBS[i]->pid == 0) {
+        else if (PCBS[i]->pid == 0) {
 
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
