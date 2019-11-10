@@ -1,7 +1,9 @@
 struct ProcessControlBlock **PCBS;
 int PCBS_len;
-typedef enum {NOTSTARTED, RUNNING, STOPPED, TERMINATED} STATES; 
+//typedef enum {NOTSTARTED, RUNNING, STOPPED, TERMINATED} STATES; 
 //            0           1        2        3
+typedef enum {NOTSTARTED, READY, RUNNING, STOPPED, TERMINATED} STATES; 
+
 struct ProcessControlBlock {
 	pid_t pid;
 	char *cmd;

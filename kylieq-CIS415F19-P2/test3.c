@@ -73,7 +73,7 @@ void idk() {
         status = 0;
 
         //check the status of all the processes
-        for (i = 0; i < PCBS_len; i++){
+        for (int i = 0; i < PCBS_len; i++){
 
             //check if this process is still running
             if (PCBS[i]->STATE != TERMINATED){
