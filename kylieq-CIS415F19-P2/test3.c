@@ -60,54 +60,75 @@ void sigusr1_handler(int sig_num) {
     }
 }*/
 
-static int alarm_check = 0;
+static int alarmed = 0;
 void sigalrm_handler(int sig_num) {
+    printf("Received alarm\n");
     alarm_check = 1;
 }
 
 void idk() {
-    pid_t w; 
-    int wstatus;
-    int x = 0;
+ int status = -1;
+    while(status){
+        //reset our current cummulative status
+        status = 0;
 
-    signal(SIGALRM, sigalrm_handler);
+        //check the status of all the processes
+        for (i = 0; i < count; i++){
 
-    kill(PCBS[0]->pid, SIGCONT);
-    w = waitpid(PCBS[0]->pid, &wstatus, WNOHANG);
-    int check = 1;
-    while(check) {
-        for (int i=0; i<PCBS_len; i++) {
-            alarm(1);
-            system("sleep 1");
-            printf("W:%d\n", w);
-            if (w == 0) {
-                if (alarm_check == 1) {
-                    kill(PCBS[i]->pid, SIGSTOP);
-                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                    PCBS[i]->STATE = STOPPED;
+            //check if this process is still running
+            if (PCBS[i]->STATE != TERMINATED){
+                //see if we need to wake it up
+                if (PCBS[i]->STATE == CREATED)
+                    //wake it up
+                    kill(PCBS[i]->pid, SIGUSR1);
+                //see if we need to continue it
+                else if (PCBS[i]->STATE == NOTSTARTED)
+                    //continue it
+                    kill(PCBS[i]->pid, SIGCONT);
 
-                    kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT);
-                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                    PCBS[i]->STATE = RUNNING;
-                    
-                    alarm_check = 0;
+                //from the above, we should have it running now
+                //so update state
+                PCBS[i]->STATE = RUNNING;
+                printf("Program #%d is running\n", PCBS[i]->pid);
+
+                //reset alarm flag
+                alarmed = 0;
+
+                //set an alarm for 1 second
+                alarm(1);
+
+                //now we wait (should be 1 second)
+                //for the alarm flag to flip
+                while(!alarmed);
+
+                //stop the current process and get ready for next one
+                printf("killing pid: %d\n", PCBS[i]->pid);
+                kill(PCBS[i]->pid, SIGSTOP);
+
+                //get the status of the process we stopped above
+                int code;
+                waitpid(PCBS[i]->pid, &code, WUNTRACED);
+
+                //check if the process is done or not
+                if (WIFEXITED(code)){
+                    //if so, terminate it
+                    printf("terminating pid: %d\n", PCBS[i]->pid);
+                    PCBS[i]->STATE = TERMINATED;
+                }
+                //if the if gives something else, that means its not done
+                //so put it to the back and get ready for next one
+                else{
+                    printf("enqueued back pid: %d\n", PCBS[i]->pid);
+                    PCBS[i]->STATE = READY;
                 }
             }
-            else if (w == -1) {
-                PCBS[x]->exit_status = 1;
-                x++;
-                continue;
-            }
-            w = waitpid(PCBS[(i+1)%PCBS_len]->pid, &wstatus, WNOHANG);
+
+            //if all states are 0, then change status to 0 and loop will break
+            //if we have any state that isn't 0 (not terminated), then status
+            //will be non zero and loop will continue
+            status |= PCBS[i]->STATE;
         }
-        check = CheckAllTerminated();
     }
-    for (int i=0; i<PCBS_len; i++) {
-        printf("Process %d - Waiting \n", PCBS[i]);
-        waitpid(PCBS[i]->pid, &wstatus, WNOHANG);
-    }
-    EXIT = 1;
-}
 
 /*void sigalrm_handler(int sig_num) {
     sleep(5);
@@ -295,7 +316,7 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     MakeCall();
-    SuspendAllProcesses();
+    //SuspendAllProcesses();
     //alarm(1);
     idk();
     AwaitTermination();
