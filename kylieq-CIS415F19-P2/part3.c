@@ -54,7 +54,8 @@ void sigchld_handler(int sig_num) {
 
 void sigalrm_handler(int sig_num) {
     printf("MADE IT TO SIGALRM\n");
-
+    sleep(1);
+    
     raise(SIGCHLD);
     if (CheckAllTerminated() == 1) {
         EXIT = 1;
@@ -163,8 +164,6 @@ int MakeCall() {
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
     }
-
-    sleep(1);
 
     return 1;
 }
