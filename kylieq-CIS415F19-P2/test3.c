@@ -241,7 +241,7 @@ int main(int argc, char *argv[]) {
 //    AwaitTermination();
 
     system("sleep 1");
-    int runPid, exist[PCBS_len], a=1, b=0;
+    int wstatus, runPid, exist[PCBS_len], a=1, b=0;
     pid_t w;
 
     for(int i=0; i<PCBS_len; i++){
@@ -274,7 +274,7 @@ int main(int argc, char *argv[]) {
             //system("sleep 1");
             a = exist_test(exist, PCBS_len);
         }       
-        for(k=0; k<PCBS_len; k++){
+        for(int k=0; k<PCBS_len; k++){
             printf("pid is waiting %d\n", PCBS[k]->pid);
             waitpid(PCBS[k]->pid, &wstatus, WNOHANG );
         }
