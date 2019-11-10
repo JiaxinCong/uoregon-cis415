@@ -14,6 +14,7 @@
 int CHECK = 0;
 int COUNTER = 0;
 int EXIT = 0;
+int EXIT_CTR = 0;
 
 void AwaitTermination() {
     while(!EXIT) {
@@ -46,6 +47,7 @@ void sigchld_handler(int sig_num) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
                 PCBS[i]->STATE = TERMINATED; 
+                EXIT_CTR++;
             }
         }
     }
@@ -60,18 +62,9 @@ void sigalrm_handler(int sig_num) {
         EXIT = 1;
     }
 
-    while(1) {
-        if (PCBS[COUNTER]->exit_status == 1) {
-            COUNTER = (COUNTER+1)%PCBS_len;
-        }
-        else {
-            break;
-        }
-    }
-
     printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
-        if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
+        if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1 && PCBS[COUNTER]->STATE != TERMINATED) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = STOPPED;
@@ -87,7 +80,7 @@ void sigalrm_handler(int sig_num) {
     }
 
     while(1) {
-        if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
+        if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1 && PCBS[COUNTER]->STATE != TERMINATED) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = RUNNING;
@@ -99,7 +92,10 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
-    }
+    
+        if (EXIT_CTR == PCBS_len-1) {
+            exit(1);
+        }
 
     alarm(1);
 }
