@@ -46,7 +46,8 @@ void sigchld_handler(int sig_num) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
                 printf("CHANGING STATES FOR PROCESS %d\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
-                PCBS[i]->STATE = TERMINATED;   
+                PCBS[i]->STATE = TERMINATED;  
+                printf("exit_stat: %d state: %d\n", PCBS[i]->exit_status, PCBS[i]->STATE); 
             }
         }
     }
