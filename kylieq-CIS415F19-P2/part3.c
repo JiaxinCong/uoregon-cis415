@@ -96,7 +96,7 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
-    alarm(1);
+    alarm(10);
 }
 
 /* Stop all processes but the first one */
