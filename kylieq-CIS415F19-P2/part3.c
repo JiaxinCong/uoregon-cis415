@@ -54,7 +54,7 @@ void sigchld_handler(int sig_num) {
 
 void sigalrm_handler(int sig_num) {
     printf("MADE IT TO SIGALRM\n");
-    sleep(1);
+    sleep(5);
 
     raise(SIGCHLD);
     if (CheckAllTerminated() == 1) {
@@ -85,10 +85,7 @@ void sigalrm_handler(int sig_num) {
         printf("Stuck in while for SIGCONT\n");
         if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
             printf("PROPER STATES TO CONTINUE\n");
-            int result = kill(PCBS[COUNTER]->pid, SIGCONT);
-            printf("result of kill(): %d\n", result);
-            //if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
-            if (result == 0) {
+            if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = RUNNING;
             }
