@@ -54,7 +54,6 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
-    sleep(5);
     printf("MADE IT TO SIGALRM\n");
 
     raise(SIGCHLD);
@@ -94,6 +93,7 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
+    printf("EXIT_CTR: %d\n", EXIT_CTR);
     if (EXIT_CTR == PCBS_len-1) {
         exit(1);
     }
