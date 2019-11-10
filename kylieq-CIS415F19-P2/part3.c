@@ -92,10 +92,11 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
-    
-        if (EXIT_CTR == PCBS_len-1) {
-            exit(1);
-        }
+    }
+
+    if (EXIT_CTR == PCBS_len-1) {
+        exit(1);
+    }
 
     alarm(1);
 }
