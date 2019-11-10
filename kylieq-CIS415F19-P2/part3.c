@@ -52,6 +52,7 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
+    sleep(1);
     raise(SIGCHLD);
     if (CheckAllTerminated() == 1) {
         EXIT = 1;
