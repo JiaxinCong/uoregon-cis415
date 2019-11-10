@@ -52,6 +52,7 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
+    sleep(5);
     printf("MADE IT TO SIGALRM\n");
 
     raise(SIGCHLD);
