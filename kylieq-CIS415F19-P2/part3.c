@@ -44,10 +44,8 @@ void sigchld_handler(int sig_num) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
                 printf("Process: %d - Ended\n", PCBS[i]->pid);
-                printf("CHANGING STATES FOR PROCESS %d\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
                 PCBS[i]->STATE = TERMINATED;  
-                printf("exit_stat: %d state: %d\n", PCBS[i]->exit_status, PCBS[i]->STATE); 
             }
         }
     }
@@ -89,7 +87,8 @@ void sigalrm_handler(int sig_num) {
     }
 
     while(1) {
-        if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
+        //if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
+        if (PCBS[COUNTER]->STATE == 2 && PCBS[COUNTER]->exit_status != 1) {
             if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                 printf("in cont: exit_status: %d state: %d needed state: %d\n", PCBS[COUNTER]->exit_status, PCBS[COUNTER]->STATE, STOPPED);
                 printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
