@@ -83,19 +83,7 @@ int MakeCall() {
 }
 
 int main(int argc, char *argv[]) {
-//    signal(SIGUSR1, sigusr1_handler);
-
-    struct sigaction act;
-    sigset_t set;
-
-    sigemptyset(&set);
-    sigaddset(&set, SIGUSR1);
-
-    act.sa_flags = 0;
-    act.sa_mask = set;
-    act.sa_handler = sigusr1_handler;
-
-    sigaction(SIGUSR1, &act, NULL);
+    signal(SIGUSR1, sigusr1_handler);
 
     char *filename = argv[1];
 
