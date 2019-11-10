@@ -72,9 +72,8 @@ void sigalrm_handler(int sig_num) {
     printf("Process: %d Ctr: %d Counter: %d\n", PCBS[COUNTER]->pid, (COUNTER+1)%PCBS_len, COUNTER);
     while(1) {
         printf("Stuck in while for SIGSTOP\n");
-        printf("need: %d state: %d\n", RUNNING, PCBS[COUNTER]->STATE);
-        printf("exit status: %d\n", PCBS[COUNTER]->exit_status);
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
+            printf("PROPER STATES TO BE STOPPED\n");
             if (kill(PCBS[COUNTER]->pid, SIGSTOP) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = STOPPED;
@@ -92,9 +91,8 @@ void sigalrm_handler(int sig_num) {
 
     while(1) {
         printf("Stuck in while for SIGCONT\n");
-        printf("need: %d state: %d\n", STOPPED, PCBS[COUNTER]->STATE);
-        printf("exit status: %d\n", PCBS[COUNTER]->exit_status);
         if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
+            printf("PROPER STATES TO CONTINUE\n");
             if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
                 printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = RUNNING;
