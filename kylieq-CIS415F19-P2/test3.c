@@ -101,6 +101,7 @@ int idk() {
         printf("Process %d - Waiting \n", PCBS[i]);
         waitpid(PCBS[i]->pid, &wstatus, WNOHANG);
     }
+    EXIT = 1;
     return 1;
 }
 
