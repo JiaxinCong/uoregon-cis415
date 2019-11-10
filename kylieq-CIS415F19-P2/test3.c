@@ -65,7 +65,7 @@ void sigalrm_handler(int sig_num) {
     alarm_check = 1;
 }
 
-void idk() {
+int idk() {
     pid_t w; 
     int wstatus;
     int x = 0;
@@ -101,6 +101,7 @@ void idk() {
         printf("Process %d - Waiting \n", PCBS[i]);
         waitpid(PCBS[i], &wstatus, WNOHANG);
     }
+    return 1;
 }
 
 /*void sigalrm_handler(int sig_num) {
@@ -292,7 +293,7 @@ int main(int argc, char *argv[]) {
     SuspendAllProcesses();
     //alarm(1);
     idk();
-    //AwaitTermination();
+    AwaitTermination();
     //TerminateAllProcesses();
 
     FreePCB(PCBS);
