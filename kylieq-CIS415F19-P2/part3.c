@@ -91,6 +91,7 @@ void sigalrm_handler(int sig_num) {
     while(1) {
         if (PCBS[COUNTER]->STATE == STOPPED && PCBS[COUNTER]->exit_status != 1) {
             if (kill(PCBS[COUNTER]->pid, SIGCONT) == 0) {
+                printf("in cont: exit_status: %d state: %d needed state: %d\n", PCBS[COUNTER]->exit_status, PCBS[COUNTER]->STATE, STOPPED);
                 printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->STATE = RUNNING;
             }
