@@ -13,6 +13,13 @@
 
 int CHECK = 0;
 int COUNTER = 0;
+int EXIT = 0;
+
+void AwaitTermination() {
+    while(!EXIT) {
+        usleep(300);
+    }
+}
 
 void sigusr1_handler(int sig_num) {
     if (sig_num == SIGUSR1) { 
@@ -85,7 +92,7 @@ int TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
     return 1;
 }
 
-int makeCall(struct ProcessControlBlock **PCBS) {
+int MakeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->pid = fork();
 
@@ -134,7 +141,7 @@ int main(int argc, char *argv[]) {
     buffer = (char *)malloc(bufferSize * sizeof(char));
 
     /* Read text file given by the user. */
-    inputSize = get_line(filename, buffer, bufferSize);
+    inputSize = GetLine(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
@@ -173,16 +180,16 @@ int main(int argc, char *argv[]) {
     PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand */
-    parseCommand(ptr, line_ctr, PCBS);
+    ParseCommand(ptr, line_ctr, PCBS);
 
     /* Make calls */
-    makeCall(PCBS);
+    MakeCall(PCBS);
 
     SuspendAllProcesses(PCBS);
     alarm(1);
     TerminateAllProcesses(PCBS);
 
-    freePCB(PCBS);
+    FreePCB(PCBS);
     free(ptr);
     free(buffer);
     return 0;

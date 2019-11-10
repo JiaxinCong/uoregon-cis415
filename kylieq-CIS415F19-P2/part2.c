@@ -21,27 +21,25 @@ void sigusr1_handler(int sig_num) {
     }
 }
 
-void SuspendAllProcesses(struct ProcessControlBlock **PCBS) {
+void SuspendAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             sleep(1);
         }
     }
-    sleep(5);
 }
 
-void ContinueAllProcesses(struct ProcessControlBlock **PCBS) {
+void ContinueAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Continue processes */
         if (kill(PCBS[i]->pid, SIGCONT) == 0) {
             printf("Process: %d - Continued\n", PCBS[i]->pid);
             sleep(1);
         }
     }
-    sleep(5);
 }
 
-void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
+void TerminateAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
@@ -49,7 +47,7 @@ void TerminateAllProcesses(struct ProcessControlBlock **PCBS) {
     } 
 }
 
-int makeCall(struct ProcessControlBlock **PCBS) {
+int MakeCall() {
     for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->pid = fork();
 
@@ -97,7 +95,7 @@ int main(int argc, char *argv[]) {
     buffer = (char *)malloc(bufferSize * sizeof(char));
 
     /* Read text file given by the user. */
-    inputSize = get_line(filename, buffer, bufferSize);
+    inputSize = GetLine(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
@@ -136,16 +134,16 @@ int main(int argc, char *argv[]) {
     PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand */
-    parseCommand(ptr, line_ctr, PCBS);
+    ParseCommand(ptr, line_ctr, PCBS);
 
     /* Make calls */
-    makeCall(PCBS);
+    MakeCall();
     sleep(1);
-    SuspendAllProcesses(PCBS);
-    ContinueAllProcesses(PCBS);
-    TerminateAllProcesses(PCBS);
+    SuspendAllProcesses();
+    ContinueAllProcesses();
+    TerminateAllProcesses();
 
-    freePCB(PCBS);
+    FreePCB(PCBS);
     free(ptr);
     free(buffer);
     return 0;
