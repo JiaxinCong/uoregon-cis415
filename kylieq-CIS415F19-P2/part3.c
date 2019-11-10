@@ -74,9 +74,9 @@ void sigalrm_handler(int sig_num) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = STOPPED;
-            //COUNTER = (COUNTER+1)%PCBS_len;
+            COUNTER = (COUNTER+1)%PCBS_len;
 
-            int c = 1;
+            /*int c = 1;
             while(c == 1) {
                 COUNTER = (COUNTER+1)%PCBS_len;
                 if (PCBS[COUNTER]->exit_status == 1) {
@@ -85,7 +85,7 @@ void sigalrm_handler(int sig_num) {
                 else {
                     c = 0;
                 }
-            }
+            }*/
 
             //printf("TEST2\n");
 
@@ -119,8 +119,8 @@ void sigalrm_handler(int sig_num) {
             break;
         }
         else {
-            //COUNTER = (COUNTER+1)%PCBS_len;
-            int c = 1;
+            COUNTER = (COUNTER+1)%PCBS_len;
+            /*int c = 1;
             while(c == 1) {
                 COUNTER = (COUNTER+1)%PCBS_len;
                 if (PCBS[COUNTER]->exit_status == 1) {
@@ -129,7 +129,7 @@ void sigalrm_handler(int sig_num) {
                 else {
                     c = 0;
                 }
-            }
+            }*/
             //printf("TEST5\n");
         }
     }
