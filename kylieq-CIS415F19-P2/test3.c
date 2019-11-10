@@ -47,7 +47,7 @@ void sigusr1_handler(int sig_num) {
     }
 }
 
-void sigchld_handler(int sig_num) {
+/*void sigchld_handler(int sig_num) {
     int status;
     for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
@@ -58,7 +58,7 @@ void sigchld_handler(int sig_num) {
             }
         }
     }
-}
+}*/
 
 int alarm_check = 0;
 void sigalrm_handler(int sig_num) {
@@ -81,9 +81,11 @@ int idk() {
                 if (alarm_check == 1) {
                     if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                        PCBS[i]->STATE = STOPPED;
                     }
                     if (kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT) == 0) {
                         printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                        PCBS[i]->STATE = RUNNING;
                     }
                     alarm_check = 0;
                 }
@@ -236,7 +238,7 @@ int MakeCall() {
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
-    signal(SIGCHLD, sigchld_handler);
+    //signal(SIGCHLD, sigchld_handler);
 
     char *filename = argv[1];
 
