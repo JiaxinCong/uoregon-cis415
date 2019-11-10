@@ -65,7 +65,7 @@ void sigalrm_handler(int sig_num) {
     alarm_check = 1;
 }
 
-int idk() {
+void idk() {
     pid_t w; 
     int wstatus;
     int x = 0;
@@ -79,7 +79,8 @@ int idk() {
         for (int i=0; i<PCBS_len; i++) {
             alarm(1);
             system("sleep 1");
-            if (w == 0){
+            printf("W:%d\n", w);
+            if (w == 0) {
                 if (alarm_check == 1) {
                     kill(PCBS[i]->pid, SIGSTOP);
                     printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
@@ -106,7 +107,6 @@ int idk() {
         waitpid(PCBS[i]->pid, &wstatus, WNOHANG);
     }
     EXIT = 1;
-    return 1;
 }
 
 /*void sigalrm_handler(int sig_num) {
