@@ -94,8 +94,8 @@ void sigalrm_handler(int sig_num) {
             }
             break;
         }
-        else if (CheckAllTerminated() == 1) {
-            EXIT = 1;
+        else if (PCBS[COUNTER]->STATE == RUNNING) {
+            break;
         }
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
