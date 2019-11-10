@@ -93,13 +93,13 @@ int idk() {
                 x++;
                 continue;
             }
-            w = waitpid(PCBS[(i+1)%PCBS_len], &wstatus, WNOHANG);
+            w = waitpid(PCBS[(i+1)%PCBS_len]->pid, &wstatus, WNOHANG);
         }
         check = CheckAllTerminated();
     }
     for (int i=0; i<PCBS_len; i++) {
         printf("Process %d - Waiting \n", PCBS[i]);
-        waitpid(PCBS[i], &wstatus, WNOHANG);
+        waitpid(PCBS[i]->pid, &wstatus, WNOHANG);
     }
     return 1;
 }
