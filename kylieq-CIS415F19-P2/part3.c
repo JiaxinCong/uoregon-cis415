@@ -69,26 +69,11 @@ void sigalrm_handler(int sig_num) {
 
     printf("Process: %d Counter: %d\n", PCBS[COUNTER]->pid, COUNTER);
     while(1) {
-        //printf("TEST1\n");
         if (PCBS[COUNTER]->STATE == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
             printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = STOPPED;
             COUNTER = (COUNTER+1)%PCBS_len;
-
-            /*int c = 1;
-            while(c == 1) {
-                COUNTER = (COUNTER+1)%PCBS_len;
-                if (PCBS[COUNTER]->exit_status == 1) {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-                else {
-                    c = 0;
-                }
-            }*/
-
-            //printf("TEST2\n");
-
             break;
         }   
         else if (PCBS[COUNTER]->STATE == STOPPED) {
@@ -96,19 +81,6 @@ void sigalrm_handler(int sig_num) {
         }
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
-            /*int c = 1;
-            while(c == 1) {
-                COUNTER = (COUNTER+1)%PCBS_len;
-                if (PCBS[COUNTER]->exit_status == 1) {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-                else {
-                    c = 0;
-                }
-            }
-            */
-            //printf("TEST3\n");
-            //printf("Process: %d STATE: %d\n", PCBS[COUNTER]->pid, PCBS[COUNTER]->STATE);
         }
     }
 
@@ -117,23 +89,10 @@ void sigalrm_handler(int sig_num) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
             PCBS[COUNTER]->STATE = RUNNING;
-
-            //printf("TEST4\n");
             break;
         }
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
-            /*int c = 1;
-            while(c == 1) {
-                COUNTER = (COUNTER+1)%PCBS_len;
-                if (PCBS[COUNTER]->exit_status == 1) {
-                    COUNTER = (COUNTER+1)%PCBS_len;
-                }
-                else {
-                    c = 0;
-                }
-            }*/
-            //printf("TEST5\n");
         }
     }
 
