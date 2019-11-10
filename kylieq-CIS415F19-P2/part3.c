@@ -61,7 +61,7 @@ void sigalrm_handler(int sig_num) {
     }
     else if (PCBS[COUNTER]->STATE == RUNNING) {
         kill(PCBS[COUNTER]->pid, SIGSTOP);
-        PCBS[COUNTER]->STATE = PAUSED;
+        PCBS[COUNTER]->STATE = STOPPED;
         printf("Process: %d - Suspended\n", PCBS[COUNTER]->pid);
     }
 
@@ -73,7 +73,7 @@ void sigalrm_handler(int sig_num) {
         int compare = COUNTER+1;
         while(1) {
             if (compare < PCBS_len-1) {
-                if (PCBS[compare]->STATE == PAUSED || PCBS[compare]->STATE == READY) {
+                if (PCBS[compare]->STATE == STOPPED || PCBS[compare]->STATE == READY) {
                     COUNTER = compare;
                     break;
                 }
@@ -82,7 +82,7 @@ void sigalrm_handler(int sig_num) {
                 }
             }
             else if (compare == (PCBS_len-1)) {
-                if(PCBS[compare]->STATE == PAUSED || PCBS[compare]->STATE == READY) {
+                if(PCBS[compare]->STATE == STOPPED || PCBS[compare]->STATE == READY) {
                     COUNTER = compare;
                     break;
                 }
@@ -98,7 +98,7 @@ void sigalrm_handler(int sig_num) {
             PCBS[COUNTER]->STATE = RUNNING;
             printf("Process: %d - Started\n", PCBS[COUNTER]->pid);
         }
-        else if (PCBS[COUNTER]->STATE == PAUSED) {
+        else if (PCBS[COUNTER]->STATE == STOPPED) {
             kill(PCBS[COUNTER]->pid, SIGCONT);
             alarm(1);
             PCBS[COUNTER]->STATE = RUNNING;
