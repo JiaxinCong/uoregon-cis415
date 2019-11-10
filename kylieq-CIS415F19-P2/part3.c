@@ -172,7 +172,6 @@ int MakeCall() {
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
     }
-    sleep(1);
 
     return 1;
 }
@@ -235,6 +234,7 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     MakeCall();
+    sleep(1);
     SuspendAllProcesses();
     alarm(1);
     AwaitTermination();
