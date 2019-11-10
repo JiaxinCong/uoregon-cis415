@@ -91,6 +91,9 @@ void sigalrm_handler(int sig_num) {
 
             break;
         }   
+        else if (PCBS[COUNTER]->STATE == STOPPED) {
+            break;
+        }
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
             /*int c = 1;
