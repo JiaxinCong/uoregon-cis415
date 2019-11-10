@@ -107,6 +107,7 @@ void sigalrm_handler(int sig_num) {
 
 /* Stop all processes but the first one */
 void SuspendAllProcesses() {
+    sleep(1);
     for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
