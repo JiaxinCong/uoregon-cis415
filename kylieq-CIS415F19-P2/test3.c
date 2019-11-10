@@ -71,7 +71,7 @@ int idk() {
     int x = 0;
 
     kill(PCBS[0]->pid, SIGCONT);
-    w = waitpid(PCBS[0], &wstatus, WNOHANG);
+    w = waitpid(PCBS[0]->pid, &wstatus, WNOHANG);
     int check = 1;
     while(check) {
         for (int i=0; i<PCBS_len; i++) {
