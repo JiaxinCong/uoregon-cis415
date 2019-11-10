@@ -32,6 +32,7 @@ int CheckAllTerminated() {
 
 void handler(int sig_num) {
     switch(sig_num) {
+        int status;
         case SIGUSR1:
             if (sig_num == SIGUSR1) { 
                 printf("Process: %i - Received signal SIGUSR1\n", getpid());
@@ -40,7 +41,6 @@ void handler(int sig_num) {
             }
             break;
         case SIGCHLD:
-            int status;
             for (int i=0; i<PCBS_len; i++) {
                 if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
                     if (WIFEXITED(status)) {
@@ -271,7 +271,6 @@ int main(int argc, char *argv[]) {
 
     struct sigaction act;
     sigset_t set;
-    int sig;
 
     sigemptyset(&set);
     sigaddset(&set, SIGUSR1);
