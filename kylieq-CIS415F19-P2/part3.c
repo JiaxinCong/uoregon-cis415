@@ -76,7 +76,7 @@ void sigalrm_handler(int sig_num) {
             //COUNTER = (COUNTER+1)%PCBS_len;
             
             int c = 1;
-            while(c) {
+            while(c == 1) {
                 if (PCBS[COUNTER]->exit_status == 1) {
                     COUNTER = (COUNTER+1)%PCBS_len;
                 }
@@ -88,7 +88,7 @@ void sigalrm_handler(int sig_num) {
         }   
         else {
             int c = 1;
-            while(c) {
+            while(c == 1) {
                 if (PCBS[COUNTER]->exit_status == 1) {
                     COUNTER = (COUNTER+1)%PCBS_len;
                 }
@@ -109,7 +109,7 @@ void sigalrm_handler(int sig_num) {
         }
         else {
             int c = 1;
-            while(c) {
+            while(c == 1) {
                 if (PCBS[COUNTER]->exit_status == 1) {
                     COUNTER = (COUNTER+1)%PCBS_len;
                 }
