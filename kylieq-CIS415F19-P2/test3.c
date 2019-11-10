@@ -79,14 +79,14 @@ int idk() {
             sleep(1);
             if (w == 0){
                 if (alarm_check == 1) {
-                    if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
-                        PCBS[i]->STATE = STOPPED;
-                    }
-                    if (kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT) == 0) {
-                        printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                        PCBS[i]->STATE = RUNNING;
-                    }
+                    kill(PCBS[i]->pid, SIGSTOP);
+                    printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
+                    PCBS[i]->STATE = STOPPED;
+
+                    kill(PCBS[(i+1)%PCBS_len]->pid, SIGCONT);
+                    printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+                    PCBS[i]->STATE = RUNNING;
+                    
                     alarm_check = 0;
                 }
             }
