@@ -10,7 +10,7 @@
 
 #include "command.h"
 
-int makeCall(struct ProcessControlBlock **PCBS) {
+int MakeCall(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_len; i++) {
 
         PCBS[i]->pid = fork();
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     buffer = (char *)malloc(bufferSize * sizeof(char));
 
     /* Read text file given by the user. */
-    inputSize = get_line(filename, buffer, bufferSize);
+    inputSize = GetLine(filename, buffer, bufferSize);
 
     /* Place '\0' at the end of the string held in the input buffer 
        to signify the end of the string. */
@@ -90,12 +90,12 @@ int main(int argc, char *argv[]) {
     PCBS = malloc(line_ctr * sizeof(struct ProcessControlBlock*));
 
     /* Send the command and its arguments (held in ptr) to parseCommand_File */
-    parseCommand(ptr, line_ctr, PCBS);
+    ParseCommand(ptr, line_ctr, PCBS);
 
     /* Make calls */
- 	makeCall(PCBS);
+ 	MakeCall(PCBS);
 
- 	freePCB(PCBS);
+ 	FreePCB(PCBS);
     free(ptr);
     free(buffer);
     return 0;

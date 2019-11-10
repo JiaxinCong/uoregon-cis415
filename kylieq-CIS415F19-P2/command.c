@@ -14,7 +14,7 @@ struct ProcessControlBlock **PCBS;
 int PCBS_len;
 
 /* Read file */
-int get_line(char *filename, char *buffer, size_t bufferSize) {
+int GetLine(char *filename, char *buffer, size_t bufferSize) {
 
     int file = open(filename, O_RDONLY);
     if (file == -1) {
@@ -39,7 +39,7 @@ int get_line(char *filename, char *buffer, size_t bufferSize) {
 }
 
 /* Split line read from file into individual commands */
-int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
+int ParseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) {
 
     const char *s = " ";
 
@@ -103,7 +103,7 @@ int parseCommand(char **arr, size_t arrSize, struct ProcessControlBlock **PCBS) 
 }
 
 /* Free struct ProcessControlBlock */
-int freePCB(struct ProcessControlBlock **PCBS) {
+int FreePCB(struct ProcessControlBlock **PCBS) {
     for (int i=0; i<PCBS_len; i++) {
         free(PCBS[i]->args);
         free(PCBS[i]);
