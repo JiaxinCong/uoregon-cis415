@@ -173,6 +173,8 @@ int MakeCall() {
         kill(PCBS[i]->pid, SIGUSR1);
     }
 
+    sleep(5);
+
     return 1;
 }
 
