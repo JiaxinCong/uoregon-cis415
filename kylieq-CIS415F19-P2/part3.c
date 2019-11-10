@@ -96,7 +96,7 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
-    alarm(10);
+    alarm(1);
 }
 
 /* Stop all processes but the first one */
@@ -160,7 +160,6 @@ int MakeCall() {
     for (int i=0; i<PCBS_len; i++) { /* SIGUSR1 signal */
         printf("Process: %d - Joined\n", PCBS[i]->pid);
         kill(PCBS[i]->pid, SIGUSR1);
-        sleep(1);
     }
 
     return 1;
