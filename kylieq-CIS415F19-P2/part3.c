@@ -57,6 +57,19 @@ void sigalrm_handler(int sig_num) {
         EXIT = 1;
     }
 
+    if (PCBS[i]->exit_status == 1) {
+        COUNTER++;
+    }
+
+    while(1) {
+        if (PCBS[COUNTER]->exit_status == 1) {
+            COUNTER = (COUNTER+1)%PCBS_len;
+        }
+        else {
+            break;
+        }
+    }
+
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
