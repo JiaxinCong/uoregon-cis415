@@ -66,6 +66,7 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
+    printf("Process: %d Counter: %d\n", PCBS[COUNTER]->pid, COUNTER);
     while(1) {
         if (PCBS[COUNTER]->STATE == RUNNING) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
@@ -98,8 +99,7 @@ void SuspendAllProcesses() {
     for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
-            PCBS[i]->STATE = STOPPED;
-            printf("PCBS stopped status: %d\n", PCBS[COUNTER]->STATE);
+            PCBS[i]->STATE = STOPPED; // 0
             sleep(1);
         }
     }
@@ -110,7 +110,6 @@ void ContinueAllProcesses() {
         if (kill(PCBS[i]->pid, SIGCONT) == 0) {
             printf("Process: %d - Continued\n", PCBS[i]->pid);
             PCBS[i]->STATE = RUNNING;
-            printf("PCBS Running status: %d\n", PCBS[COUNTER]->STATE);
             sleep(1);
         }
     }
@@ -120,9 +119,8 @@ int TerminateAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
         printf("Process: %d - Ended\n", PCBS[i]->pid);
-        PCBS[i]->STATE = TERMINATED;
+        PCBS[i]->STATE = TERMINATED; 
         PCBS[i]->exit_status = 1;
-        printf("PCBS terminated status: %d\n", PCBS[COUNTER]->STATE);
         sleep(1);
     } 
     return 1;
