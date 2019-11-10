@@ -180,6 +180,7 @@ int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
     signal(SIGCHLD, sigchld_handler);
+    signal(SIGTSTP, SIG_DFL);
 
     char *filename = argv[1];
 
