@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
 
 
     system("sleep 1");
-    int runPid, exist[PCBS_len], a=1, b=0;
+    int runPid, exist[PCBS_len], a=1, b=0, wstatus;
     pid_t w;
 
     for(int i=0; i<PCBS_len; i++){
@@ -264,8 +264,8 @@ int main(int argc, char *argv[]) {
             system("sleep 1");
             if(w == 0 ){
                 if(alarmFlg==1){
-                    printf("stopping signal to %d\n", PCBS[runpid]->pid);     
-                    kill(PCBS[runpid]->pid, SIGSTOP);                         // sending stop signal
+                    printf("stopping signal to %d\n", PCBS[runPid]->pid);     
+                    kill(PCBS[runPid]->pid, SIGSTOP);                         // sending stop signal
                     printf("running signal to %d\n", PCBS[(runPid+1)%PCBS_len]->pid);
                     kill(PCBS[(runPid+1)%PCBS_len]->pid, SIGCONT);                    // sending start signal
                     alarmFlg = 0 ;
