@@ -84,7 +84,10 @@ void sigalrm_handler(int sig_num) {
                 PCBS[COUNTER]->state = STOPPED;
                 COUNTER = (COUNTER+1)%PCBS_len;
                 break;
-            }   
+            }  
+            else if (PCBS[COUNTER]->STATE == STOPPED) {
+                break;
+            }
             else {
                 COUNTER = (COUNTER+1)%PCBS_len;
                 printf("New process: %d\n", PCBS[COUNTER]->pid);
@@ -98,6 +101,9 @@ void sigalrm_handler(int sig_num) {
                 printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
                 kill(PCBS[COUNTER]->pid, SIGCONT);
                 PCBS[COUNTER]->state = RUNNING;
+                break;
+            }
+            else if (PCBS[COUNTER]->STATE == RUNNING) {
                 break;
             }
             else {
