@@ -39,7 +39,7 @@ void SigUsr1Handler(int sig_num) {
     }
 }
 
-void SigChld_handler(int sig_num) {
+void SigChldHandler(int sig_num) {
     int status;
     for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
@@ -52,7 +52,7 @@ void SigChld_handler(int sig_num) {
     }
 }
 
-void sigalrm_handler(int sig_num) {
+void SigAlrmHandler(int sig_num) {
     raise(SIGCHLD);
 
     if (PCBS[COUNTER]->exit_status == 1) {
@@ -186,8 +186,8 @@ int MakeCall() {
 
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, SigUsr1Handler);
-    signal(SIGALRM, sigalrm_handler);
-    signal(SIGCHLD, sigchld_handler);
+    signal(SIGALRM, SigAlrmHandler);
+    signal(SIGCHLD, SigChldHandler);
 
     char *filename = argv[1];
 
