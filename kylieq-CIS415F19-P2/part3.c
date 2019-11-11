@@ -52,8 +52,6 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
-    printf("MADE IT TO SIGALRM\n");
-
     raise(SIGCHLD);
 
     if (PCBS[COUNTER]->exit_status == 1) {
