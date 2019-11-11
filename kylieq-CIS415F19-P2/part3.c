@@ -44,7 +44,6 @@ void sigchld_handler(int sig_num) {
     for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
-                printf("Process: %d - Terminated\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
             }
         }
