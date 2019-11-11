@@ -49,6 +49,7 @@ void SigChldHandler(int sig_num) {
             else
                 printf("status: %d\n", status);
         }
+        printf("here\n");
 }
 
 void SigAlrmHandler(int sig_num) {
