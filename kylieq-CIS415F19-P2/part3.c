@@ -82,7 +82,7 @@ void sigalrm_handler(int sig_num) {
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status);
                 }
                 else {
-                    printf("Next process: %d\n", PCBS[COUNTER]->pid);
+                    printf("Next process: %d - Has not terminated. Continue.\n", PCBS[COUNTER]->pid);
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status); 
                 }
                 printf("-----------------------------------------------------\n");
