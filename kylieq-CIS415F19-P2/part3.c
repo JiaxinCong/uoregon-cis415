@@ -68,7 +68,7 @@ void sigalrm_handler(int sig_num) {
         while(1) {
             if (PCBS[COUNTER]->exit_status == 1) {
                 COUNTER = (COUNTER+1)%PCBS_len;
-                printf("new process: %d\n", PCBS[i]->pid);
+                printf("new process: %d\n", PCBS[COUNTER]->pid);
             }
             else {
                 break;
