@@ -229,7 +229,7 @@ int main(int argc, char *argv[]) {
     for (int i=0; i<PCBS_len; i++) {
         PCBS[i]->exit_status = 1;
     }
-    CheckAllTerminated();
+    EXIT = CheckAllTerminated();
     AwaitTermination();
     //TerminateAllProcesses();
 
