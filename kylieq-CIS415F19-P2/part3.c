@@ -43,7 +43,7 @@ void sigchld_handler(int sig_num) {
     for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
-                printf("Process: %d - Ended\n", PCBS[i]->pid);
+                printf("Process: %d - Terminated\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
             }
         }
@@ -120,7 +120,7 @@ void ContinueAllProcesses() {
 int TerminateAllProcesses() {
     for (int i=0; i<PCBS_len; i++) { /* Terminate processes */
         wait(NULL);
-        printf("Process: %d - Ended\n", PCBS[i]->pid);
+        printf("Process: %d - Terminated\n", PCBS[i]->pid);
         PCBS[i]->state = TERMINATED; 
         PCBS[i]->exit_status = 1;
         sleep(1);
