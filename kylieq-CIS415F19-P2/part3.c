@@ -76,18 +76,16 @@ void sigalrm_handler(int sig_num) {
             }
             else {
                 COUNTER = (COUNTER+1)%PCBS_len;
-                printf("-------------------------------------------------\n");
+                printf("-----------------------------------------------------\n");
                 if (PCBS[COUNTER]->exit_status == 1) {
                     printf("Next process: %d - Already terminated. Move on.\n", PCBS[COUNTER]->pid);
-                    printf("Process state: %d\n", PCBS[COUNTER]->state);
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status);
                 }
                 else {
                     printf("Next process: %d\n", PCBS[COUNTER]->pid);
-                    printf("Process state: %d\n", PCBS[COUNTER]->state);
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status); 
                 }
-                printf("-------------------------------------------------\n");
+                printf("-----------------------------------------------------\n");
             }
         }
 
@@ -103,18 +101,16 @@ void sigalrm_handler(int sig_num) {
             }
             else {
                 COUNTER = (COUNTER+1)%PCBS_len;
-                printf("-------------------------------------------------\n");
+                printf("-----------------------------------------------------\n");
                 if (PCBS[COUNTER]->exit_status == 1) {
                     printf("Next process: %d - Already terminated. Move on.\n", PCBS[COUNTER]->pid);
-                    printf("Process state: %d\n", PCBS[COUNTER]->state);
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status);
                 }
                 else {
                     printf("Next process: %d\n", PCBS[COUNTER]->pid);
-                    printf("Process state: %d\n", PCBS[COUNTER]->state);
                     printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status); 
                 }
-                printf("-------------------------------------------------\n");
+                printf("-----------------------------------------------------\n");
             }
 
         }
