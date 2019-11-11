@@ -148,7 +148,7 @@ int MakeCall() {
                 //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
             }
 
-            exit(-1);
+            exit(1);
         }
     }
 
