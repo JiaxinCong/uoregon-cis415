@@ -187,51 +187,6 @@ int MakeCall() {
     return 1;
 }
 
-void ProgramStatistics(){
-    while(!EXIT) {
-        sleep(1);
-        for(int i = 0; i < PCBS_len; i++){
-            int track = 0;
-            char count[MAX_BUFF];
-            char file[MAX_BUFF] = "/proc/";
-            char stats_output[MAX_BUFF] = "";
-            char* finalout[50];
-            sprintf(count, "%d", PCBS[i]->pid);
-            strcat(file,count);
-            strcpy(count, "/stat");
-            strcat(file,count);
-            FILE *procfile = fopen(file, "r");
-            if(procfile == NULL)
-                continue;
-            if(fgets(stats_output, MAX_BUFF, procfile) != NULL){
-                char* token = "";
-                token = strtok(stats_output,"  \n");
-                while(token != NULL){
-                    track+=1;
-                    if(track == 1){
-                        finalout[0] = token;
-                    }
-
-                    token = strtok(NULL, " \n");
-                    if(token != NULL){
-                        if(track == 3){
-                            finalout[1] = token;
-                        }
-                        else if(track == 13){
-                            finalout[2] = token;
-                        }
-                        else if(track == 14){
-                            finalout[3] = token;  
-                        }
-                    }
-                }
-                printf("PID: %s   ParentPID: %s   IO: %s   Kernel: %s\n", finalout[0], finalout[1], finalout[2],finalout[3]);           
-            }
-            fclose(procfile);
-        }
-    }
-}
-
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, sigusr1_handler);
     signal(SIGALRM, sigalrm_handler);
@@ -293,7 +248,6 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses();
     alarm(1);
-    ProgramStatistics();
     AwaitTermination();
 
     FreePCB(PCBS);
