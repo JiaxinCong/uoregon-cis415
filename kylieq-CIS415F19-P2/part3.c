@@ -159,18 +159,17 @@ int MakeCall() {
             printf("Unable to fork process.\n");
             exit(1);
         }
-        if (PCBS[i]->pid == 0) {
+        else if (PCBS[i]->pid == 0) {
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
                 usleep(300);
             }
-
+            printf("continued\n");
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
-                //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                exit(-1);
             }
-
-            exit(1);
         }
     }
 
