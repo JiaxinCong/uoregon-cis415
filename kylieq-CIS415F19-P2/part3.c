@@ -84,20 +84,16 @@ void sigalrm_handler(int sig_num) {
     }
 
     while(1) {
-        if(w == 0) {
-            if (PCBS[COUNTER]->state == STOPPED && PCBS[COUNTER]->exit_status != 1) {
-                kill(PCBS[COUNTER]->pid, SIGCONT);
-                printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
-                PCBS[COUNTER]->state = RUNNING;
-                break;
-            }
-            else {
-                COUNTER = (COUNTER+1)%PCBS_len;
-            }
+        if (PCBS[COUNTER]->state == STOPPED && PCBS[COUNTER]->exit_status != 1) {
+            kill(PCBS[COUNTER]->pid, SIGCONT);
+            printf("Process: %d - Received Signal SIGALRM - Continued\n", PCBS[COUNTER]->pid);
+            PCBS[COUNTER]->state = RUNNING;
+            break;
         }
-        else{
+        else {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
+
     }
 
     alarm(1);
