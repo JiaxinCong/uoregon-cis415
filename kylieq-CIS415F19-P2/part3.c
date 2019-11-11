@@ -46,6 +46,7 @@ void sigchld_handler(int sig_num) {
             if (WIFEXITED(status)) {
                 printf("Process: %d - Terminated\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
+                PCBS[i]->state = TERMINATED;
             }
         }
     }
