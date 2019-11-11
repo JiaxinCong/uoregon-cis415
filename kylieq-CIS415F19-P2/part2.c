@@ -13,7 +13,7 @@
 
 int CHECK = 0;
 
-void sigusr1_handler(int sig_num) {
+void SigUsr1Handler(int sig_num) {
     if (sig_num == SIGUSR1) {
         printf("Process: %i - Received signal: SIGUSR1\n", getpid());
         CHECK = 1;
@@ -83,7 +83,7 @@ int MakeCall() {
 }
 
 int main(int argc, char *argv[]) {
-    signal(SIGUSR1, sigusr1_handler);
+    signal(SIGUSR1, SigUsr1Handler);
 
     char *filename = argv[1];
 
