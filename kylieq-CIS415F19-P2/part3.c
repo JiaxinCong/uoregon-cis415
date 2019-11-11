@@ -52,6 +52,8 @@ void sigchld_handler(int sig_num) {
 }
 
 void sigalrm_handler(int sig_num) {
+    printf("MADE IT TO SIGALRM\n");
+
     raise(SIGCHLD);
 
     if (PCBS[COUNTER]->exit_status == 1) {
@@ -63,6 +65,18 @@ void sigalrm_handler(int sig_num) {
         EXIT = 1;
     }
     else {
+        /*while(1) {
+            if (PCBS[COUNTER]->exit_status == 1) {
+                COUNTER = (COUNTER+1)%PCBS_len;
+                printf("New process: %d\n", PCBS[COUNTER]->pid);
+                printf("Process state: %d\n", PCBS[COUNTER]->state);
+                printf("Process exit status: %d\n", PCBS[COUNTER]->exit_status);
+            }
+            else {
+                break;
+            }
+        }*/
+
         while(1) {
             if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
