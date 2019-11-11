@@ -225,13 +225,8 @@ int main(int argc, char *argv[]) {
     MakeCall();
     sleep(1);
     SuspendAllProcesses();
-    //alarm(1);
-    for (int i=0; i<PCBS_len; i++) {
-        PCBS[i]->exit_status = 1;
-    }
-    EXIT = CheckAllTerminated();
+    alarm(1);
     AwaitTermination();
-    //TerminateAllProcesses();
 
     FreePCB(PCBS);
     free(ptr);
