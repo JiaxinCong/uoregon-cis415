@@ -85,7 +85,7 @@ void sigalrm_handler(int sig_num) {
                 COUNTER = (COUNTER+1)%PCBS_len;
                 break;
             }  
-            else if (PCBS[COUNTER]->STATE == STOPPED) {
+            else if (PCBS[COUNTER]->state == STOPPED) {
                 break;
             }
             else {
@@ -103,7 +103,7 @@ void sigalrm_handler(int sig_num) {
                 PCBS[COUNTER]->state = RUNNING;
                 break;
             }
-            else if (PCBS[COUNTER]->STATE == RUNNING) {
+            else if (PCBS[COUNTER]->state == RUNNING) {
                 break;
             }
             else {
