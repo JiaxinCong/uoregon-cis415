@@ -39,17 +39,20 @@ void SigUsr1Handler(int sig_num) {
     }
 }
 
-void SigChldHandler(int sig_num) {
+void SigChld_handler(int sig_num) {
     int status;
-        if (waitpid(PCBS[COUNTER]->pid, &status, WNOHANG) > 0) {
+    for (int i=0; i<PCBS_len; i++) {
+        if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
-                printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
-                PCBS[COUNTER]->exit_status = 1;
+                printf("Process: %d - Terminated\n", PCBS[i]->pid);
+                PCBS[i]->exit_status = 1;
+                COUNTER = (COUNTER+1)%PCBS_len;
             }
         }
+    }
 }
 
-void SigAlrmHandler(int sig_num) {
+void sigalrm_handler(int sig_num) {
     raise(SIGCHLD);
 
     if (PCBS[COUNTER]->exit_status == 1) {
@@ -121,6 +124,7 @@ void SuspendAllProcesses() {
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             PCBS[i]->state = STOPPED; 
+            sleep(1);
         }
     }
 }
@@ -182,8 +186,8 @@ int MakeCall() {
 
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, SigUsr1Handler);
-    signal(SIGALRM, SigAlrmHandler);
-    signal(SIGCHLD, SigChldHandler);
+    signal(SIGALRM, sigalrm_handler);
+    signal(SIGCHLD, sigchld_handler);
 
     char *filename = argv[1];
 
