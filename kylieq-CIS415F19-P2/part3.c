@@ -220,6 +220,7 @@ int main(int argc, char *argv[]) {
 
     /* Make calls */
     MakeCall();
+    sleep(1);
     SuspendAllProcesses();
     alarm(1);
     AwaitTermination();
