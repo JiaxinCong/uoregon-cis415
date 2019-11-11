@@ -72,6 +72,7 @@ void sigalrm_handler(int sig_num) {
     //printf("Process: %d Counter: %d\n", PCBS[COUNTER]->pid, COUNTER);
     while(1) {
         w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
+        printf("W: %d\n", w);
         if(w == 0) {
         if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
