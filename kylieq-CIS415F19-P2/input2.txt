@@ -1,3 +1,0 @@
-./file.exe
-./which.exe hello
-ls -a
