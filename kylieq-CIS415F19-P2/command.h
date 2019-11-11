@@ -9,7 +9,7 @@ struct ProcessControlBlock {
 	char **args;
 	int count;
 	int exit_status;
-	STATES STATE;
+	STATES state;
 };
 
 /* Read file */
