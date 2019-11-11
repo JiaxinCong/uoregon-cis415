@@ -65,6 +65,7 @@ void sigalrm_handler(int sig_num) {
         EXIT = 1;
     }
     else {
+        printf("in else\n");
         while(1) {
             if (PCBS[COUNTER]->exit_status == 1) {
                 COUNTER = (COUNTER+1)%PCBS_len;
