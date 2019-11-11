@@ -41,15 +41,12 @@ void SigUsr1Handler(int sig_num) {
 
 void SigChldHandler(int sig_num) {
     int status;
-    for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
                 printf("Process: %d - Terminated\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
-                COUNTER = (COUNTER+1)%PCBS_len;
             }
         }
-    }
 }
 
 void SigAlrmHandler(int sig_num) {
@@ -120,7 +117,7 @@ void SigAlrmHandler(int sig_num) {
 
 /* Stop all processes but the first one */
 void SuspendAllProcesses() {
-    for (int i=0; i<PCBS_len; i++) { /* Stop processes */
+    for (int i=1; i<PCBS_len; i++) { /* Stop processes */
         if (kill(PCBS[i]->pid, SIGSTOP) == 0) {
             printf("Process: %d - Suspended\n", PCBS[i]->pid);
             PCBS[i]->state = STOPPED; 
