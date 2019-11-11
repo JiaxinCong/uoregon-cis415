@@ -68,7 +68,7 @@ void SigAlrmHandler(int sig_num) {
                 kill(PCBS[COUNTER]->pid, SIGSTOP);
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->state = STOPPED;
-                //COUNTER = (COUNTER+1)%PCBS_len;
+                COUNTER = (COUNTER+1)%PCBS_len;
                 break;
             }  
             else if (PCBS[COUNTER]->state == STOPPED) {
