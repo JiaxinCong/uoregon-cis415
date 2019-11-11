@@ -44,6 +44,7 @@ void sigchld_handler(int sig_num) {
     for (int i=0; i<PCBS_len; i++) {
         if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
+                printf("Process: %d - Terminated\n", PCBS[i]->pid);
                 PCBS[i]->exit_status = 1;
             }
         }
@@ -67,6 +68,7 @@ void sigalrm_handler(int sig_num) {
         while(1) {
             if (PCBS[COUNTER]->exit_status == 1) {
                 COUNTER = (COUNTER+1)%PCBS_len;
+                printf("new process: %d\n", PCBS[i]->pid);
             }
             else {
                 break;
