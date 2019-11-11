@@ -11,6 +11,9 @@
 
 #include "command.h"
 
+#define MAX_BUFF 300
+int RUN = 0;
+
 int CHECK = 0;
 int COUNTER = 0;
 int EXIT = 0;
@@ -50,28 +53,6 @@ void sigchld_handler(int sig_num) {
             }
         }
     }
-}
-
-void print_status(pid_t _pid){
-
-    //get the info of this requested PID from /proc
-    char tmp[1000];
-    sprintf(tmp, "/proc/%u/stat", _pid);
-
-    //see if we got info, if so open it or return
-    FILE *f = fopen(tmp, "r");
-    if (f == NULL) return;
-
-    int pid, utime, stime;
-    char name[1000], state;
-    //grab only what we're looking for below, and ignore the rest
-    fscanf(f, "%d %s %c %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %d %d", &pid, name, &state, &utime, &stime);
-    //we are going to print the pid, the name of the pid, the state the pid
-    //is in (S, Z, T, etc.), and the total time. each tabbed
-    printf("[%d]\t%s\t%c\t%d\n", pid, name, state, utime + stime);
-
-    //close file
-    fclose(f);
 }
 
 void sigalrm_handler(int sig_num) {
@@ -187,8 +168,6 @@ int MakeCall() {
                 usleep(300);
             }
 
-            print_status(PCBS[i]->pid);
-
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
                 //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
@@ -206,6 +185,53 @@ int MakeCall() {
     }
 
     return 1;
+}
+
+void ProgramStatistics(){
+    while(!EXIT){
+    sleep(1);
+    for(int i = 0; i < PCBS_len; i++){
+        int track = 0;
+        char count[MAX_BUFF];
+        char file[MAX_BUFF] = "/proc/";
+        char stats_output[MAX_BUFF] = "";
+        char* finalout[50];
+        sprintf(count, "%d", PCBS[i]->pid);
+        strcat(file,count);
+        strcpy(count, "/stat");
+        strcat(file,count);
+        FILE *procfile = fopen(file, "r");
+        if(procfile == NULL)
+            continue;
+        if(fgets(stats_output, MAX_BUFF, procfile) != NULL){
+            char* token = "";
+            token = strtok(stats_output,"  \n");
+            while(token != NULL){
+                track+=1;
+                if(track == 1){
+                    finalout[0] = token;
+                }
+
+                token = strtok(NULL, " \n");
+                if(token != NULL){
+                    if(track == 3){
+                        finalout[1] = token;
+                    }
+                    else if(track == 13){
+                        finalout[2] = token;
+                        //PCBS[i]->IOTIME = atoi(token);
+                    }
+                    else if(track == 14){
+                        finalout[3] = token;
+                        //PCBS[i]->CPUTIME = atoi(token);     
+                    }
+                }
+            }
+            printf("PID: %s   ParentPID: %s   IO: %s   Kernel: %s\n", finalout[0], finalout[1], finalout[2],finalout[3]);           
+        }
+        fclose(procfile);
+    }
+ }
 }
 
 int main(int argc, char *argv[]) {
@@ -269,6 +295,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses();
     alarm(1);
+    ProgramStatistics();
     AwaitTermination();
 
     FreePCB(PCBS);
