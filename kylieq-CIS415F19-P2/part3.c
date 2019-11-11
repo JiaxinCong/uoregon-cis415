@@ -73,6 +73,8 @@ void sigalrm_handler(int sig_num) {
     while(1) {
         w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
         if(w == 0) {
+            printf("condition 1: %d\n", PCBS[COUNTER]->state == RUNNING);
+            printf("condition 2: %d\n", PCBS[COUNTER]->exit_status != 1);
             if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
                 kill(PCBS[COUNTER]->pid, SIGSTOP);
                 printf("Process: %d - Received Signal SIGALRM - Suspended\n", PCBS[COUNTER]->pid);
