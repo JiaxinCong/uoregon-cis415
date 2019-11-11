@@ -84,6 +84,9 @@ void sigalrm_handler(int sig_num) {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
         }
+        else {
+            COUNTER = (COUNTER+1)%PCBS_len;
+        }
     }
 
     while(1) {
@@ -98,6 +101,9 @@ void sigalrm_handler(int sig_num) {
         else {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
+        }
+        else{
+            COUNTER = (COUNTER+1)%PCBS_len;
         }
     }
 
