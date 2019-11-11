@@ -82,7 +82,6 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
-    if(w == 0) {
     while(1) {
         if(w == 0) {
             if (PCBS[COUNTER]->state == STOPPED && PCBS[COUNTER]->exit_status != 1) {
