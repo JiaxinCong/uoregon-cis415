@@ -57,9 +57,9 @@ void SigAlrmHandler(int sig_num) {
     if (PCBS[COUNTER]->exit_status == 1) {
         PCBS[COUNTER]->state = TERMINATED;
     }
-//    for(int i=0; i<PCBS_len; i++){
-//        printf("i: %d  STATE: %d\n", i, PCBS[i]->state);
-//    }
+    for(int i=0; i<PCBS_len; i++){
+        printf("i: %d  STATE: %d\n", i, PCBS[i]->state);
+    }
     if (CheckAllTerminated()) {
         EXIT = 1;
     }
