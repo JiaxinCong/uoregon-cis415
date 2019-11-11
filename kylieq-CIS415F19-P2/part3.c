@@ -19,6 +19,7 @@ void AwaitTermination() {
     while(!EXIT) {
         usleep(300);
     }
+    printf("Done!\n");
 }
 
 int CheckAllTerminated() {
@@ -228,7 +229,11 @@ int main(int argc, char *argv[]) {
     MakeCall();
     sleep(1);
     SuspendAllProcesses();
-    alarm(1);
+    //alarm(1);
+    for (int i=0; i<PCBS_len; i++) {
+        PCBS[i]->exit_status = 1;
+    }
+    CheckAllTerminated();
     AwaitTermination();
     //TerminateAllProcesses();
 
