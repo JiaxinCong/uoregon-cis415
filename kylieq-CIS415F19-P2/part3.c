@@ -67,11 +67,8 @@ void sigalrm_handler(int sig_num) {
         }
     }
 
-    pid_t w;
-    int wstatus;
     //printf("Process: %d Counter: %d\n", PCBS[COUNTER]->pid, COUNTER);
-    w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
-    if(w == 0) {
+
     while(1) {
         if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
             kill(PCBS[COUNTER]->pid, SIGSTOP);
@@ -84,9 +81,7 @@ void sigalrm_handler(int sig_num) {
             COUNTER = (COUNTER+1)%PCBS_len;
         }
     }
-    }
 
-    w = waitpid(PCBS[COUNTER]->pid, &wstatus, WNOHANG);
     if(w == 0) {
     while(1) {
         if(w == 0) {
@@ -103,7 +98,6 @@ void sigalrm_handler(int sig_num) {
         else{
             COUNTER = (COUNTER+1)%PCBS_len;
         }
-    }
     }
 
     alarm(1);
