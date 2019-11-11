@@ -58,7 +58,6 @@ void sigalrm_handler(int sig_num) {
 
     if (PCBS[COUNTER]->exit_status == 1) {
         PCBS[COUNTER]->state = TERMINATED;
-        printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
     }
 
     if (CheckAllTerminated()) {
