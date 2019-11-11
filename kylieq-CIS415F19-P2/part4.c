@@ -52,6 +52,28 @@ void sigchld_handler(int sig_num) {
     }
 }
 
+void print_status(pid_t _pid){
+
+    //get the info of this requested PID from /proc
+    char tmp[1000];
+    sprintf(tmp, "/proc/%u/stat", _pid);
+
+    //see if we got info, if so open it or return
+    FILE *f = fopen(tmp, "r");
+    if (f == NULL) return;
+
+    int pid, utime, stime;
+    char name[1000], state;
+    //grab only what we're looking for below, and ignore the rest
+    fscanf(f, "%d %s %c %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %d %d", &pid, name, &state, &utime, &stime);
+    //we are going to print the pid, the name of the pid, the state the pid
+    //is in (S, Z, T, etc.), and the total time. each tabbed
+    printf("[%d]\t%s\t%c\t%d\n", pid, name, state, utime + stime);
+
+    //close file
+    fclose(f);
+}
+
 void sigalrm_handler(int sig_num) {
     raise(SIGCHLD);
 
@@ -164,6 +186,8 @@ int MakeCall() {
             while(!CHECK) {
                 usleep(300);
             }
+
+            print_status(PCBS[i]->pid);
 
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
