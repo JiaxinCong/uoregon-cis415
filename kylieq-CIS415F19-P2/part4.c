@@ -51,26 +51,6 @@ void SigChldHandler(int sig_num) {
         }
 }
 
-int GetData(int pid) {
-    //while(!EXIT) {
-        //for (int i=0; i<PCBS_len; i++) {
-            //int pid = PCBS[0]->pid;
-            char filename[100];
-            char line[100];
-            sprintf(filename, "/proc/%d/stat", pid);
-            FILE *fp = fopen(filename, "r");
-            if (fp != NULL) {
-                if (fgets(line, 100, fp) != NULL) {
-                    printf("line: %s\n", line);
-                }
-            }
-
-            fclose(fp);
-        //}
-    //}
-    return 1;
-}
-
 void SigAlrmHandler(int sig_num) {
     raise(SIGCHLD);
 
@@ -84,7 +64,6 @@ void SigAlrmHandler(int sig_num) {
         EXIT = 1;
     }
     else {
-        GetData(PCBS[COUNTER]->pid);
         while(1) {
             if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
                 kill(PCBS[COUNTER]->pid, SIGSTOP);
@@ -138,6 +117,25 @@ void SigAlrmHandler(int sig_num) {
         }
         alarm(1);
     }
+}
+
+int GetData() {
+    while(!EXIT) {
+        for (int i=0; i<PCBS_len; i++) {
+            char filename[100];
+            char line[100];
+            sprintf(filename, "/proc/%d/stat", PCBS[i]->pid);
+            FILE *fp = fopen(filename, "r");
+            if (fp != NULL) {
+                if (fgets(line, 100, fp) != NULL) {
+                    printf("line: %s\n", line);
+                }
+            }
+
+            fclose(fp);
+        }
+    }
+    return 1;
 }
 
 /* Stop all processes but the first one */
@@ -266,7 +264,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses();
     alarm(1);
-    //GetData();
+    GetData();
     AwaitTermination();
 
     FreePCB(PCBS);
