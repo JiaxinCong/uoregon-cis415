@@ -120,23 +120,22 @@ void SigAlrmHandler(int sig_num) {
 }
 
 int GetData() {
-    while(!EXIT) {
-        for (int i=0; i<PCBS_len; i++) {
-            int pid = PCBS[i]->pid;
+    //while(!EXIT) {
+        //for (int i=0; i<PCBS_len; i++) {
+            int pid = PCBS[0]->pid;
             char filename[100];
             char line[100];
             sprintf(filename, "/proc/%d/stat", pid);
             FILE *fp = fopen(filename, "r");
-            if (fp == NULL) {
-                continue;
-            }
-            if (fgets(line, 100, fp) != NULL) {
-                printf("line: %s\n", line);
+            if (fp != NULL) {
+                if (fgets(line, 100, fp) != NULL) {
+                    printf("line: %s\n", line);
+                }
             }
 
             fclose(fp);
-        }
-    }
+        //}
+    //}
     return 1;
 }
 
