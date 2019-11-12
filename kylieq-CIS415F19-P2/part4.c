@@ -120,19 +120,19 @@ void SigAlrmHandler(int sig_num) {
 }
 
 void GetData() {
-    //for (int i=0; i<PCBS_len; i++) {
     while(!EXIT) {
-        int pid = PCBS[COUNTER]->pid;
-        char *filename = NULL;
-        sprintf(filename, "/proc/%d/stat", pid);
-        FILE *fp = fopen(filename, "r");
-        int getPid;
-        char *comm = NULL;
-        char state;
-        int ppid;
-        fscanf(fp, "%d %s %c %d", &getPid, comm, &state, &ppid);
-        printf("PID: %d  COMM: %s  STATE: %c  PPID: %d\n", getPid, comm, state, ppid);
-        fclose(fp);
+        for (int i=0; i<PCBS_len; i++) {
+            int pid = PCBS[i]->pid;
+            char *filename = NULL;
+            sprintf(filename, "/proc/%d/stat", pid);
+            FILE *fp = fopen(filename, "r");
+            char *comm = NULL;
+            char state;
+            int ppid;
+            fscanf(fp, "%d %s %c %d", &getPid, comm, &state, &ppid);
+            printf("PID: %d  COMM: %s  STATE: %c  PPID: %d\n", pid, comm, state, ppid);
+            fclose(fp);
+        }
     }
 }
 
