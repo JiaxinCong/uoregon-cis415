@@ -44,16 +44,10 @@ void SigChldHandler(int sig_num) {
         if (waitpid(PCBS[COUNTER]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)){
                 printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
-                PCBS[COUNTER]->exit_status = 1;
-                
+                PCBS[COUNTER]->exit_status = 1;    
             }
-            else {
-                printf("Something strange just happened.\n");
-                printf("WHAT THE FUCK: %d", status);
-                PCBS[COUNTER]->exit_status = 1;
-            }
-                }
-                printf("value of status: %d \n", status);
+        }
+
 }
 
 void SigAlrmHandler(int sig_num) {
