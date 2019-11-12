@@ -129,7 +129,7 @@ void GetData() {
             char *comm = NULL;
             char state;
             int ppid;
-            fscanf(fp, "%d %s %c %d", &getPid, comm, &state, &ppid);
+            fscanf(fp, "%d %s %c %d", &pid, comm, &state, &ppid);
             printf("PID: %d  COMM: %s  STATE: %c  PPID: %d\n", pid, comm, state, ppid);
             fclose(fp);
         }
