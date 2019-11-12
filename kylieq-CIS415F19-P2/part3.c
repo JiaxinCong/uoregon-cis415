@@ -42,7 +42,7 @@ void SigUsr1Handler(int sig_num) {
 void SigChldHandler(int sig_num) {
     int status;
         if (waitpid(PCBS[COUNTER]->pid, &status, WNOHANG) > 0) {
-            if (WIFEXITED(status) || WIFSIGNALED(status)) {
+            if (WIFEXITSTATUS(status) ){
                 printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->exit_status = 1;
                 
