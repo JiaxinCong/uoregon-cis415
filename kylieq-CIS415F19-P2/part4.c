@@ -64,6 +64,7 @@ void SigAlrmHandler(int sig_num) {
         EXIT = 1;
     }
     else {
+        GetData(PCBS[COUNTER]->pid);
         while(1) {
             if (PCBS[COUNTER]->state == RUNNING && PCBS[COUNTER]->exit_status != 1) {
                 kill(PCBS[COUNTER]->pid, SIGSTOP);
@@ -119,10 +120,10 @@ void SigAlrmHandler(int sig_num) {
     }
 }
 
-int GetData() {
+int GetData(int pid) {
     //while(!EXIT) {
         //for (int i=0; i<PCBS_len; i++) {
-            int pid = PCBS[0]->pid;
+            //int pid = PCBS[0]->pid;
             char filename[100];
             char line[100];
             sprintf(filename, "/proc/%d/stat", pid);
@@ -265,7 +266,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses();
     alarm(1);
-    GetData();
+    //GetData();
     AwaitTermination();
 
     FreePCB(PCBS);
