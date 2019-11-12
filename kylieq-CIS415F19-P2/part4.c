@@ -121,8 +121,8 @@ void SigAlrmHandler(int sig_num) {
 
 int GetData() {
     while(!EXIT) {
+        sleep(1);
         for (int i=0; i<PCBS_len; i++) {
-            sleep(1);
             char filename[100];
             char line[100];
             sprintf(filename, "/proc/%d/stat", PCBS[i]->pid);
