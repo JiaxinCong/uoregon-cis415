@@ -129,8 +129,8 @@ int GetData() {
             FILE *fp = fopen(filename, "r");
             if (fp != NULL) {
                 if (fgets(line, 100, fp) != NULL) {
-                    //printf("line: %s\n", line);
-                    char *collect[4];
+                    printf("line: %s\n", line);
+                    /*char *collect[4];
                     char *token = strtok(line, ",");
                     collect[0] = token;
                     for (int i=1; i<4; i++) {
@@ -140,7 +140,7 @@ int GetData() {
                     printf("pid: %s\n", collect[0]);
                     printf("executable: %s\n", collect[1]);
                     printf("state: %s\n", collect[2]);
-                    printf("ppid: %s\n", collect[3]);
+                    printf("ppid: %s\n", collect[3]);*/
                 }
             }
 
