@@ -101,6 +101,9 @@ void SigAlrmHandler(int sig_num) {
                 break;
             }
             else {
+                raise(SIGCHLD);
+                if(PCBS[COUNTER]->state = TERMINATED)
+                    break;
                 COUNTER = (COUNTER+1)%PCBS_len;
                 printf("-----------------------------------------------------\n");
                 if (PCBS[COUNTER]->exit_status == 1) {
