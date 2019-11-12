@@ -47,11 +47,7 @@ void SigChldHandler(int sig_num) {
                 PCBS[COUNTER]->exit_status = 1;
                 
             }
-            else {
-                printf("Something strange just happened.\n");
-                printf("WHAT THE FUCK: %d", status);
-                PCBS[COUNTER]->exit_status = 1;
-            }
+
         }
 }
 
