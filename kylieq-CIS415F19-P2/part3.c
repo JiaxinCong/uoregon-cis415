@@ -47,10 +47,10 @@ void SigChldHandler(int sig_num) {
                 PCBS[COUNTER]->exit_status = 1;
                 
             }
-            else {
+/*            else {
                 PCBS[COUNTER]->exit_status = 1;
             }
-        }
+*/        }
 }
 
 void SigAlrmHandler(int sig_num) {
