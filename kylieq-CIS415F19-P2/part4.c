@@ -119,13 +119,17 @@ void SigAlrmHandler(int sig_num) {
     }
 }
 
-void GetData() {
+int GetData() {
     while(!EXIT) {
         for (int i=0; i<PCBS_len; i++) {
             int pid = PCBS[i]->pid;
             char *filename = NULL;
             sprintf(filename, "/proc/%d/stat", pid);
             FILE *fp = fopen(filename, "r");
+            if (fp == NULL) {
+                perror("Failed: ");
+                return 1;
+            }
             char *comm = NULL;
             char state;
             int ppid;
@@ -134,6 +138,7 @@ void GetData() {
             fclose(fp);
         }
     }
+    return 1;
 }
 
 /* Stop all processes but the first one */
