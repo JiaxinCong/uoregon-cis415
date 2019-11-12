@@ -47,8 +47,6 @@ void SigChldHandler(int sig_num) {
                 PCBS[COUNTER]->exit_status = 1;
                 
             }
-            else if(status > 0)
-                PCBS[COUNTER]->exit_status = 1;
         }
         printf("value of status: %d \n", status);
 }
