@@ -1,7 +1,7 @@
 CC = gcc -std=c99
 CFLAGS = -g -Wall
 
-all: part1 part2 part3 part4
+all: part1 part2 part3
 
 part1: part1.o command.o
 	$(CC) $(CFLAGS) -o part1 part1.o command.o
@@ -20,12 +20,6 @@ part3: part3.o command.o
 
 part3.o: part3.c
 	$(CC) $(CFLAGS) -c part3.c
-
-part4: part4.o command.o
-	$(CC) $(CFLAGS) -o part4 part4.o command.o
-
-part4.o: part4.c
-	$(CC) $(CFLAGS) -c part4.c
 
 command.o: command.c command.h
 	$(CC) $(CFLAGS) -c command.c
