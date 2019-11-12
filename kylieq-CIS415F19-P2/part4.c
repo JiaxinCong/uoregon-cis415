@@ -196,7 +196,7 @@ int MakeCall() {
             while(!CHECK) {
                 usleep(300);
             }
-            printf("continued\n");
+            //printf("continued\n");
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
                 printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
