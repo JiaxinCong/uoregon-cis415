@@ -123,7 +123,7 @@ int GetData() {
     while(!EXIT) {
         for (int i=0; i<PCBS_len; i++) {
             int pid = PCBS[i]->pid;
-            char *filename = NULL;
+            char filename[100];
             sprintf(filename, "/proc/%d/stat", pid);
             FILE *fp = fopen(filename, "r");
             if (fp == NULL) {
