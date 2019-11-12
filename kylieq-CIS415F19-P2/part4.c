@@ -124,17 +124,16 @@ int GetData() {
         for (int i=0; i<PCBS_len; i++) {
             int pid = PCBS[i]->pid;
             char filename[100];
+            char line[100];
             sprintf(filename, "/proc/%d/stat", pid);
             FILE *fp = fopen(filename, "r");
             if (fp == NULL) {
-                perror("Failed: ");
-                return 1;
+                continue;
             }
-            char *comm = NULL;
-            char state;
-            int ppid;
-            fscanf(fp, "%d %s %c %d", &pid, comm, &state, &ppid);
-            printf("PID: %d  COMM: %s  STATE: %c  PPID: %d\n", pid, comm, state, ppid);
+            if (fgets(line, 100, fp) != NULL) {
+                printf("line: %s\n", line);
+            }
+
             fclose(fp);
         }
     }
