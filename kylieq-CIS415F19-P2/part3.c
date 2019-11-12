@@ -118,7 +118,7 @@ void SigAlrmHandler(int sig_num) {
             }
 
         }
-        alarm(1);
+        alarm(100);
     }
 }
 
