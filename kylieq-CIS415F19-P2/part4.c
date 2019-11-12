@@ -122,7 +122,7 @@ void SigAlrmHandler(int sig_num) {
 void GetData() {
     //for (int i=0; i<PCBS_len; i++) {
     while(!EXIT) {
-        int pid = PCBS[CURRENT]->pid;
+        int pid = PCBS[COUNTER]->pid;
         char *filename = NULL;
         sprintf(filename, "/proc/%d/stat", pid);
         FILE *fp = fopen(filename, "r");
