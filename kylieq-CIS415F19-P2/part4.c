@@ -134,7 +134,7 @@ int GetData() {
                     char *token = strtok(line, ",");
                     collect[0] = token;
                     for (int i=1; i<4; i++) {
-                        token = strtok(line, NULL);
+                        token = strtok(NULL, ",");
                         collect[i] = token;
                     }
                     printf("pid: %s\n", collect[0]);
