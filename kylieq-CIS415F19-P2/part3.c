@@ -47,11 +47,6 @@ void SigChldHandler(int sig_num) {
                 PCBS[COUNTER]->exit_status = 1;
                 
             }
-            else if ( WIFSIGNALED(status) ) {
-                int signum = WTERMSIG(status);
-                printf("Exited due to receiving signal %d\n", signum);
-                PCBS[COUNTER]->exit_status = 1;
-            }
             else {
                 printf("Something strange just happened.\n");
                 PCBS[COUNTER]->exit_status = 1;
