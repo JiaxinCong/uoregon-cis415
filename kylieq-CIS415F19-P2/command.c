@@ -16,10 +16,8 @@ int PCBS_len;
 /* Read file */
 int GetLine(char *filename, char *buffer, size_t bufferSize) {
 
-    //int file = open(filename, O_RDONLY);
-    int file = fopen(filename, "r");
-    //if (file == -1) {
-    if (file == NULL) {
+    int file = open(filename, O_RDONLY);
+    if (file == -1) {
     	char *error = "Error: Unable to open file '";
     	write(1, error, strlen(error));
     	write(1, filename, strlen(filename));
@@ -28,8 +26,7 @@ int GetLine(char *filename, char *buffer, size_t bufferSize) {
         return -1;
     }
 
-    //if (read(file, buffer, bufferSize) == -1) {
-    if (read(file, buffer, bufferSize) == NULL) {
+    if (read(file, buffer, bufferSize) == -1) {
     	char *error = "Error: Unable to read file '";
     	write(1, error, strlen(error));
     	write(1, filename, strlen(filename));
@@ -37,8 +34,7 @@ int GetLine(char *filename, char *buffer, size_t bufferSize) {
 
         return -1;
     }
-    //close(file);
-    fclose(file);
+    close(file);
     return 1;
 }
 
