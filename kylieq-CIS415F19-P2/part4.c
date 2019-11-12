@@ -121,6 +121,7 @@ void SigAlrmHandler(int sig_num) {
 
 int GetData() {
     while(!EXIT) {
+        sleep(1);
         for (int i=0; i<PCBS_len; i++) {
             char filename[100];
             char line[100];
@@ -128,7 +129,18 @@ int GetData() {
             FILE *fp = fopen(filename, "r");
             if (fp != NULL) {
                 if (fgets(line, 100, fp) != NULL) {
-                    printf("line: %s\n", line);
+                    //printf("line: %s\n", line);
+                    char *collect[4];
+                    char *token = strtok(line, ",");
+                    collect[0] = token;
+                    for (int i=1; i<4; i++) {
+                        token = strtok(line, NULL);
+                        collect[i] = token;
+                    }
+                    printf("pid: %s\n", collect[0]);
+                    printf("executable: %s\n", collect[1]);
+                    printf("state: %s\n", collect[2]);
+                    printf("ppid: %s\n", collect[3]);
                 }
             }
 
