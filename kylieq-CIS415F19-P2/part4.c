@@ -11,9 +11,6 @@
 
 #include "command.h"
 
-#define MAX_BUFF 300
-int RUN = 0;
-
 int CHECK = 0;
 int COUNTER = 0;
 int EXIT = 0;
@@ -34,7 +31,7 @@ int CheckAllTerminated() {
     return 1;
 }
 
-void sigusr1_handler(int sig_num) {
+void SigUsr1Handler(int sig_num) {
     if (sig_num == SIGUSR1) { 
         printf("Process: %i - Received signal: SIGUSR1\n", getpid());
         CHECK = 1;
@@ -42,26 +39,27 @@ void sigusr1_handler(int sig_num) {
     }
 }
 
-void sigchld_handler(int sig_num) {
+void SigChldHandler(int sig_num) {
     int status;
-    for (int i=0; i<PCBS_len; i++) {
-        if (waitpid(PCBS[i]->pid, &status, WNOHANG) > 0) {
+        if (waitpid(PCBS[COUNTER]->pid, &status, WNOHANG) > 0) {
             if (WIFEXITED(status)) {
-                printf("Process: %d - Terminated\n", PCBS[i]->pid);
-                PCBS[i]->exit_status = 1;
-                COUNTER = (COUNTER+1)%PCBS_len;
+                printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
+                
             }
+            else if(status > 0)
+                PCBS[COUNTER]->exit_status = 1;
         }
-    }
 }
 
-void sigalrm_handler(int sig_num) {
+void SigAlrmHandler(int sig_num) {
     raise(SIGCHLD);
 
     if (PCBS[COUNTER]->exit_status == 1) {
         PCBS[COUNTER]->state = TERMINATED;
     }
-
+    for(int i=0; i<PCBS_len; i++){
+        printf("i: %d  STATE: %d\n", i, PCBS[i]->state);
+    }
     if (CheckAllTerminated()) {
         EXIT = 1;
     }
@@ -121,6 +119,22 @@ void sigalrm_handler(int sig_num) {
     }
 }
 
+void GetData() {
+    for (int i=0; i<PCBS_len; i++) {
+        int pid = PCBS[i]->pid;
+        char *filename;
+        sprintf(filename, "/proc/%d/stat", pid);
+        FILE *fp = fopen(filename, "r");
+        int getPid;
+        char *comm;
+        char state;
+        int ppid;
+        fscanf(fp, "%d %s %c %d", &getPid, comm, &state, &ppid);
+        printf("PID: %d  COMM: %s  STATE: %c  PPID: %d\n", getPid, comm, state, ppid);
+        fclose(fp);
+    }
+}
+
 /* Stop all processes but the first one */
 void SuspendAllProcesses() {
     for (int i=1; i<PCBS_len; i++) { /* Stop processes */
@@ -162,18 +176,17 @@ int MakeCall() {
             printf("Unable to fork process.\n");
             exit(1);
         }
-        if (PCBS[i]->pid == 0) {
+        else if (PCBS[i]->pid == 0) {
             /* Have process wait until it receives SIGUSR1 signal */
             while(!CHECK) {
                 usleep(300);
             }
-
+            printf("continued\n");
             /* Launch workload programs */
             if (execvp(PCBS[i]->cmd, PCBS[i]->args) < 0) {
-                //printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                printf("Process failed to execute command: %s. Exiting.\n", PCBS[i]->cmd);
+                exit(-1);
             }
-
-            exit(1);
         }
     }
 
@@ -188,9 +201,9 @@ int MakeCall() {
 }
 
 int main(int argc, char *argv[]) {
-    signal(SIGUSR1, sigusr1_handler);
-    signal(SIGALRM, sigalrm_handler);
-    signal(SIGCHLD, sigchld_handler);
+    signal(SIGUSR1, SigUsr1Handler);
+    signal(SIGALRM, SigAlrmHandler);
+    signal(SIGCHLD, SigChldHandler);
 
     char *filename = argv[1];
 
@@ -248,6 +261,7 @@ int main(int argc, char *argv[]) {
     sleep(1);
     SuspendAllProcesses();
     alarm(1);
+    GetData();
     AwaitTermination();
 
     FreePCB(PCBS);
@@ -255,4 +269,3 @@ int main(int argc, char *argv[]) {
     free(buffer);
     return 0;
 }
-

@@ -46,6 +46,8 @@ void SigChldHandler(int sig_num) {
                 printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
                 
             }
+            else if(status > 0)
+                PCBS[COUNTER]->exit_status = 1;
         }
 }
 
