@@ -190,7 +190,6 @@ int main(int argc, char *argv[]) {
     signal(SIGCHLD, SigChldHandler);
 
     char *filename = argv[1];
-    printf("file: %s\n", filename);
 
     char *buffer = NULL;
     size_t bufferSize = 300;
