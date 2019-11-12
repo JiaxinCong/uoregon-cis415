@@ -29,7 +29,7 @@ int GetLine(char *filename, char *buffer, size_t bufferSize) {
     }
 
     //if (read(file, buffer, bufferSize) == -1) {
-    if (fgets(file, buffer, bufferSize) == NULL) {
+    if (fgets(buffer, bufferSize, file) == NULL) {
     	char *error = "Error: Unable to read file '";
     	write(1, error, strlen(error));
     	write(1, filename, strlen(filename));
