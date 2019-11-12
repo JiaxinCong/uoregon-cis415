@@ -42,13 +42,22 @@ void SigUsr1Handler(int sig_num) {
 void SigChldHandler(int sig_num) {
     int status;
         if (waitpid(PCBS[COUNTER]->pid, &status, WNOHANG) > 0) {
-            if (WEXITSTATUS(status) > 0){
+            if (WIFEXITED(status)){
                 printf("Process: %d - Terminated\n", PCBS[COUNTER]->pid);
                 PCBS[COUNTER]->exit_status = 1;
                 
             }
-        }
-        printf("value of status: %d \n", status);
+            else if ( WIFSIGNALED(status) ) {
+                int signum = WTERMSIG(status);
+                printf("Exited due to receiving signal %d\n", signum);
+                PCBS[COUNTER]->exit_status = 1;
+            }
+            else {
+                printf("Something strange just happened.\n");
+                PCBS[COUNTER]->exit_status = 1;
+            }
+                }
+                printf("value of status: %d \n", status);
 }
 
 void SigAlrmHandler(int sig_num) {
