@@ -85,7 +85,7 @@ int MakeCall() {
 int main(int argc, char *argv[]) {
     signal(SIGUSR1, SigUsr1Handler);
 
-    char *filename = argv[1];
+    char *filename = argv[2];
     printf("file: %s\n", filename);
 
     char *buffer = NULL;
