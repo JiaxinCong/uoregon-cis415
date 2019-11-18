@@ -6,7 +6,7 @@
 int CTR = 0;
 int HEAD = 0;
 int TAIL = 0;
-struct MTQ *registry[MAXQUEUES];
+struct MTQ **registry;
 
 struct mealTicket {
 	int ticketNum;
@@ -21,19 +21,20 @@ struct MTQ {
 	int length;
 };
 
-int enqueue(char *MTQ_ID, struct mealTicket *MT) {
+/*int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 	int idx;
 	for (int i=0; i<MAXQUEUES; i++) {
 		if (strcmp(MTQ_ID, registry[i]->name) == 0) {
 			idx = i;
 		}
 	}
-	if (registry[idx]->length >= 3) { /* queue full */
-		printf("Queue is full. Unable to push element: %s\n", MT->dish);
-		return 0;
-	}
-	else { /* queue not full */
-		registry[idx]->buffer[registry[idx]->head] = MT;
+*/	
+//	if (registry[idx]->length >= 3) { /* queue full */
+//		printf("Queue is full. Unable to push element: %s\n", MT->dish);
+//		return 0;
+//	}
+//	else { /* queue not full */
+/*		registry[idx]->buffer[registry[idx]->head] = MT;
 		if (registry[idx]->head == 2) {
 			registry[idx]->head = 0;
 		}
@@ -43,21 +44,22 @@ int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 		registry[idx]->length++;
 	}
 	return 1;
-}
+}*/
 
-int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
+/*int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
 	int idx;
 	for (int i=0; i<MAXQUEUES; i++) {
 		if (strcmp(MTQ_ID, registry[i]->name) == 0) {
 			idx = i;
 		}
 	}
-	if (registry[idx]->length == 0) { /* queue empty */
-		printf("Queue is empty. Unable to pop element.\n");
-		return 0;
-	}
-	else { /* queue not empty */
-		MT->ticketNum = registry[idx]->buffer[registry[idx]->tail]->ticketNum;
+*/
+//	if (registry[idx]->length == 0) { /* queue empty */
+//		printf("Queue is empty. Unable to pop element.\n");
+//		return 0;
+//	}
+//	else { /* queue not empty */
+/*		MT->ticketNum = registry[idx]->buffer[registry[idx]->tail]->ticketNum;
 		MT->dish = registry[idx]->buffer[registry[idx]->tail]->dish;
 		registry[idx]->buffer[registry[idx]->tail] = NULL;
 		printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx]->name, MT->ticketNum, MT->dish);
@@ -71,7 +73,7 @@ int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
 	}
 	return 1;
 }
-
+*/
 int main() {
 	struct MTQ *Breakfast;
 	struct MTQ *Lunch;
@@ -95,10 +97,13 @@ int main() {
 		Bar->buffer[i] = NULL;
 	}
 
+	registry = malloc(4 * sizeof(struct MTQ*));
 	registry[0] = Breakfast;
 	registry[1] = Lunch;
 	registry[2] = Dinner;
 	registry[3] = Bar;
+
+	printf("dish: %s\n", registry[0]->name);
 
 	for (int i=0; i<4; i++) {
 		registry[i]->head = 0;
@@ -119,9 +124,9 @@ int main() {
 	ticket1->ticketNum = 3;
 	ticket1->dish = "Toast";
 
-	enqueue("Breakfast", ticket1);
-	enqueue("Breakfast", ticket2);
-	enqueue("Breakfast", ticket3);
+//	enqueue("Breakfast", ticket1);
+//	enqueue("Breakfast", ticket2);
+//	enqueue("Breakfast", ticket3);
 
 	for (int i=0; i<=2; i++) {
 		printf("item: %s\n", registry[0]->buffer[i]->dish);
