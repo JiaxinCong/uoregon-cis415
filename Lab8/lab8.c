@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #define MAXQUEUES 4
 
@@ -56,7 +57,6 @@ int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
 		return 0;
 	}
 	else { /* queue not empty */
-		//struct mealTicket **tmp = registry[idx]->buffer[registry[idx]->tail];
 		MT->ticketNum = registry[idx]->buffer[registry[idx]->tail]->ticketNum;
 		MT->dish = registry[idx]->buffer[registry[idx]->tail]->dish;
 		registry[idx]->buffer[registry[idx]->tail] = NULL;
@@ -82,6 +82,11 @@ int main() {
 	Lunch->name = "Lunch";
 	Dinner->name = "Dinner";
 	Bar->name = "Bar";
+
+	Breakfast->buffer = malloc(3 * sizeof(struct mealTicket*));
+	Lunch->buffer = malloc(3 * sizeof(struct mealTicket*));
+	Dinner->buffer = malloc(3 * sizeof(struct mealTicket*));
+	Bar->buffer = malloc(3 * sizeof(struct mealTicket*));
 
 	for (int i=0; i<3; i++) {
 		Breakfast->buffer[i] = NULL;
