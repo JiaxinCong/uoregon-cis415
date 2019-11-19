@@ -30,7 +30,7 @@ int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 	}
 	
 	if (registry[idx].length >= 3) { /* queue full */
-		printf("Queue is full. Unable to push element: %s\n", MT->dish);
+		//printf("Queue is full. Unable to push element: %s\n", MT->dish);
 		return 0;
 	}
 	else { /* queue not full */
@@ -56,14 +56,14 @@ int dequeue(char *MTQ_ID, struct mealTicket *MT) {
 	}
 
 	if (registry[idx].length == 0) { /* queue empty */
-		printf("Queue is empty. Unable to pop element.\n");
+		//printf("Queue is empty. Unable to pop element.\n");
 		return 0;
 	}
 	else { /* queue not empty */
 		MT->ticketNum = registry[idx].buffer[registry[idx].tail]->ticketNum;
 		MT->dish = registry[idx].buffer[registry[idx].tail]->dish;
-		registry[idx].buffer[registry[idx].tail] = NULL;
 		printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx].name, MT->ticketNum, MT->dish);
+		registry[idx].buffer[registry[idx].tail] = NULL;
 		if (registry[idx].tail >= 2) {
 			registry[idx].tail = 0;
 		}
@@ -109,6 +109,29 @@ int main() {
 		registry[i].tail = 0;
 		registry[i].length = 0;
 	}
+
+	/* Test case A: Dequeue when a queue is empty */
+	struct mealTicket MT;
+	char *result;
+	if (dequeue("Breakfast", &MT) == 0) {
+		result = "Fail";
+	}
+	else {
+		result = "Success";
+	}
+	printf("Test Case: A - Result: %s\n", result);
+
+	/* Test case D: Enqueue when a queue is empty */
+	struct mealTicket testTicket;
+	testTicket.ticketNum = 23;
+	testTicket.dish = "Pancakes";
+	if (enqueue("Breakfast", &testTicket) == 0) {
+		result = "Fail";
+	}
+	else {
+		result = "Success";
+	}
+	printf("Test Case: D - Result: %s\n", result);
 
 	/* Breakfast meal tickets */
 	struct mealTicket ticket1;
@@ -178,26 +201,21 @@ int main() {
 	enqueue("Bar", &ticket11);
 	enqueue("Bar", &ticket12);
 
-	//dequeue("Breakfast", &ticket1);
-
-	for (int i=0; i<=3; i++) {
-		for (int j=0; j<3; j++) {
-			if (registry[i].buffer[j] == NULL) {
-				printf("NULL\n");
-			}
-			else {
-				printf("dish: %s\n", registry[i].buffer[j]->dish);
-			}
-		}
+	/* Test case B: Dequeue when a queue is full */
+	if (dequeue("Breakfast", &MT) == 0) {
+		result = "Fail";
 	}
+	else {
+		result = "Success";
+	}
+	printf("Test Case: B - Result: %s\n", result);
 
-	struct mealTicket ticket14;
-	ticket14.ticketNum = 14;
-	ticket14.dish = "Pancakes";	
-
-	free(Breakfast.buffer);
-	free(Lunch.buffer);
-	free(Dinner.buffer);
-	free(Bar.buffer);
-	free(registry);
+	/* Test case C: Enqueue when a queue is full */
+	if (enqueue("Dinner", &MT) == 0) {
+		result = "Fail";
+	}
+	else {
+		result = "Success";
+	}
+	printf("Test Case: C - Result: %s\n", result);
 }
