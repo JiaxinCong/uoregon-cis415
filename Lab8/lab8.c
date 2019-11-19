@@ -210,6 +210,14 @@ int main() {
 	}
 	printf("Test Case: B - Result: %s\n", result);
 
+	/* In a round robin fashion pop a meal ticket from each
+	   queue and display it until all queues are empty. */
+	for (int i=0; i<=3; i++) {
+		for (int j=0; j<=2; j++) {
+			dequeue(registry[i].name, &MT);
+		}
+	}
+
 	/* Test case C: Enqueue when a queue is full */
 	if (enqueue("Dinner", &MT) == 0) {
 		result = "Fail";
