@@ -218,4 +218,10 @@ int main() {
 		result = "Success";
 	}
 	printf("Test Case: C - Result: %s\n", result);
+
+	free(Breakfast);
+	free(Lunch);
+	free(Dinner);
+	free(Bar);
+	free(registry);
 }
