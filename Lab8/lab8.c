@@ -181,4 +181,5 @@ int main() {
 	free(Lunch.buffer);
 	free(Dinner.buffer);
 	free(Bar.buffer);
+	free(registry);
 }
