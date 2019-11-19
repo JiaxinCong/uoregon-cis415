@@ -47,7 +47,7 @@ int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 }
 
 //int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
-int dequeue(char *MTQ_ID, struct mealTicket *MT) {
+int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
 	int idx;
 	for (int i=0; i<=MAXQUEUES; i++) {
 		if (strcmp(MTQ_ID, registry[i].name) == 0) {
@@ -60,6 +60,24 @@ int dequeue(char *MTQ_ID, struct mealTicket *MT) {
 		return 0;
 	}
 	else { /* queue not empty */
+		int check = 0;
+		for (int i=0; i<3; i++) {
+			int num = registry[idx].buffer[registry[idx].tail]->ticketNum;
+			if (num == ticketNum) {
+				MT->ticketNum = num;
+				MT->dish = registry[idx].buffer[registry[idx].tail]->dish;
+				printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx].name, MT->ticketNum, MT->dish);
+				registry[idx].buffer[registry[idx].tail] = NULL;
+				if (registry[idx].tail >= 2) {
+					registry[idx].tail = 0;
+				}
+				else {
+					registry[idx].tail++;
+				}
+				registry[idx].length--;
+				return 1;
+			}
+		}	
 		MT->ticketNum = registry[idx].buffer[registry[idx].tail]->ticketNum;
 		MT->dish = registry[idx].buffer[registry[idx].tail]->dish;
 		printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx].name, MT->ticketNum, MT->dish);
@@ -113,7 +131,7 @@ int main() {
 	/* Test case A: Dequeue when a queue is empty */
 	struct mealTicket MT;
 	char *result;
-	if (dequeue("Breakfast", &MT) == 0) {
+	if (dequeue("Breakfast", 1, &MT) == 0) {
 		result = "Fail";
 	}
 	else {
@@ -211,7 +229,7 @@ int main() {
 	printf("Test Case: C - Result: %s\n", result);
 
 	/* Test case B: Dequeue when a queue is full */
-	if (dequeue("Breakfast", &MT) == 0) {
+	if (dequeue("Breakfast", 1, &MT) == 0) {
 		result = "Fail";
 	}
 	else {
@@ -223,7 +241,7 @@ int main() {
 	   queue and display it until all queues are empty. */
 	for (int i=0; i<=3; i++) {
 		for (int j=0; j<=2; j++) {
-			dequeue(registry[i].name, &MT);
+			dequeue(registry[i].name, 1, &MT);
 		}
 	}
 
