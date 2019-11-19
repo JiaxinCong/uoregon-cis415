@@ -46,34 +46,35 @@ int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 	return 1;
 }
 
-/*int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
+//int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
+int dequeue(char *MTQ_ID, struct mealTicket *MT) {
 	int idx;
-	for (int i=0; i<MAXQUEUES; i++) {
-		if (strcmp(MTQ_ID, registry[i]->name) == 0) {
+	for (int i=0; i<=MAXQUEUES; i++) {
+		if (strcmp(MTQ_ID, registry[i].name) == 0) {
 			idx = i;
 		}
 	}
-*/
-//	if (registry[idx]->length == 0) { /* queue empty */
-//		printf("Queue is empty. Unable to pop element.\n");
-//		return 0;
-//	}
-//	else { /* queue not empty */
-/*		MT->ticketNum = registry[idx]->buffer[registry[idx]->tail]->ticketNum;
-		MT->dish = registry[idx]->buffer[registry[idx]->tail]->dish;
-		registry[idx]->buffer[registry[idx]->tail] = NULL;
-		printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx]->name, MT->ticketNum, MT->dish);
-		if (registry[idx]->tail == 2) {
-			registry[idx]->tail = 0;
+
+	if (registry[idx].length == 0) { /* queue empty */
+		printf("Queue is empty. Unable to pop element.\n");
+		return 0;
+	}
+	else { /* queue not empty */
+		MT->ticketNum = registry[idx].buffer[registry[idx].tail]->ticketNum;
+		MT->dish = registry[idx].buffer[registry[idx].tail]->dish;
+		registry[idx].buffer[registry[idx].tail] = NULL;
+		printf("Queue: %s - Ticket Number: %d - Dish: %s\n", registry[idx].name, MT->ticketNum, MT->dish);
+		if (registry[idx].tail >= 2) {
+			registry[idx].tail = 0;
 		}
 		else {
-			registry[idx]->tail++;
+			registry[idx].tail++;
 		}
-		registry[idx]->length--;
+		registry[idx].length--;
 	}
 	return 1;
 }
-*/
+
 int main() {
 	struct MTQ Breakfast;
 	struct MTQ Lunch;
@@ -176,6 +177,23 @@ int main() {
 	enqueue("Bar", &ticket10);
 	enqueue("Bar", &ticket11);
 	enqueue("Bar", &ticket12);
+
+	//dequeue("Breakfast", &ticket1);
+
+	for (int i=0; i<=3; i++) {
+		for (int j=0; j<3; j++) {
+			if (registry[i].buffer[j] == NULL) {
+				printf("NULL\n");
+			}
+			else {
+				printf("dish: %s\n", registry[i].buffer[j]->dish);
+			}
+		}
+	}
+
+	struct mealTicket ticket14;
+	ticket14.ticketNum = 14;
+	ticket14.dish = "Pancakes";	
 
 	free(Breakfast.buffer);
 	free(Lunch.buffer);
