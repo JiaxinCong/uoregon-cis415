@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAXQUEUES 3
+#define MAXNAME 10
 
 int CTR = 0;
 int HEAD = 0;
@@ -14,7 +15,7 @@ struct mealTicket {
 };
 
 struct MTQ {
-	char *name;
+	char name[MAXNAME];
 	struct mealTicket **buffer;
 	int head;
 	int tail;
@@ -99,15 +100,15 @@ int main() {
 	struct MTQ Dinner;
 	struct MTQ Bar;
 
-	Breakfast.name = "Breakfast";
-	Lunch.name = "Lunch";
-	Dinner.name = "Dinner";
-	Bar.name = "Bar";
+	strcpy(Breakfast.name,"Breakfast\0");
+	strcpy(Lunch.name,"Lunch\0");
+	strcpy(Dinner.name, "Dinner\0");
+	strcpy(Bar.name, "Bar\0");
 
-	Breakfast.buffer = malloc(3 * sizeof(struct mealTicket*));
-	Lunch.buffer = malloc(3 * sizeof(struct mealTicket*));
-	Dinner.buffer = malloc(3 * sizeof(struct mealTicket*));
-	Bar.buffer = malloc(3 * sizeof(struct mealTicket*));
+	Breakfast.buffer = malloc(MAXQUEUES * sizeof(struct mealTicket*));
+	Lunch.buffer = malloc(MAXQUEUES * sizeof(struct mealTicket*));
+	Dinner.buffer = malloc(MAXQUEUES * sizeof(struct mealTicket*));
+	Bar.buffer = malloc(MAXQUEUES * sizeof(struct mealTicket*));
 
 	for (int i=0; i<3; i++) {
 		Breakfast.buffer[i] = NULL;
