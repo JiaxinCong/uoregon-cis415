@@ -219,9 +219,9 @@ int main() {
 	}
 	printf("Test Case: C - Result: %s\n", result);
 
-	free(Breakfast);
-	free(Lunch);
-	free(Dinner);
-	free(Bar);
+	free(Breakfast.buffer);
+	free(Lunch.buffer);
+	free(Dinner.buffer);
+	free(Bar.buffer);
 	free(registry);
 }
