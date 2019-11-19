@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXQUEUES 4
+#define MAXQUEUES 3
 
 int CTR = 0;
 int HEAD = 0;
 int TAIL = 0;
-struct MTQ **registry;
+struct MTQ *registry;
 
 struct mealTicket {
 	int ticketNum;
@@ -21,30 +21,30 @@ struct MTQ {
 	int length;
 };
 
-/*int enqueue(char *MTQ_ID, struct mealTicket *MT) {
+int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 	int idx;
 	for (int i=0; i<MAXQUEUES; i++) {
-		if (strcmp(MTQ_ID, registry[i]->name) == 0) {
+		if (strcmp(MTQ_ID, registry[i].name) == 0) {
 			idx = i;
 		}
 	}
-*/	
-//	if (registry[idx]->length >= 3) { /* queue full */
-//		printf("Queue is full. Unable to push element: %s\n", MT->dish);
-//		return 0;
-//	}
-//	else { /* queue not full */
-/*		registry[idx]->buffer[registry[idx]->head] = MT;
-		if (registry[idx]->head == 2) {
-			registry[idx]->head = 0;
+	
+	if (registry[idx].length >= 3) { /* queue full */
+		printf("Queue is full. Unable to push element: %s\n", MT->dish);
+		return 0;
+	}
+	else { /* queue not full */
+		registry[idx].buffer[registry[idx].head] = MT;
+		if (registry[idx].head == 2) {
+			registry[idx].head = 0;
 		}
 		else {
-			registry[idx]->head++;
+			registry[idx].head++;
 		}
-		registry[idx]->length++;
+		registry[idx].length++;
 	}
 	return 1;
-}*/
+}
 
 /*int dequeue(char *MTQ_ID, int ticketNum, struct mealTicket *MT) {
 	int idx;
@@ -75,112 +75,105 @@ struct MTQ {
 }
 */
 int main() {
-	struct MTQ *Breakfast;
-	struct MTQ *Lunch;
-	struct MTQ *Dinner;
-	struct MTQ *Bar;
+	struct MTQ Breakfast;
+	struct MTQ Lunch;
+	struct MTQ Dinner;
+	struct MTQ Bar;
 
-	Breakfast->name = "Breakfast";
-	Lunch->name = "Lunch";
-	Dinner->name = "Dinner";
-	Bar->name = "Bar";
+	Breakfast.name = "Breakfast";
+	Lunch.name = "Lunch";
+	Dinner.name = "Dinner";
+	Bar.name = "Bar";
 
-	Breakfast->buffer = malloc(3 * sizeof(struct mealTicket*));
-	Lunch->buffer = malloc(3 * sizeof(struct mealTicket*));
-	Dinner->buffer = malloc(3 * sizeof(struct mealTicket*));
-	Bar->buffer = malloc(3 * sizeof(struct mealTicket*));
+	Breakfast.buffer = malloc(3 * sizeof(struct mealTicket*));
+	Lunch.buffer = malloc(3 * sizeof(struct mealTicket*));
+	Dinner.buffer = malloc(3 * sizeof(struct mealTicket*));
+	Bar.buffer = malloc(3 * sizeof(struct mealTicket*));
 
 	for (int i=0; i<3; i++) {
-		Breakfast->buffer[i] = NULL;
-		Lunch->buffer[i] = NULL;
-		Dinner->buffer[i] = NULL;
-		Bar->buffer[i] = NULL;
+		Breakfast.buffer[i] = NULL;
+		Lunch.buffer[i] = NULL;
+		Dinner.buffer[i] = NULL;
+		Bar.buffer[i] = NULL;
 	}
 
-	registry = malloc(4 * sizeof(struct MTQ*));
+	registry = malloc(4 * sizeof(struct MTQ));
 	registry[0] = Breakfast;
 	registry[1] = Lunch;
 	registry[2] = Dinner;
 	registry[3] = Bar;
 
-	printf("dish: %s\n", registry[0]->name);
-
 	for (int i=0; i<4; i++) {
-		registry[i]->head = 0;
-		registry[i]->tail = 0;
-		registry[i]->length = 0;
+		registry[i].head = 0;
+		registry[i].tail = 0;
+		registry[i].length = 0;
 	}
- 
+
 	/* Breakfast meal tickets */
-	struct mealTicket *ticket1;
-	ticket1->ticketNum = 1;
-	ticket1->dish = "Eggs";
+	struct mealTicket ticket1;
+	ticket1.ticketNum = 1;
+	ticket1.dish = "Eggs";
 
-	struct mealTicket *ticket2;
-	ticket1->ticketNum = 2;
-	ticket1->dish = "Cereal";
+	struct mealTicket ticket2;
+	ticket2.ticketNum = 2;
+	ticket2.dish = "Cereal";
 
-	struct mealTicket *ticket3;
-	ticket1->ticketNum = 3;
-	ticket1->dish = "Toast";
+	struct mealTicket ticket3;
+	ticket3.ticketNum = 3;
+	ticket3.dish = "Toast";
 
-//	enqueue("Breakfast", ticket1);
-//	enqueue("Breakfast", ticket2);
-//	enqueue("Breakfast", ticket3);
-
-	for (int i=0; i<=2; i++) {
-		printf("item: %s\n", registry[0]->buffer[i]->dish);
-	}
+	enqueue("Breakfast", &ticket1);
+	enqueue("Breakfast", &ticket2);
+	enqueue("Breakfast", &ticket3);
 
 	/* Lunch meal tickets */
-/*	struct mealTicket *ticket4;
-	ticket1->ticketNum = 4;
-	ticket1->dish = "Sandwich";
+	struct mealTicket ticket4;
+	ticket4.ticketNum = 4;
+	ticket4.dish = "Sandwich";
 
-	struct mealTicket *ticket5;
-	ticket1->ticketNum = 5;
-	ticket1->dish = "Salad";
+	struct mealTicket ticket5;
+	ticket5.ticketNum = 5;
+	ticket5.dish = "Salad";
 
-	struct mealTicket *ticket6;
-	ticket1->ticketNum = 6;
-	ticket1->dish = "Burrito";
+	struct mealTicket ticket6;
+	ticket6.ticketNum = 6;
+	ticket6.dish = "Burrito";
 
-	enqueue("Lunch", ticket4);
-	enqueue("Lunch", ticket5);
-	enqueue("Lunch", ticket6);
-*/
+	enqueue("Lunch", &ticket4);
+	enqueue("Lunch", &ticket5);
+	enqueue("Lunch", &ticket6);
+
 	/* Dinner meal tickets */
-/*	struct mealTicket *ticket7;
-	ticket1->ticketNum = 7;
-	ticket1->dish = "Spaghetti";
+	struct mealTicket ticket7;
+	ticket7.ticketNum = 7;
+	ticket7.dish = "Spaghetti";
 
-	struct mealTicket *ticket8;
-	ticket1->ticketNum = 8;
-	ticket1->dish = "Sushi";
+	struct mealTicket ticket8;
+	ticket8.ticketNum = 8;
+	ticket8.dish = "Sushi";
 
-	struct mealTicket *ticket9;
-	ticket1->ticketNum = 9;
-	ticket1->dish = "Salmon";
+	struct mealTicket ticket9;
+	ticket9.ticketNum = 9;
+	ticket9.dish = "Salmon";
 
-	enqueue("Dinner", ticket7);
-	enqueue("Dinner", ticket8);
-	enqueue("Dinner", ticket9);
-*/
+	enqueue("Dinner", &ticket7);
+	enqueue("Dinner", &ticket8);
+	enqueue("Dinner", &ticket9);
+
 	/* Bar meal tickets */
-/*	struct mealTicket *ticket10;
-	ticket1->ticketNum = 10;
-	ticket1->dish = "Wine";
+	struct mealTicket ticket10;
+	ticket10.ticketNum = 10;
+	ticket10.dish = "Wine";
 
-	struct mealTicket *ticket11;
-	ticket1->ticketNum = 11;
-	ticket1->dish = "Mojito";
+	struct mealTicket ticket11;
+	ticket11.ticketNum = 11;
+	ticket11.dish = "Mojito";
 
-	struct mealTicket *ticket12;
-	ticket1->ticketNum = 12;
-	ticket1->dish = "Margarita";
+	struct mealTicket ticket12;
+	ticket12.ticketNum = 12;
+	ticket12.dish = "Margarita";
 
-	enqueue("Bar", ticket10);
-	enqueue("Bar", ticket11);
-	enqueue("Bar", ticket12);
-*/
+	enqueue("Bar", &ticket10);
+	enqueue("Bar", &ticket11);
+	enqueue("Bar", &ticket12);
 }
