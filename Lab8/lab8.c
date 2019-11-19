@@ -176,4 +176,9 @@ int main() {
 	enqueue("Bar", &ticket10);
 	enqueue("Bar", &ticket11);
 	enqueue("Bar", &ticket12);
+
+	free(Breakfast.buffer);
+	free(Lunch.buffer);
+	free(Dinner.buffer);
+	free(Bar.buffer);
 }
