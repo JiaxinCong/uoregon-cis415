@@ -201,6 +201,15 @@ int main() {
 	enqueue("Bar", &ticket11);
 	enqueue("Bar", &ticket12);
 
+	/* Test case C: Enqueue when a queue is full */
+	if (enqueue("Dinner", &MT) == 0) {
+		result = "Fail";
+	}
+	else {
+		result = "Success";
+	}
+	printf("Test Case: C - Result: %s\n", result);
+
 	/* Test case B: Dequeue when a queue is full */
 	if (dequeue("Breakfast", &MT) == 0) {
 		result = "Fail";
@@ -217,15 +226,6 @@ int main() {
 			dequeue(registry[i].name, &MT);
 		}
 	}
-
-	/* Test case C: Enqueue when a queue is full */
-	if (enqueue("Dinner", &MT) == 0) {
-		result = "Fail";
-	}
-	else {
-		result = "Success";
-	}
-	printf("Test Case: C - Result: %s\n", result);
 
 	free(Breakfast.buffer);
 	free(Lunch.buffer);
