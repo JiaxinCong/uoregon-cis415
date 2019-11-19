@@ -23,7 +23,7 @@ struct MTQ {
 
 int enqueue(char *MTQ_ID, struct mealTicket *MT) {
 	int idx;
-	for (int i=0; i<MAXQUEUES; i++) {
+	for (int i=0; i<=MAXQUEUES; i++) {
 		if (strcmp(MTQ_ID, registry[i].name) == 0) {
 			idx = i;
 		}
