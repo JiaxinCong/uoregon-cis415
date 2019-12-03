@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "thread_structs.h"
+#include "part1.h"
 #include "synch_bounded_queue.h"
 
 struct synch_bounded_queue *MallocTopicQueue(long size) {

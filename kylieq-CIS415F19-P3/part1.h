@@ -1,5 +1,5 @@
-#ifndef THREAD_STRUCTS_H
-#define THREAD_STRUCTS_H
+#ifndef PART1_H
+#define PART1_H
 #include <sys/time.h>
 #include "synch_bounded_queue.h"
 #define URLSIZE 500
