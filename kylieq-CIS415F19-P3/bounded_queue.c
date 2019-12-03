@@ -11,7 +11,7 @@ int RoundIDToBufferIndex(int size, long long index) {
 BoundedQueue *BB_MallocBoundedQueue(long size) {
     struct bounded_queue *result = NULL;
     result = malloc(sizeof(struct bounded_queue)); 
-    result->buffer = malloc(size * sizeof(void*)); 
+    result->buffer = malloc(size * sizeof(void *)); 
     for (int i = 0; i < size; i++) {
         result->buffer[i] = NULL;
     }
@@ -24,7 +24,7 @@ BoundedQueue *BB_MallocBoundedQueue(long size) {
 long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 	long long result = 0;
 	long long head = RoundIDToBufferIndex(queue->size, queue->head);
-	if (BB_IsFull(queue) == 0){
+	if (BB_IsFull(queue) == 0) {
 		queue->buffer[head] = entry;
 		result = queue->head;
 		queue->head += 1;
@@ -37,7 +37,7 @@ long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 int BB_Dequeue(struct bounded_queue *queue,long long id) {
 	long long result = -1;
 	long long tail = queue->tail;
-	if (BB_IsEmpty(queue) == 0){
+	if (BB_IsEmpty(queue) == 0) {
 		if (BB_IsIdValid(queue, id) == 1 && id == tail) {
 			queue->buffer[tail] = NULL;
 			queue->tail += 1;

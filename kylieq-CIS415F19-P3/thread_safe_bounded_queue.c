@@ -9,7 +9,7 @@
 
 TSBoundedQueue *TS_BB_MallocBoundedQueue(long size) {
 	struct thread_safe_bounded_queue *result = NULL;
-	result = (struct thread_safe_bounded_queue*)malloc(sizeof(struct thread_safe_bounded_queue));
+    result = malloc(sizeof(struct thread_safe_bounded_queue));
 	pthread_mutex_init(&(result->lock), NULL);
 	result->queue = BB_MallocBoundedQueue(size);
 	return result; 
@@ -19,8 +19,7 @@ long long TS_BB_Enqueue(struct thread_safe_bounded_queue *queue,void *entry) {
 	pthread_mutex_lock(&(queue->lock)); 
 	long long result = BB_Enqueue(queue->queue,entry);
 	pthread_mutex_unlock(&(queue->lock)); 
-	if (result < 0) 
-		return -1;
+	if (result < 0) return -1;
 	return result;
 }
 
@@ -28,32 +27,30 @@ int TS_BB_Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
 	pthread_mutex_lock(&(queue->lock)); 
 	int result = BB_Dequeue(queue->queue,id);
 	pthread_mutex_unlock(&(queue->lock)); 
-	if (result < 0) 
-		return -1;
+	if (result < 0) return -1;
 	return result;
 }
 
 void *TS_BB_GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
-	void *result = NULL;
 	pthread_mutex_lock(&(queue->lock)); 
-	result = BB_GetEntry(queue->queue,id);
+	void *result = BB_GetEntry(queue->queue,id);
 	pthread_mutex_unlock(&(queue->lock)); 
 	return result;
 }
 
 long long TS_BB_GetBack(struct thread_safe_bounded_queue *queue) {
-	long long result = -1;
 	pthread_mutex_lock(&(queue->lock)); 
-	result = BB_GetBack(queue->queue);
+	long long result = BB_GetBack(queue->queue);
 	pthread_mutex_unlock(&(queue->lock)); 
+    if (result < 0) return -1;
 	return result;
 }
 
 long long TS_BB_GetFront(struct thread_safe_bounded_queue *queue) {
-    long long result = -1;
     pthread_mutex_lock(&(queue->lock)); 
-    result = BB_GetFront(queue->queue);
+    long long result = BB_GetFront(queue->queue);
     pthread_mutex_unlock(&(queue->lock)); 
+    if (result < 0) return -1;
     return result;
 }
 
