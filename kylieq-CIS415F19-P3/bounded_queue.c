@@ -109,6 +109,9 @@ int BB_IsEmpty(struct bounded_queue *queue) {
 }
 
 void BB_FreeBoundedQueue(struct bounded_queue *queue) {
+	for (int i=0; i<queue->size; i++) {
+        free(queue->buffer[i]);
+    }
 	free(queue->buffer);
 	free(queue);
 }
