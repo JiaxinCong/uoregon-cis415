@@ -9,26 +9,26 @@ struct thread_safe_bounded_queue {
 	pthread_mutex_t lock; 
 };
 
-struct thread_safe_bounded_queue *TS_BB_MallocBoundedQueue(long size);
+struct thread_safe_bounded_queue *TS_BQ_MallocBoundedQueue(long size);
 
-long long TS_BB_Enqueue(struct thread_safe_bounded_queue *queue,void *entry); 
+long long TS_BQ_Enqueue(struct thread_safe_bounded_queue *queue,void *entry); 
 
-int TS_BB_Dequeue(struct thread_safe_bounded_queue *queue,long long id);
+int TS_BQ_Dequeue(struct thread_safe_bounded_queue *queue,long long id);
 
-void *TS_BB_GetEntry(struct thread_safe_bounded_queue *queue,long long id);
+void *TS_BQ_GetEntry(struct thread_safe_bounded_queue *queue,long long id);
 
-long long TS_BB_GetBack(struct thread_safe_bounded_queue *queue);
+long long TS_BQ_GetBack(struct thread_safe_bounded_queue *queue);
 
-long long TS_BB_GetFront(struct thread_safe_bounded_queue *queue);
+long long TS_BQ_GetFront(struct thread_safe_bounded_queue *queue);
 
-int TS_BB_GetCount(struct thread_safe_bounded_queue *queue);
+int TS_BQ_GetCount(struct thread_safe_bounded_queue *queue);
 
-int TS_BB_IsIdValid(struct thread_safe_bounded_queue *queue,long long id);
+int TS_BQ_IsIdValid(struct thread_safe_bounded_queue *queue,long long id);
 
-int TS_BB_IsFull(struct thread_safe_bounded_queue *queue);
+int TS_BQ_IsFull(struct thread_safe_bounded_queue *queue);
 
-int TS_BB_IsEmpty(struct thread_safe_bounded_queue *queue);
+int TS_BQ_IsEmpty(struct thread_safe_bounded_queue *queue);
 
-void TS_BB_FreeBoundedQueue(struct thread_safe_bounded_queue *queue);
+void TS_BQ_FreeBoundedQueue(struct thread_safe_bounded_queue *queue);
 
 #endif

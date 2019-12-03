@@ -8,26 +8,26 @@ struct bounded_queue {
 	int size;
 };
 
-struct bounded_queue *BB_MallocBoundedQueue(long size); 
+struct bounded_queue *BQ_MallocBoundedQueue(long size); 
 
-long long BB_Enqueue(struct bounded_queue *queue,void *entry); 
+long long BQ_Enqueue(struct bounded_queue *queue,void *entry); 
 
-int BB_Dequeue(struct bounded_queue *queue,long long id);
+int BQ_Dequeue(struct bounded_queue *queue,long long id);
 
-void *BB_GetEntry(struct bounded_queue *queue,long long id);
+void *BQ_GetEntry(struct bounded_queue *queue,long long id);
 
-long long BB_GetBack(struct bounded_queue *queue); 
+long long BQ_GetBack(struct bounded_queue *queue); 
 
-long long BB_GetFront(struct bounded_queue *queue); 
+long long BQ_GetFront(struct bounded_queue *queue); 
 
-int BB_GetCount(struct bounded_queue *queue); /* Not used in part 1 */
+int BQ_GetCount(struct bounded_queue *queue); /* Not used in part 1 */
 
-int BB_IsIdValid(struct bounded_queue *queue,long long id); 
+int BQ_IsIdValid(struct bounded_queue *queue,long long id); 
 
-int BB_IsFull(struct bounded_queue *queue);
+int BQ_IsFull(struct bounded_queue *queue);
 
-int BB_IsEmpty(struct bounded_queue *queue); 
+int BQ_IsEmpty(struct bounded_queue *queue); 
 
-void BB_FreeBoundedQueue(struct bounded_queue *queue); /* Not used in part 1 */
+void BQ_FreeBoundedQueue(struct bounded_queue *queue); /* Not used in part 1 */
 
 #endif

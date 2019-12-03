@@ -8,57 +8,57 @@
 
 struct thread_safe_bounded_queue *MallocTopicQueue(long size) {
 	struct thread_safe_bounded_queue *result = NULL;
-	result = TS_BB_MallocBoundedQueue(size);
+	result = TS_BQ_MallocBoundedQueue(size);
 	return result;
 }
 
 long long Enqueue(struct thread_safe_bounded_queue *queue, void *entry) {
-	long long result = TS_BB_Enqueue(queue, entry);
+	long long result = TS_BQ_Enqueue(queue, entry);
 	return result;
 }
 
 int Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
-	int result = TS_BB_Dequeue(queue, id); 
+	int result = TS_BQ_Dequeue(queue, id); 
 	return result;
 }
 
 void *GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
-	void *result = TS_BB_GetEntry(queue, id);
+	void *result = TS_BQ_GetEntry(queue, id);
 	return result;
 }
 
 long long GetBack(struct thread_safe_bounded_queue *queue) {
-	long long result = TS_BB_GetBack(queue);
+	long long result = TS_BQ_GetBack(queue);
 	return result;
 }
 
 long long GetFront(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-	long long result = TS_BB_GetFront(queue);
+	long long result = TS_BQ_GetFront(queue);
 	return result;
 }
 
 int GetCount(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-	long long result = TS_BB_GetCount(queue);
+	long long result = TS_BQ_GetCount(queue);
 	return result;
 }
 
 int IsIdValid(struct thread_safe_bounded_queue *queue,long long id) { /* Not used in part 1 */
-	int result = TS_BB_IsIdValid(queue, id);
+	int result = TS_BQ_IsIdValid(queue, id);
 	return result;
 }
 
 int IsFull(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-	int result = TS_BB_IsFull(queue); 
+	int result = TS_BQ_IsFull(queue); 
 	return result;
 }
 
 int IsEmpty(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-	int result = TS_BB_IsEmpty(queue);
+	int result = TS_BQ_IsEmpty(queue);
 	return result;
 }
 
 void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-	TS_BB_FreeBoundedQueue(queue);
+	TS_BQ_FreeBoundedQueue(queue);
 }
 
 struct topicEntry *MakeEntry(int num) {
