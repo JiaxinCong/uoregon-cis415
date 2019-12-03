@@ -105,5 +105,6 @@ int main() {
 			printf("Tail Denied\n");
 		}
 	}
+	free(entry);
 	FreeBoundedQueue(topic_queue);
 }
