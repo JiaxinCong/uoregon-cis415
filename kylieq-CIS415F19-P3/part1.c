@@ -1,4 +1,4 @@
-/* Outline for Topic Queue */
+/* Outline for topic queue */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
