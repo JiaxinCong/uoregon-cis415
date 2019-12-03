@@ -63,7 +63,7 @@ void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { /* Not used in 
 
 struct topicEntry *MakeEntry(int num) {
 	struct topicEntry *entry = NULL;
-	entry = (struct topicEntry*)malloc(sizeof(struct topicEntry));
+	entry = malloc(sizeof(struct topicEntry));
 	entry->entryNum = num;
 	entry->timeStamp = NULL;
 	entry->pubID = 0;
