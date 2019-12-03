@@ -38,7 +38,6 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 	long long result = -1;
 	if (BQ_IsEmpty(queue) == 0) { // queue not empty
 		if ((BQ_IsIdValid(queue, id) == 1) && (id == queue->tail)) {
-			free(queue->buffer[queue->tail]);
 			queue->buffer[queue->tail] = NULL;
 			result = queue->tail;
 			queue->tail += 1;
