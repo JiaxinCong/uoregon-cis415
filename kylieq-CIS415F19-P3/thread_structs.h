@@ -10,11 +10,11 @@ typedef struct topicEntry Entry;
 
 typedef struct line_arguments Argument;
 
-typedef struct timeval Timeval;
+typedef struct timeval timeval;
 
 struct topicEntry {
 	int entryNum;
-	Timeval *timeStamp;
+	struct timeval *timeStamp;
 	int pubID;
 	char photoURL[URLSIZE]; // URL to photo
 	char photoCaption[CAPSIZE]; // photo caption
