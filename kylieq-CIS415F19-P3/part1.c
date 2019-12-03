@@ -1,8 +1,4 @@
-/*
-This file serves as the outline for the Topic Queue
-Implements the Thread Safe Queue header files to help maintain
-A circular bounded buffer
-*/
+/* Outline for Topic Queue */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -83,141 +79,67 @@ int main() {
 	int size = 30;
 	TSBoundedQueue *topic_queue = MallocTopicQueue(size);
 	int check = 0;
-//	int dequeue_bounds_check = 0;
-//	int empty_check = 0;
-//	int enqueue_bounds_check = 0;
-//	int fill_check = 0;
-//	int refill_check = 0;
-//	int remove_check = 0;
-//	int size_check = 0;
-	void *invalid_entry = NULL;
-//	printf("size: %d\n", topic_queue->queue->size);
+	int ctr = 0;
 
-	/* Fill queue past limit */
-	for(int i = 0; i < size+5; i++){ //fill the queue overflow of 5; should print 5 fails
-		Entry *entry = MakeEntry(i);
+	/* Fill queue */
+	for (ctr = 0; ctr < size; ctr++) {
+		Entry *entry = MakeEntry(ctr);
 		check = TryAddEntry(topic_queue, entry);
-		printf("enqueued: %d\n", check);
-		if(check < 0){
-			printf("Enqueue Denied\n");
-			enqueue_bounds_check += 1;
-		}
-	}
-
-	/* Check if queue is full */
-	fill_check = Thread_IsFull(topic_queue);
-	printf("isFull: %d\n", check);
-
-	/* Empty Queue past limit */
-	for(int i = 0; i < size+7; i++){ //empty the queue overflow of 7, should print 7 fails
-		int tail = Thread_GetBack(topic_queue);
-		if(tail >= 0){
-			Entry *output = Thread_GetItem(topic_queue, tail); //grabbing all of the items and outputting their entrynumber
-			printf("dequeued: %d\n", output->entryNum);
-			check = Thread_TryDequeue(topic_queue, tail);
-			if(check < 0){
-				printf("Dequeue Denied\n");
-			}
-		}
-		else{
-			printf("Tail Denied\n");
-			dequeue_bounds_check += 1;
-		}
-	}
-
-	/* Check if queue is empty */
-	empty_check = Thread_IsEmpty(topic_queue);
-	printf("isEmpty: %d\n", check);
-	
-	/* Fill queue past limit again */
-	for(int i = 0; i < size; i++){ //fill the queue overflow of 5; should print 5 fails
-		Entry *entry = MakeEntry(i);
-		check = TryAddEntry(topic_queue, entry);
-		printf("enqueued: %d\n", check);
-		if(check < 0){
+		printf("Enqueued: %d\n", check);
+		if (check < 0) {
 			printf("Enqueue Denied\n");
 		}
 	}
 
-	/* Check if queue is full */
-	refill_check = Thread_IsFull(topic_queue);
+	/* Attempt to fill queue past limit */
+	Entry *entry = MakeEntry(ctr);
+	check = TryAddEntry(topic_queue, entry);
+	printf("Enqueued: %d\n", check);
+	if (check < 0) {
+		printf("Enqueue Denied\n");
+	}
 
-	/* Remove some items from the queue */
-	for(int i = 0; i < 30; i++){ //deletes some items from queue
+	/* Empty queue */
+	for (ctr = 0; ctr < size; ctr++) {
 		int tail = Thread_GetBack(topic_queue);
-		if(tail >= 0){
+		if (tail >= 0) {
 			Entry *output = Thread_GetItem(topic_queue, tail);
-			printf("dequeued: %d\n", output->entryNum);
+			printf("Dequeued: %d\n", output->entryNum);
 			check = Thread_TryDequeue(topic_queue, tail);
-			if(check < 0){
+			if (check < 0) {
 				printf("Dequeue Denied\n");
 			}
 		}
-		else{
+		else {
 			printf("Tail Denied\n");
 		}
 	}
 
-	size_check = Thread_GetCount(topic_queue);
+	/* Attempt to remove item from empty queue */
+	int tail = Thread_GetBack(topic_queue);
+	if (tail >= 0) {
+		Entry *output = Thread_GetItem(topic_queue, tail);
+		printf("Dequeued: %d\n", output->entryNum);
+		check = Thread_TryDequeue(topic_queue, tail);
+		if (check < 0) {
+			printf("Dequeue Denied\n");
+		}
+	}
+	else {
+		printf("Tail Denied\n");
+	}
 
-	invalid_entry = Thread_GetItem(topic_queue, size*2); //attempting to access an item not in the queue
-
-	/*
-	Printing Results From Tests!
-	*/
-	int pass = 0;
-	for(int i = 0; i < 20; i++)
-		printf("*****");
-	printf("\n");
-	if(fill_check == 1){
-		printf("FILL QUEUE CHECK: PASSES\n");
-		pass += 1;
+	/* Attempt to remove item from empty queue */
+	tail = Thread_GetBack(topic_queue);
+	if (tail >= 0) {
+		Entry *output = Thread_GetItem(topic_queue, tail); 
+		printf("Dequeued: %d\n", output->entryNum);
+		check = Thread_TryDequeue(topic_queue, tail);
+		if (check < 0) {
+			printf("Dequeue Denied\n");
+		}
 	}
-	else
-		printf("FILL QUEUE CHECK: FAILS\n");
-	if(enqueue_bounds_check == 5){
-		printf("ENQUEUE BOUNDS CHECK: PASSES\n");
-		pass += 1;
+	else {
+		printf("Tail Denied\n");
 	}
-	else
-		printf("ENQUEUE BOUNDS CHECK: FAILS\n");
-	if(empty_check == 1){
-		printf("EMPTY QUEUE CHECK: PASSES\n");
-		pass += 1;
-	}
-	else
-		printf("EMPTY QUEUE CHECK: FAILS\n");
-	if(dequeue_bounds_check == 7){
-		printf("DEQUEUE BOUNDS CHECK: PASSES\n");
-		pass += 1;
-	}
-	else
-		printf("DEQUEUE BOUNDS CHECK: FAILS\n");
-	if(refill_check == 1){
-		printf("REFILL QUEUE CHECK: PASSES\n");
-		pass += 1;
-	}
-	else
-		printf("REFILL QUEUE CHECK: FAILS\n");
-	if(size_check == (size-30)){
-		printf("DELETE ITEMS CHECK: PASSES %d REMAINING of size: %d\n", size_check, size);
-		pass += 1;
-	}
-	else
-		printf("DELETE ITEMS CHECK: FAILS %d %d\n", size_check, size);
-	if(invalid_entry == NULL){
-		printf("INVALID GET ENTRY CHECK: PASSES\n");
-		pass += 1;
-	}
-	else
-		printf("INVALID GET ENTRY CHECK: FAILS\n");
-
-	if(pass == 7)
-		printf("ALL TEST CASES PASSED: ALL 9 REQUIREMENTS FULFILLED\n");
-	else
-		printf("ONLY %d/7 TEST CASES PASSED\n", pass);
-
-	for(int i = 0; i < 20; i++)
-		printf("*****");
-	printf("\n");
 }

@@ -23,7 +23,7 @@ long long TS_BB_TryEnqueue(struct thread_safe_bounded_queue *queue,void *item) {
 }
 
 int TS_BB_TryDequeue(struct thread_safe_bounded_queue *queue,long long id) {
-        int  returnValue = 0;
+        int returnValue = 0;
         pthread_mutex_lock(&(queue->lock)); 
         returnValue = BB_TryDequeue(queue->queue,id);
         pthread_mutex_unlock(&(queue->lock)); 

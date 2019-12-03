@@ -9,8 +9,8 @@ int RoundIDToBufferIndex(int size, long long index) {
 
 BoundedQueue *BB_MallocBoundedQueue(long size) {
         struct bounded_queue *returnValue = NULL;
-        returnValue = malloc(sizeof(struct bounded_queue)); //28bytes
-        returnValue->buffer = malloc(size * sizeof(void*)); //260bytes
+        returnValue = malloc(sizeof(struct bounded_queue)); 
+        returnValue->buffer = malloc(size * sizeof(void*)); 
         for(int i = 0; i < size; i++){
                 returnValue->buffer[i] = NULL;
         }
@@ -95,7 +95,7 @@ void *BB_GetItem(struct bounded_queue *queue,long long id){
 }
 
 int BB_IsFull(struct bounded_queue *queue) { //can possibly just check if head = size and tail = 0
-        int returnValue = 0; //leaving this logic to make sure we don't get an overflow
+        int returnValue = 0; 
         if((queue->head - queue->tail) == queue->size) {
                 returnValue = 1;
         }
