@@ -84,8 +84,10 @@ int main() {
 	for (ctr=0; ctr<size+5; ctr++) {
 		entry = MakeEntry(ctr);
 		check = Enqueue(topic_queue, entry);
-		printf("Enqueued: %d\n", check);
-		if (check < 0) {
+		if (check > -1) {
+			printf("Enqueued: %d\n", check);
+		}
+		else {
 			printf("Enqueue Denied\n");
 		}
 	}

@@ -24,7 +24,7 @@ struct bounded_queue *BB_MallocBoundedQueue(long size) {
 long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 	long long result = -1;
 	long long head = RoundIDToBufferIndex(queue->size, queue->head);
-	if (BB_IsFull(queue) == 0) {
+	if (BB_IsFull(queue) == 0) { // queue not full
 		queue->buffer[head] = entry;
 		result = queue->head;
 		queue->head += 1;
@@ -34,21 +34,21 @@ long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 
 int BB_Dequeue(struct bounded_queue *queue,long long id) {
 	long long result = -1;
-	long long tail = queue->tail;
-	if (BB_IsEmpty(queue) == 0) {
-		if (BB_IsIdValid(queue, id) == 1 && id == tail) {
-			queue->buffer[tail] = NULL;
+	if (BB_IsEmpty(queue) == 0) { // queue not empty
+		if ((BB_IsIdValid(queue, id) == 1) && (id == queue->tail)) {
+			queue->buffer[queue->tail] = NULL;
+			result = queue->tail;
 			queue->tail += 1;
-			result = 1;
 		}
 	}
 	return result;
 }
 
-long long BB_GetFront(struct bounded_queue *queue) {
-	long long result = -1;
-	if (BB_IsEmpty(queue) == 0) {
-		result = queue->head-1;
+void *BB_GetEntry(struct bounded_queue *queue,long long id){
+	void *result = NULL;
+	if (BB_IsIdValid(queue, id) == 1) {
+		int newid = RoundIDToBufferIndex(queue->size, id);
+		result = queue->buffer[newid];
 	}
 	return result;
 }
@@ -58,6 +58,14 @@ long long BB_GetBack(struct bounded_queue *queue) {
 		return queue->tail;
 	}
 	return -1;
+}
+
+long long BB_GetFront(struct bounded_queue *queue) {
+	long long result = -1;
+	if (BB_IsEmpty(queue) == 0) {
+		result = queue->head-1;
+	}
+	return result;
 }
 
 int BB_GetCount(struct bounded_queue *queue) {
@@ -72,15 +80,6 @@ int BB_IsIdValid(struct bounded_queue *queue,long long id) {
 		return 1;
 	}
 	return 0;
-}
-
-void *BB_GetEntry(struct bounded_queue *queue,long long id){
-	void *result = NULL;
-	if (BB_IsIdValid(queue, id) == 1) {
-		int newid = RoundIDToBufferIndex(queue->size, id);
-		result = queue->buffer[newid];
-	}
-	return result;
 }
 
 int BB_IsFull(struct bounded_queue *queue) { 
