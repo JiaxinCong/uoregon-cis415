@@ -1,7 +1,7 @@
 #ifndef THREAD_STRUCTS_H
 #define THREAD_STRUCTS_H
 #include <sys/time.h>
-#include "thread_safe_bounded_queue.h"
+#include "synch_bounded_queue.h"
 #define URLSIZE 500
 #define	CAPSIZE 500
 
@@ -20,27 +20,27 @@ struct line_arguments {
 
 typedef struct line_arguments Argument;
 
-struct thread_safe_bounded_queue *MallocTopicQueue(long size);
+struct synch_bounded_queue *MallocTopicQueue(long size);
 
-long long Enqueue(struct thread_safe_bounded_queue *queue,void *entry); 
+long long Enqueue(struct synch_bounded_queue *queue,void *entry); 
 
-int Dequeue(struct thread_safe_bounded_queue *queue,long long id);
+int Dequeue(struct synch_bounded_queue *queue,long long id);
 
-void *GetEntry(struct thread_safe_bounded_queue *queue,long long id);
+void *GetEntry(struct synch_bounded_queue *queue,long long id);
 
-long long GetBack(struct thread_safe_bounded_queue *queue);
+long long GetBack(struct synch_bounded_queue *queue);
 
-long long GetFront(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
+long long GetFront(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-int GetCount(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
+int GetCount(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-int IsIdValid(struct thread_safe_bounded_queue *queue,long long id); /* Not used in part 1 */
+int IsIdValid(struct synch_bounded_queue *queue,long long id); /* Not used in part 1 */
 
-int IsFull(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
+int IsFull(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-int IsEmpty(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
+int IsEmpty(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-void FreeBoundedQueue(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
+void FreeBoundedQueue(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
 struct topicEntry *MakeEntry();
 
