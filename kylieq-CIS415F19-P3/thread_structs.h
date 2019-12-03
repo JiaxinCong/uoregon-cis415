@@ -27,9 +27,9 @@ struct line_arguments {
 
 TSBoundedQueue *MallocTopicQueue(long size);
 
-long long TryAddEntry(TSBoundedQueue *queue,void *item); 
+long long Thread_Enqueue(TSBoundedQueue *queue,void *item); 
 
-int Thread_TryDequeue(TSBoundedQueue *queue,long long id);
+int Thread_Dequeue(TSBoundedQueue *queue,long long id);
 
 long long Thread_GetFront(TSBoundedQueue *queue);
 

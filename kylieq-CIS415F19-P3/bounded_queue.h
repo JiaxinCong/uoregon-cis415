@@ -1,12 +1,11 @@
 #ifndef BOUNDED_QUEUE_H
 #define BOUNDED_QUEUE_H
 
-struct bounded_queue
-{
+struct bounded_queue {
         int size;       // capacity
         void **buffer;  // storage
-        long long head; // 
-        long long tail; //
+        long long head;  
+        long long tail; 
 };
 
 typedef struct bounded_queue BoundedQueue;

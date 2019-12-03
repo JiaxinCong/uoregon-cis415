@@ -1,3 +1,4 @@
+/* Functionality to handle locks */
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>

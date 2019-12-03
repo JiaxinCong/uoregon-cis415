@@ -1,3 +1,4 @@
+/* Functionality to modify data in queue */
 #include <stdio.h>
 #include <stdlib.h>
 #include "bounded_queue.h"

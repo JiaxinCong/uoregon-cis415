@@ -14,12 +14,12 @@ TSBoundedQueue *MallocTopicQueue(long size) {
 	return (TSBoundedQueue *)returnValue;
 }
 
-long long TryAddEntry(struct thread_safe_bounded_queue *queue, void *item) {
+long long Thread_Enqueue(struct thread_safe_bounded_queue *queue, void *item) {
 	long long returnValue = TS_BB_TryEnqueue(queue,item);
 	return returnValue;
 }
 
-int Thread_TryDequeue(struct thread_safe_bounded_queue *queue,long long id) {
+int Thread_Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
         int  returnValue = TS_BB_TryDequeue(queue, id); 
         return returnValue;
 }
@@ -80,11 +80,12 @@ int main() {
 	TSBoundedQueue *topic_queue = MallocTopicQueue(size);
 	int check = 0;
 	int ctr = 0;
+	char *test = NULL;
 
 	/* Fill queue */
 	for (ctr = 0; ctr < size; ctr++) {
 		Entry *entry = MakeEntry(ctr);
-		check = TryAddEntry(topic_queue, entry);
+		check = Thread_Enqueue(topic_queue, entry);
 		printf("Enqueued: %d\n", check);
 		if (check < 0) {
 			printf("Enqueue Denied\n");
@@ -92,12 +93,14 @@ int main() {
 	}
 
 	/* Attempt to fill queue past limit */
+	test = "Success";
 	Entry *entry = MakeEntry(ctr);
-	check = TryAddEntry(topic_queue, entry);
+	check = Thread_Enqueue(topic_queue, entry);
 	printf("Enqueued: %d\n", check);
 	if (check < 0) {
 		printf("Enqueue Denied\n");
 	}
+	printf("Test Case: Enqueue when queue is full - Result: %s\n", test);
 
 	/* Empty queue */
 	for (ctr = 0; ctr < size; ctr++) {
@@ -105,41 +108,33 @@ int main() {
 		if (tail >= 0) {
 			Entry *output = Thread_GetItem(topic_queue, tail);
 			printf("Dequeued: %d\n", output->entryNum);
-			check = Thread_TryDequeue(topic_queue, tail);
+			check = Thread_Dequeue(topic_queue, tail);
 			if (check < 0) {
 				printf("Dequeue Denied\n");
+				test = "Fail";
 			}
 		}
 		else {
 			printf("Tail Denied\n");
+			test = "Fail";
 		}
 	}
 
 	/* Attempt to remove item from empty queue */
+	test = "Success";
 	int tail = Thread_GetBack(topic_queue);
 	if (tail >= 0) {
 		Entry *output = Thread_GetItem(topic_queue, tail);
 		printf("Dequeued: %d\n", output->entryNum);
-		check = Thread_TryDequeue(topic_queue, tail);
+		check = Thread_Dequeue(topic_queue, tail);
 		if (check < 0) {
 			printf("Dequeue Denied\n");
+			test = "Fail";
 		}
 	}
 	else {
 		printf("Tail Denied\n");
+		test = "Fail";
 	}
-
-	/* Attempt to remove item from empty queue */
-	tail = Thread_GetBack(topic_queue);
-	if (tail >= 0) {
-		Entry *output = Thread_GetItem(topic_queue, tail); 
-		printf("Dequeued: %d\n", output->entryNum);
-		check = Thread_TryDequeue(topic_queue, tail);
-		if (check < 0) {
-			printf("Dequeue Denied\n");
-		}
-	}
-	else {
-		printf("Tail Denied\n");
-	}
+	printf("Test Case: Dequeue when queue is empty - Result: %s\n", test);
 }
