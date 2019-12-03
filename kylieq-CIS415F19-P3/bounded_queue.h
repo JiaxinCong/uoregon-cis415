@@ -28,6 +28,6 @@ int BQ_IsFull(struct bounded_queue *queue);
 
 int BQ_IsEmpty(struct bounded_queue *queue); 
 
-void BQ_FreeBoundedQueue(struct bounded_queue *queue); /* Not used in part 1 */
+void BQ_FreeBoundedQueue(struct bounded_queue *queue, int size); /* Not used in part 1 */
 
 #endif
