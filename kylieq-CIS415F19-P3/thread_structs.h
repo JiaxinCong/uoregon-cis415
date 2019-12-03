@@ -5,10 +5,6 @@
 #define URLSIZE 500
 #define	CAPSIZE 500
 
-typedef struct line_arguments Argument;
-
-typedef struct timeval timeval;
-
 struct topicEntry {
 	int entryNum;
 	struct timeval *timeStamp;
@@ -21,6 +17,8 @@ struct line_arguments {
 	int count;
 	char **args;
 };
+
+typedef struct line_arguments Argument;
 
 struct thread_safe_bounded_queue *MallocTopicQueue(long size);
 
