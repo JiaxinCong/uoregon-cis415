@@ -100,6 +100,8 @@ int BQ_IsEmpty(struct bounded_queue *queue) {
 }
 
 void BQ_FreeBoundedQueue(struct bounded_queue *queue) {
+	while(!BQ_IsEmpty(queue))
+		BQ_Dequeue(queue, queue->tail);
 	free(queue->buffer);
 	free(queue);
 }
