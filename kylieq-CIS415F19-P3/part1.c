@@ -105,9 +105,5 @@ int main() {
 			printf("Tail Denied\n");
 		}
 	}
-
-	for (int i=0; i<size; i++) {
-        free(topic_queue->queue->buffer[i]);
-    }
 	FreeBoundedQueue(topic_queue);
 }
