@@ -31,15 +31,15 @@ long long Enqueue(TSBoundedQueue *queue,void *entry);
 
 int Dequeue(TSBoundedQueue *queue,long long id);
 
-long long GetFront(TSBoundedQueue *queue); /* Not used in part 1 */
+void *GetEntry(TSBoundedQueue *queue,long long id);
 
 long long GetBack(TSBoundedQueue *queue);
+
+long long GetFront(TSBoundedQueue *queue); /* Not used in part 1 */
 
 int GetCount(TSBoundedQueue *queue); /* Not used in part 1 */
 
 int IsIdValid(TSBoundedQueue *queue,long long id); /* Not used in part 1 */
-
-void *GetEntry(TSBoundedQueue *queue,long long id);
 
 int IsFull(TSBoundedQueue *queue); /* Not used in part 1 */
 
