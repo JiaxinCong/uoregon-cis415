@@ -102,7 +102,7 @@ int main() {
 			}
 		}
 		else {
-			printf("Tail Denied\n");
+			printf("Dequeue Denied\n");
 		}
 	}
 	FreeBoundedQueue(topic_queue);
