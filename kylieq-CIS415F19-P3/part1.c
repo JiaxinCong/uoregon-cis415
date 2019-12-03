@@ -6,7 +6,7 @@
 #include "thread_structs.h"
 #include "thread_safe_bounded_queue.h"
 
-TSBoundedQueue *MallocTopicQueue(long size) {
+struct thread_safe_bounded_queue *MallocTopicQueue(long size) {
 	struct thread_safe_bounded_queue *result = NULL;
 	result = TS_BB_MallocBoundedQueue(size);
 	return result;
@@ -61,7 +61,7 @@ void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { /* Not used in 
 	TS_BB_FreeBoundedQueue(queue);
 }
 
-Entry *MakeEntry(int num) {
+struct topicEntry *MakeEntry(int num) {
 	struct topicEntry *entry = NULL;
 	entry = (struct topicEntry*)malloc(sizeof(struct topicEntry));
 	entry->entryNum = num;
@@ -74,8 +74,8 @@ Entry *MakeEntry(int num) {
 
 int main() {
 	int size = 30;
-	TSBoundedQueue *topic_queue = MallocTopicQueue(size);
-	Entry *entry = NULL;
+	struct thread_safe_bounded_queue *topic_queue = MallocTopicQueue(size);
+	struct topicEntry *entry = NULL;
 
 	int check = 0;
 	int ctr = 0;

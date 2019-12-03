@@ -7,7 +7,7 @@
 #include "bounded_queue.h"
 #include "thread_safe_bounded_queue.h"
 
-TSBoundedQueue *TS_BB_MallocBoundedQueue(long size) {
+struct thread_safe_bounded_queue *TS_BB_MallocBoundedQueue(long size) {
 	struct thread_safe_bounded_queue *result = NULL;
     result = malloc(sizeof(struct thread_safe_bounded_queue));
 	pthread_mutex_init(&(result->lock), NULL);

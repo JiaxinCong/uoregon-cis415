@@ -8,7 +8,7 @@ int RoundIDToBufferIndex(int size, long long index) {
     return result;
 }
 
-BoundedQueue *BB_MallocBoundedQueue(long size) {
+struct bounded_queue *BB_MallocBoundedQueue(long size) {
     struct bounded_queue *result = NULL;
     result = malloc(sizeof(struct bounded_queue)); 
     result->size = size;
@@ -70,7 +70,7 @@ int BB_GetCount(struct bounded_queue *queue) {
 	return result;
 }
 
-int BB_IsIdValid(struct bounded_queue *queue,long long id) {
+int BB_IsIdValid(struct bounded_queue *queue,long long id) { 
 	long long head = queue->head;
 	long long tail = queue->tail;
 	int result = 0;
@@ -92,15 +92,15 @@ void *BB_GetEntry(struct bounded_queue *queue,long long id){
 	return result;
 }
 
-int BB_IsFull(struct bounded_queue *queue) { //can possibly just check if head = size and tail = 0
+int BB_IsFull(struct bounded_queue *queue) { 
 	int result = 0; 
-	if ((queue->head - queue->tail) == queue->size) {
+	if (queue->head == queue->size && queue->tail == 0) {
 		result = 1;
 	}
 	return result;
 }
 
-int BB_IsEmpty(struct bounded_queue *queue) {
+int BB_IsEmpty(struct bounded_queue *queue) { 
 	int result = 0;
 	if (queue->head == queue->tail) {
 		result = 1;

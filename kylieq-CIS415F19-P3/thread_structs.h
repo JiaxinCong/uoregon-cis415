@@ -5,8 +5,6 @@
 #define URLSIZE 500
 #define	CAPSIZE 500
 
-typedef struct topicEntry Entry;
-
 typedef struct line_arguments Argument;
 
 typedef struct timeval timeval;
@@ -24,28 +22,28 @@ struct line_arguments {
 	char **args;
 };
 
-TSBoundedQueue *MallocTopicQueue(long size);
+struct thread_safe_bounded_queue *MallocTopicQueue(long size);
 
-long long Enqueue(TSBoundedQueue *queue,void *entry); 
+long long Enqueue(struct thread_safe_bounded_queue *queue,void *entry); 
 
-int Dequeue(TSBoundedQueue *queue,long long id);
+int Dequeue(struct thread_safe_bounded_queue *queue,long long id);
 
-void *GetEntry(TSBoundedQueue *queue,long long id);
+void *GetEntry(struct thread_safe_bounded_queue *queue,long long id);
 
-long long GetBack(TSBoundedQueue *queue);
+long long GetBack(struct thread_safe_bounded_queue *queue);
 
-long long GetFront(TSBoundedQueue *queue); /* Not used in part 1 */
+long long GetFront(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-int GetCount(TSBoundedQueue *queue); /* Not used in part 1 */
+int GetCount(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-int IsIdValid(TSBoundedQueue *queue,long long id); /* Not used in part 1 */
+int IsIdValid(struct thread_safe_bounded_queue *queue,long long id); /* Not used in part 1 */
 
-int IsFull(TSBoundedQueue *queue); /* Not used in part 1 */
+int IsFull(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-int IsEmpty(TSBoundedQueue *queue); /* Not used in part 1 */
+int IsEmpty(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-void FreeBoundedQueue(TSBoundedQueue *queue); /* Not used in part 1 */
+void FreeBoundedQueue(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-Entry *MakeEntry();
+struct topicEntry *MakeEntry();
 
 #endif
