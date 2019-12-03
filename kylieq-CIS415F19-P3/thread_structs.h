@@ -3,8 +3,7 @@
 #include <sys/time.h>
 #include "thread_safe_bounded_queue.h"
 #define URLSIZE 500
-#define	CAPSIZE 1000
-
+#define	CAPSIZE 500
 
 typedef struct topicEntry Entry;
 
