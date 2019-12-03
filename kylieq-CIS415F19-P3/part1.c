@@ -108,4 +108,5 @@ int main() {
 		}
 	}
 	FreeBoundedQueue(topic_queue);
+	return 0;
 }

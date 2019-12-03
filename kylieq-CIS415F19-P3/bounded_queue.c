@@ -46,7 +46,7 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 	return result;
 }
 
-void *BQ_GetEntry(struct bounded_queue *queue, long long id){
+void *BQ_GetEntry(struct bounded_queue *queue, long long id) {
 	void *result = NULL;
 	if (BQ_ValidEntry(queue, id) == 1) {
 		int newid = RoundIDToBufferIndex(queue->size, id);
