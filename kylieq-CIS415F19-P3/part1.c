@@ -57,8 +57,8 @@ int IsEmpty(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
 	return result;
 }
 
-void FreeBoundedQueue(struct thread_safe_bounded_queue *queue, int size) { /* Not used in part 1 */
-	TS_BQ_FreeBoundedQueue(queue, size);
+void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { 
+	TS_BQ_FreeBoundedQueue(queue);
 }
 
 struct topicEntry *MakeEntry(int num) {
@@ -107,5 +107,5 @@ int main() {
 			printf("Dequeue Denied\n");
 		}
 	}
-	FreeBoundedQueue(topic_queue, size);
+	FreeBoundedQueue(topic_queue);
 }

@@ -86,8 +86,8 @@ int TS_BQ_IsEmpty(struct thread_safe_bounded_queue *queue) {
     return result;
 }
 
-void TS_BQ_FreeBoundedQueue(struct thread_safe_bounded_queue *queue, int size) {
-    BQ_FreeBoundedQueue(queue->queue, size);
+void TS_BQ_FreeBoundedQueue(struct thread_safe_bounded_queue *queue) {
+    BQ_FreeBoundedQueue(queue->queue);
     queue->queue = NULL;
     pthread_mutex_destroy(&(queue->lock));
     free(queue);

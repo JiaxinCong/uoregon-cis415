@@ -42,7 +42,7 @@ int IsFull(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
 int IsEmpty(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
-void FreeBoundedQueue(struct thread_safe_bounded_queue *queue, int size); /* Not used in part 1 */
+void FreeBoundedQueue(struct thread_safe_bounded_queue *queue); /* Not used in part 1 */
 
 struct topicEntry *MakeEntry();
 

@@ -29,6 +29,6 @@ int TS_BQ_IsFull(struct thread_safe_bounded_queue *queue);
 
 int TS_BQ_IsEmpty(struct thread_safe_bounded_queue *queue);
 
-void TS_BQ_FreeBoundedQueue(struct thread_safe_bounded_queue *queue, int size);
+void TS_BQ_FreeBoundedQueue(struct thread_safe_bounded_queue *queue);
 
 #endif

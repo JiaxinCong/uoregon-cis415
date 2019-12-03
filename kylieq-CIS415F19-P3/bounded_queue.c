@@ -38,7 +38,7 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 	long long result = -1;
 	if (BQ_IsEmpty(queue) == 0) { // queue not empty
 		if ((BQ_IsIdValid(queue, id) == 1) && (id == queue->tail)) {
-			//free(queue->buffer[queue->tail]);
+			free(queue->buffer[queue->tail]);
 			queue->buffer[queue->tail] = NULL;
 			result = queue->tail;
 			queue->tail += 1;
@@ -99,10 +99,7 @@ int BQ_IsEmpty(struct bounded_queue *queue) {
 	return 0;
 }
 
-void BQ_FreeBoundedQueue(struct bounded_queue *queue, int size) {
-	for(int i = 0; i < size; i++){
-		free(queue->buffer[i]);
-	}
+void BQ_FreeBoundedQueue(struct bounded_queue *queue) {
 	free(queue->buffer);
 	free(queue);
 }
