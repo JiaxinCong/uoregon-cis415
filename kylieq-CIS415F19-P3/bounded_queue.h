@@ -22,7 +22,7 @@ long long BQ_GetFront(struct bounded_queue *queue);
 
 int BQ_GetCount(struct bounded_queue *queue); /* Not used in part 1 */
 
-int BQ_IsIdValid(struct bounded_queue *queue,long long id); 
+int BQ_ValidEntry(struct bounded_queue *queue,long long id); 
 
 int BQ_IsFull(struct bounded_queue *queue);
 

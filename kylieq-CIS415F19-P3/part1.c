@@ -42,8 +42,8 @@ int GetCount(struct synch_bounded_queue *queue) { /* Not used in part 1 */
 	return result;
 }
 
-int IsIdValid(struct synch_bounded_queue *queue,long long id) { /* Not used in part 1 */
-	int result = SBQ_IsIdValid(queue, id);
+int ValidEntry(struct synch_bounded_queue *queue,long long id) { /* Not used in part 1 */
+	int result = SBQ_ValidEntry(queue, id);
 	return result;
 }
 

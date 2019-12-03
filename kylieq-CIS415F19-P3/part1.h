@@ -34,7 +34,7 @@ long long GetFront(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
 int GetCount(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-int IsIdValid(struct synch_bounded_queue *queue,long long id); /* Not used in part 1 */
+int ValidEntry(struct synch_bounded_queue *queue,long long id); /* Not used in part 1 */
 
 int IsFull(struct synch_bounded_queue *queue); /* Not used in part 1 */
 

@@ -23,7 +23,7 @@ long long SBQ_GetFront(struct synch_bounded_queue *queue);
 
 int SBQ_GetCount(struct synch_bounded_queue *queue);
 
-int SBQ_IsIdValid(struct synch_bounded_queue *queue,long long id);
+int SBQ_ValidEntry(struct synch_bounded_queue *queue,long long id);
 
 int SBQ_IsFull(struct synch_bounded_queue *queue);
 

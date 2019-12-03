@@ -62,10 +62,10 @@ int SBQ_GetCount(struct synch_bounded_queue *queue) {
     return result;
 }
 
-int SBQ_IsIdValid(struct synch_bounded_queue *queue,long long id) {
+int SBQ_ValidEntry(struct synch_bounded_queue *queue,long long id) {
     int result = 0;  
     pthread_mutex_lock(&(queue->lock)); 
-    result = BQ_IsIdValid(queue->queue,id);
+    result = BQ_ValidEntry(queue->queue,id);
     pthread_mutex_unlock(&(queue->lock)); 
     return result;
 }

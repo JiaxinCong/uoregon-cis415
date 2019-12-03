@@ -37,7 +37,7 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 	// If dequeue valid, return position of tail. Otherwise, -1.
 	long long result = -1;
 	if (BQ_IsEmpty(queue) == 0) { // queue not empty
-		if ((BQ_IsIdValid(queue, id) == 1) && (id == queue->tail)) {
+		if ((BQ_ValidEntry(queue, id) == 1) && (id == queue->tail)) {
 			queue->buffer[queue->tail] = NULL;
 			result = queue->tail;
 			queue->tail += 1;
@@ -48,7 +48,7 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 
 void *BQ_GetEntry(struct bounded_queue *queue, long long id){
 	void *result = NULL;
-	if (BQ_IsIdValid(queue, id) == 1) {
+	if (BQ_ValidEntry(queue, id) == 1) {
 		int newid = RoundIDToBufferIndex(queue->size, id);
 		result = queue->buffer[newid];
 	}
@@ -75,7 +75,8 @@ int BQ_GetCount(struct bounded_queue *queue) {
 	return result;
 }
 
-int BQ_IsIdValid(struct bounded_queue *queue, long long id) { 
+int BQ_ValidEntry(struct bounded_queue *queue, long long id) { 
+	// Check if item referred to by id is in queue
 	long long head = queue->head;
 	long long tail = queue->tail;
 	if (id >= tail && id < head) {
