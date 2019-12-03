@@ -27,25 +27,25 @@ struct line_arguments {
 
 TSBoundedQueue *MallocTopicQueue(long size);
 
-long long Thread_Enqueue(TSBoundedQueue *queue,void *item); 
+long long Enqueue(TSBoundedQueue *queue,void *entry); 
 
-int Thread_Dequeue(TSBoundedQueue *queue,long long id);
+int Dequeue(TSBoundedQueue *queue,long long id);
 
-long long Thread_GetFront(TSBoundedQueue *queue);
+long long GetFront(TSBoundedQueue *queue);
 
-long long Thread_GetBack(TSBoundedQueue *queue);
+long long GetBack(TSBoundedQueue *queue);
 
-int Thread_GetCount(TSBoundedQueue *queue);
+int GetCount(TSBoundedQueue *queue);
 
-int Thread_IsIdValid(TSBoundedQueue *queue,long long id);
+int IsIdValid(TSBoundedQueue *queue,long long id);
 
-void *Thread_GetItem(TSBoundedQueue *queue,long long id);
+void *GetEntry(TSBoundedQueue *queue,long long id);
 
-int Thread_IsFull(TSBoundedQueue *queue);
+int IsFull(TSBoundedQueue *queue);
 
-int Thread_IsEmpty(TSBoundedQueue *queue);
+int IsEmpty(TSBoundedQueue *queue);
 
-void Thread_FreeBoundedQueue(TSBoundedQueue *queue);
+void FreeBoundedQueue(TSBoundedQueue *queue);
 
 Entry *MakeEntry();
 

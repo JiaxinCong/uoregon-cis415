@@ -15,18 +15,18 @@ TSBoundedQueue *TS_BB_MallocBoundedQueue(long size) {
         return (TSBoundedQueue *)returnValue; 
 }
 
-long long TS_BB_TryEnqueue(struct thread_safe_bounded_queue *queue,void *item) {
+long long TS_BB_Enqueue(struct thread_safe_bounded_queue *queue,void *entry) {
         long long returnValue = -1;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_TryEnqueue(queue->queue,item);
+        returnValue = BB_Enqueue(queue->queue,entry);
         pthread_mutex_unlock(&(queue->lock)); 
         return returnValue;
 }
 
-int TS_BB_TryDequeue(struct thread_safe_bounded_queue *queue,long long id) {
+int TS_BB_Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
         int returnValue = 0;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_TryDequeue(queue->queue,id);
+        returnValue = BB_Dequeue(queue->queue,id);
         pthread_mutex_unlock(&(queue->lock)); 
         return returnValue;
 }
@@ -63,10 +63,10 @@ int TS_BB_IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
         return returnValue;
 }
 
-void *TS_BB_GetItem(struct thread_safe_bounded_queue *queue,long long id) {
+void *TS_BB_GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
         void *returnValue = NULL;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_GetItem(queue->queue,id);
+        returnValue = BB_GetEntry(queue->queue,id);
         pthread_mutex_unlock(&(queue->lock)); 
         return returnValue;
 }

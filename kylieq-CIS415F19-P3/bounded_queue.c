@@ -21,11 +21,11 @@ BoundedQueue *BB_MallocBoundedQueue(long size) {
         return (BoundedQueue *)returnValue;
 }
 
-long long BB_TryEnqueue(struct bounded_queue *queue,void *item) {
+long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
         long long returnValue = 0;
         long long head = RoundIDToBufferIndex(queue->size, queue->head);
         if(BB_IsFull(queue) == 0){
-                queue->buffer[head] = item;
+                queue->buffer[head] = entry;
                 returnValue = queue->head;
                 queue->head += 1;
         }
@@ -35,7 +35,7 @@ long long BB_TryEnqueue(struct bounded_queue *queue,void *item) {
         return returnValue;
 }
 
-int BB_TryDequeue(struct bounded_queue *queue,long long id) {
+int BB_Dequeue(struct bounded_queue *queue,long long id) {
         long long returnValue = -1;
         long long tail = queue->tail;
         if(BB_IsEmpty(queue) == 0){
@@ -86,7 +86,7 @@ int BB_IsIdValid(struct bounded_queue *queue,long long id) {
         return returnValue;
 }
 
-void *BB_GetItem(struct bounded_queue *queue,long long id){
+void *BB_GetEntry(struct bounded_queue *queue,long long id){
         void *returnValue = NULL;
         if(BB_IsIdValid(queue, id) == 1){
                 int newid = RoundIDToBufferIndex(queue->size, id);

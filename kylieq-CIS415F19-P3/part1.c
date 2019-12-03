@@ -14,52 +14,52 @@ TSBoundedQueue *MallocTopicQueue(long size) {
 	return (TSBoundedQueue *)returnValue;
 }
 
-long long Thread_Enqueue(struct thread_safe_bounded_queue *queue, void *item) {
-	long long returnValue = TS_BB_TryEnqueue(queue,item);
+long long Enqueue(struct thread_safe_bounded_queue *queue, void *entry) {
+	long long returnValue = TS_BB_Enqueue(queue,entry);
 	return returnValue;
 }
 
-int Thread_Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
-        int  returnValue = TS_BB_TryDequeue(queue, id); 
+int Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
+        int  returnValue = TS_BB_Dequeue(queue, id); 
         return returnValue;
 }
 
-long long Thread_GetFront(struct thread_safe_bounded_queue *queue) {
+long long GetFront(struct thread_safe_bounded_queue *queue) {
         long long returnValue = TS_BB_GetFront(queue);
         return returnValue;
 }
 
-long long Thread_GetBack(struct thread_safe_bounded_queue *queue) {
+long long GetBack(struct thread_safe_bounded_queue *queue) {
         long long returnValue = TS_BB_GetBack(queue);
         return returnValue;
 }
 
-int Thread_GetCount(struct thread_safe_bounded_queue *queue) {
+int GetCount(struct thread_safe_bounded_queue *queue) {
 	long long returnValue = TS_BB_GetCount(queue);
 	return returnValue;
 }
 
-int Thread_IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
+int IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
         int returnValue = TS_BB_IsIdValid(queue, id);
         return returnValue;
 }
 
-void *Thread_GetItem(struct thread_safe_bounded_queue *queue,long long id) {
-        void *returnValue = TS_BB_GetItem(queue,id);
+void *GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
+        void *returnValue = TS_BB_GetEntry(queue,id);
         return returnValue;
 }
 
-int Thread_IsFull(struct thread_safe_bounded_queue *queue) {
+int IsFull(struct thread_safe_bounded_queue *queue) {
         int returnValue = TS_BB_IsFull(queue); 
         return returnValue;
 }
 
-int Thread_IsEmpty(struct thread_safe_bounded_queue *queue) {
+int IsEmpty(struct thread_safe_bounded_queue *queue) {
         int returnValue = TS_BB_IsEmpty(queue);
         return returnValue;
 }
 
-void Thread_FreeBoundedQueue(struct thread_safe_bounded_queue *queue) {
+void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) {
 	TS_BB_FreeBoundedQueue(queue);
 }
 
@@ -78,6 +78,7 @@ Entry *MakeEntry(int num) {
 int main() {
 	int size = 30;
 	TSBoundedQueue *topic_queue = MallocTopicQueue(size);
+
 	int check = 0;
 	int ctr = 0;
 	char *test = NULL;
@@ -85,7 +86,7 @@ int main() {
 	/* Fill queue */
 	for (ctr = 0; ctr < size; ctr++) {
 		Entry *entry = MakeEntry(ctr);
-		check = Thread_Enqueue(topic_queue, entry);
+		check = Enqueue(topic_queue, entry);
 		printf("Enqueued: %d\n", check);
 		if (check < 0) {
 			printf("Enqueue Denied\n");
@@ -95,7 +96,7 @@ int main() {
 	/* Attempt to fill queue past limit */
 	test = "Success";
 	Entry *entry = MakeEntry(ctr);
-	check = Thread_Enqueue(topic_queue, entry);
+	check = Enqueue(topic_queue, entry);
 	printf("Enqueued: %d\n", check);
 	if (check < 0) {
 		printf("Enqueue Denied\n");
@@ -104,11 +105,11 @@ int main() {
 
 	/* Empty queue */
 	for (ctr = 0; ctr < size; ctr++) {
-		int tail = Thread_GetBack(topic_queue);
+		int tail = GetBack(topic_queue);
 		if (tail >= 0) {
-			Entry *output = Thread_GetItem(topic_queue, tail);
+			Entry *output = GetEntry(topic_queue, tail);
 			printf("Dequeued: %d\n", output->entryNum);
-			check = Thread_Dequeue(topic_queue, tail);
+			check = Dequeue(topic_queue, tail);
 			if (check < 0) {
 				printf("Dequeue Denied\n");
 				test = "Fail";
@@ -122,11 +123,11 @@ int main() {
 
 	/* Attempt to remove item from empty queue */
 	test = "Success";
-	int tail = Thread_GetBack(topic_queue);
+	int tail = GetBack(topic_queue);
 	if (tail >= 0) {
-		Entry *output = Thread_GetItem(topic_queue, tail);
+		Entry *output = GetEntry(topic_queue, tail);
 		printf("Dequeued: %d\n", output->entryNum);
-		check = Thread_Dequeue(topic_queue, tail);
+		check = Dequeue(topic_queue, tail);
 		if (check < 0) {
 			printf("Dequeue Denied\n");
 			test = "Fail";

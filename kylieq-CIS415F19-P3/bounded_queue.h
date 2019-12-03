@@ -12,9 +12,9 @@ typedef struct bounded_queue BoundedQueue;
 
 BoundedQueue *BB_MallocBoundedQueue(long size);
 
-long long BB_TryEnqueue(BoundedQueue *queue,void *item); 
+long long BB_Enqueue(BoundedQueue *queue,void *entry); 
 
-int BB_TryDequeue(BoundedQueue *queue,long long id);
+int BB_Dequeue(BoundedQueue *queue,long long id);
 
 long long BB_GetFront(BoundedQueue *queue);
 
@@ -24,7 +24,7 @@ int BB_GetCount(BoundedQueue *queue);
 
 int BB_IsIdValid(BoundedQueue *queue,long long id);
 
-void *BB_GetItem(BoundedQueue *queue,long long id);
+void *BB_GetEntry(BoundedQueue *queue,long long id);
 
 int BB_IsFull(BoundedQueue *queue);
 
