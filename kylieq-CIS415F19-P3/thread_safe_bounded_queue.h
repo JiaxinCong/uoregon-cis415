@@ -1,8 +1,8 @@
 #ifndef THREAD_SAFE_BOUNDED_QUEUE_H
 #define THREAD_SAFE_BOUNDED_QUEUE_H
-#include "bounded_queue.h"
 #include <pthread.h> 
 #include <unistd.h>
+#include "bounded_queue.h"
 
 struct thread_safe_bounded_queue {
         BoundedQueue *queue;

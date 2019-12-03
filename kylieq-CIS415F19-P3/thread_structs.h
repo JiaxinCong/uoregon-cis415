@@ -1,7 +1,7 @@
 #ifndef THREAD_STRUCTS_H
 #define THREAD_STRUCTS_H
-#include "thread_safe_bounded_queue.h"
 #include <sys/time.h>
+#include "thread_safe_bounded_queue.h"
 #define URLSIZE 500
 #define	CAPSIZE 1000
 

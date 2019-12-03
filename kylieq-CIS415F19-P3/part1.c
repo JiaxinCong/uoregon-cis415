@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "thread_structs.h"
 #include "thread_safe_bounded_queue.h"
-#include <sys/time.h>
 #define QUACKSIZE 500
 #define	CAPTIONSIZE 1000
 
