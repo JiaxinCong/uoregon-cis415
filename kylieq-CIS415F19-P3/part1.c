@@ -1,7 +1,7 @@
 /* Outline for topic queue */
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
 #include "part1.h"
 #include "synch_bounded_queue.h"
