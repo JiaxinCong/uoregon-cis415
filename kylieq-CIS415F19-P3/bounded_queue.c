@@ -4,18 +4,18 @@
 #include "bounded_queue.h"
 
 int RoundIDToBufferIndex(int size, long long index) {
-    long long value = (index % ((long long)size));
-    return value;
+    long long result = (index % ((long long)size));
+    return result;
 }
 
 BoundedQueue *BB_MallocBoundedQueue(long size) {
     struct bounded_queue *result = NULL;
     result = malloc(sizeof(struct bounded_queue)); 
+    result->size = size;
     result->buffer = malloc(size * sizeof(void *)); 
-    for (int i = 0; i < size; i++) {
+    for (int i=0; i<size; i++) {
         result->buffer[i] = NULL;
     }
-    result->size = size;
     result->head = 0;
     result->tail = 0;
     return result;
@@ -29,8 +29,9 @@ long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 		result = queue->head;
 		queue->head += 1;
 	}
-	else
+	else {
 		result = -1;
+	}
 	return result;
 }
 
@@ -76,8 +77,9 @@ int BB_IsIdValid(struct bounded_queue *queue,long long id) {
 	if (id >= tail && id < head) {
 		result = 1;
 	}
-	else
+	else {
 		result = 0;
+	}
 	return result;
 }
 

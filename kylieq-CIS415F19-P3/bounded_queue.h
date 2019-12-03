@@ -2,10 +2,10 @@
 #define BOUNDED_QUEUE_H
 
 struct bounded_queue {
-        int size;
-        void **buffer;
-        long long head;
-        long long tail;
+	void **buffer;
+	long long head;
+	long long tail;
+	int size;
 };
 
 typedef struct bounded_queue BoundedQueue;
