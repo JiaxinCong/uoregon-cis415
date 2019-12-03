@@ -81,7 +81,7 @@ int main() {
 	int ctr = 0;
 
 	/* Fill queue & attempt to enqueue when full */
-	for (ctr = 0; ctr < size+5; ctr++) {
+	for (ctr=0; ctr<size+5; ctr++) {
 		entry = MakeEntry(ctr);
 		check = Enqueue(topic_queue, entry);
 		printf("Enqueued: %d\n", check);
@@ -91,7 +91,7 @@ int main() {
 	}
 
 	/* Empty queue & attempt to dequeue when empty */
-	for (ctr = 0; ctr < size+5; ctr++) {
+	for (ctr=0; ctr<size+5; ctr++) {
 		int tail = GetBack(topic_queue);
 		if (tail >= 0) {
 			entry = GetEntry(topic_queue, tail);
