@@ -21,7 +21,7 @@ struct bounded_queue *BB_MallocBoundedQueue(long size) {
     return result;
 }
 
-long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
+long long BB_Enqueue(struct bounded_queue *queue, void *entry) {
 	// If enqueue valid, return position of head. Otherwise, -1.
 	long long result = -1;
 	long long head = RoundIDToBufferIndex(queue->size, queue->head);
@@ -33,7 +33,7 @@ long long BB_Enqueue(struct bounded_queue *queue,void *entry) {
 	return result;
 }
 
-int BB_Dequeue(struct bounded_queue *queue,long long id) {
+int BB_Dequeue(struct bounded_queue *queue, long long id) {
 	// If dequeue valid, return position of tail. Otherwise, -1.
 	long long result = -1;
 	if (BB_IsEmpty(queue) == 0) { // queue not empty
@@ -47,7 +47,7 @@ int BB_Dequeue(struct bounded_queue *queue,long long id) {
 	return result;
 }
 
-void *BB_GetEntry(struct bounded_queue *queue,long long id){
+void *BB_GetEntry(struct bounded_queue *queue, long long id){
 	void *result = NULL;
 	if (BB_IsIdValid(queue, id) == 1) {
 		int newid = RoundIDToBufferIndex(queue->size, id);
@@ -76,7 +76,7 @@ int BB_GetCount(struct bounded_queue *queue) {
 	return result;
 }
 
-int BB_IsIdValid(struct bounded_queue *queue,long long id) { 
+int BB_IsIdValid(struct bounded_queue *queue, long long id) { 
 	long long head = queue->head;
 	long long tail = queue->tail;
 	if (id >= tail && id < head) {
