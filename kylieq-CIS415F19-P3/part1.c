@@ -24,7 +24,7 @@ int Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
         return returnValue;
 }
 
-long long GetFront(struct thread_safe_bounded_queue *queue) {
+long long GetFront(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
         long long returnValue = TS_BB_GetFront(queue);
         return returnValue;
 }
@@ -34,12 +34,12 @@ long long GetBack(struct thread_safe_bounded_queue *queue) {
         return returnValue;
 }
 
-int GetCount(struct thread_safe_bounded_queue *queue) {
+int GetCount(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
 	long long returnValue = TS_BB_GetCount(queue);
 	return returnValue;
 }
 
-int IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
+int IsIdValid(struct thread_safe_bounded_queue *queue,long long id) { /* Not used in part 1 */
         int returnValue = TS_BB_IsIdValid(queue, id);
         return returnValue;
 }
@@ -49,17 +49,17 @@ void *GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
         return returnValue;
 }
 
-int IsFull(struct thread_safe_bounded_queue *queue) {
+int IsFull(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
         int returnValue = TS_BB_IsFull(queue); 
         return returnValue;
 }
 
-int IsEmpty(struct thread_safe_bounded_queue *queue) {
+int IsEmpty(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
         int returnValue = TS_BB_IsEmpty(queue);
         return returnValue;
 }
 
-void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) {
+void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
 	TS_BB_FreeBoundedQueue(queue);
 }
 

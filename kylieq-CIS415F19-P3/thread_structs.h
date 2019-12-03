@@ -31,21 +31,21 @@ long long Enqueue(TSBoundedQueue *queue,void *entry);
 
 int Dequeue(TSBoundedQueue *queue,long long id);
 
-long long GetFront(TSBoundedQueue *queue);
+long long GetFront(TSBoundedQueue *queue); /* Not used in part 1 */
 
 long long GetBack(TSBoundedQueue *queue);
 
-int GetCount(TSBoundedQueue *queue);
+int GetCount(TSBoundedQueue *queue); /* Not used in part 1 */
 
-int IsIdValid(TSBoundedQueue *queue,long long id);
+int IsIdValid(TSBoundedQueue *queue,long long id); /* Not used in part 1 */
 
 void *GetEntry(TSBoundedQueue *queue,long long id);
 
-int IsFull(TSBoundedQueue *queue);
+int IsFull(TSBoundedQueue *queue); /* Not used in part 1 */
 
-int IsEmpty(TSBoundedQueue *queue);
+int IsEmpty(TSBoundedQueue *queue); /* Not used in part 1 */
 
-void FreeBoundedQueue(TSBoundedQueue *queue);
+void FreeBoundedQueue(TSBoundedQueue *queue); /* Not used in part 1 */
 
 Entry *MakeEntry();
 
