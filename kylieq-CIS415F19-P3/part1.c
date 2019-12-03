@@ -15,28 +15,28 @@ TSBoundedQueue *MallocTopicQueue(long size) {
 }
 
 long long Enqueue(struct thread_safe_bounded_queue *queue, void *entry) {
-	long long result = TS_BB_Enqueue(queue,entry);
+	long long result = TS_BB_Enqueue(queue, entry);
 	return result;
 }
 
 int Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
-        int result = TS_BB_Dequeue(queue, id); 
-        return result;
+	int result = TS_BB_Dequeue(queue, id); 
+	return result;
 }
 
 void *GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
-        void *result = TS_BB_GetEntry(queue,id);
-        return result;
+	void *result = TS_BB_GetEntry(queue, id);
+	return result;
 }
 
 long long GetBack(struct thread_safe_bounded_queue *queue) {
-        long long result = TS_BB_GetBack(queue);
-        return result;
+	long long result = TS_BB_GetBack(queue);
+	return result;
 }
 
 long long GetFront(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-        long long result = TS_BB_GetFront(queue);
-        return result;
+	long long result = TS_BB_GetFront(queue);
+	return result;
 }
 
 int GetCount(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
@@ -45,18 +45,18 @@ int GetCount(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
 }
 
 int IsIdValid(struct thread_safe_bounded_queue *queue,long long id) { /* Not used in part 1 */
-        int result = TS_BB_IsIdValid(queue, id);
-        return result;
+	int result = TS_BB_IsIdValid(queue, id);
+	return result;
 }
 
 int IsFull(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-        int result = TS_BB_IsFull(queue); 
-        return result;
+	int result = TS_BB_IsFull(queue); 
+	return result;
 }
 
 int IsEmpty(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
-        int result = TS_BB_IsEmpty(queue);
-        return result;
+	int result = TS_BB_IsEmpty(queue);
+	return result;
 }
 
 void FreeBoundedQueue(struct thread_safe_bounded_queue *queue) { /* Not used in part 1 */
