@@ -8,83 +8,87 @@
 #include "thread_safe_bounded_queue.h"
 
 TSBoundedQueue *TS_BB_MallocBoundedQueue(long size) {
-        struct thread_safe_bounded_queue *returnValue = NULL;
-        returnValue = (struct thread_safe_bounded_queue*)malloc(sizeof(struct thread_safe_bounded_queue));
-        pthread_mutex_init(&(returnValue->lock), NULL);
-        returnValue->queue = BB_MallocBoundedQueue(size);
-        return (TSBoundedQueue *)returnValue; 
+        struct thread_safe_bounded_queue *result = NULL;
+        result = (struct thread_safe_bounded_queue*)malloc(sizeof(struct thread_safe_bounded_queue));
+        pthread_mutex_init(&(result->lock), NULL);
+        result->queue = BB_MallocBoundedQueue(size);
+        return result; 
 }
 
 long long TS_BB_Enqueue(struct thread_safe_bounded_queue *queue,void *entry) {
-        long long returnValue = -1;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_Enqueue(queue->queue,entry);
+        long long result = BB_Enqueue(queue->queue,entry);
         pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
+        if (result < 0) {
+        	return -1;
+        }
+        return result;
 }
 
 int TS_BB_Dequeue(struct thread_safe_bounded_queue *queue,long long id) {
-        int returnValue = 0;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_Dequeue(queue->queue,id);
+        int result = BB_Dequeue(queue->queue,id);
         pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
-}
-
-long long TS_BB_GetFront(struct thread_safe_bounded_queue *queue) {
-        long long returnValue = -1;
-        pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_GetFront(queue->queue);
-        pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
-}
-
-long long TS_BB_GetBack(struct thread_safe_bounded_queue *queue) {
-        long long returnValue = -1;
-        pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_GetBack(queue->queue);
-        pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
-}
-
-int TS_BB_GetCount(struct thread_safe_bounded_queue *queue) {
-        long long returnValue = 0;
-        pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_GetCount(queue->queue);
-        pthread_mutex_unlock(&(queue->lock)); 
-        return (int)returnValue;
-}
-
-int TS_BB_IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
-        int returnValue = 0;  
-        pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_IsIdValid(queue->queue,id);
-        pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
+        if (result < 0) {
+        	return -1;
+        }
+        return result;
 }
 
 void *TS_BB_GetEntry(struct thread_safe_bounded_queue *queue,long long id) {
-        void *returnValue = NULL;
+        void *result = NULL;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_GetEntry(queue->queue,id);
+        result = BB_GetEntry(queue->queue,id);
         pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
+        return result;
+}
+
+long long TS_BB_GetBack(struct thread_safe_bounded_queue *queue) {
+        long long result = -1;
+        pthread_mutex_lock(&(queue->lock)); 
+        result = BB_GetBack(queue->queue);
+        pthread_mutex_unlock(&(queue->lock)); 
+        return result;
+}
+
+long long TS_BB_GetFront(struct thread_safe_bounded_queue *queue) {
+        long long result = -1;
+        pthread_mutex_lock(&(queue->lock)); 
+        result = BB_GetFront(queue->queue);
+        pthread_mutex_unlock(&(queue->lock)); 
+        return result;
+}
+
+int TS_BB_GetCount(struct thread_safe_bounded_queue *queue) {
+        long long result = 0;
+        pthread_mutex_lock(&(queue->lock)); 
+        result = BB_GetCount(queue->queue);
+        pthread_mutex_unlock(&(queue->lock)); 
+        return result;
+}
+
+int TS_BB_IsIdValid(struct thread_safe_bounded_queue *queue,long long id) {
+        int result = 0;  
+        pthread_mutex_lock(&(queue->lock)); 
+        result = BB_IsIdValid(queue->queue,id);
+        pthread_mutex_unlock(&(queue->lock)); 
+        return result;
 }
 
 int TS_BB_IsFull(struct thread_safe_bounded_queue *queue) {
-        int returnValue = 0;
+        int result = 0;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_IsFull(queue->queue);
+        result = BB_IsFull(queue->queue);
         pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
+        return result;
 }
 
 int TS_BB_IsEmpty(struct thread_safe_bounded_queue *queue) {
-        int returnValue = 0;
+        int result = 0;
         pthread_mutex_lock(&(queue->lock)); 
-        returnValue = BB_IsEmpty(queue->queue);
+        result = BB_IsEmpty(queue->queue);
         pthread_mutex_unlock(&(queue->lock)); 
-        return returnValue;
+        return result;
 }
 
 void TS_BB_FreeBoundedQueue(struct thread_safe_bounded_queue *queue) {

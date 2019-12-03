@@ -17,15 +17,15 @@ long long TS_BB_Enqueue(TSBoundedQueue *queue,void *entry);
 
 int TS_BB_Dequeue(TSBoundedQueue *queue,long long id);
 
-long long TS_BB_GetFront(TSBoundedQueue *queue);
+void *TS_BB_GetEntry(TSBoundedQueue *queue,long long id);
 
 long long TS_BB_GetBack(TSBoundedQueue *queue);
+
+long long TS_BB_GetFront(TSBoundedQueue *queue);
 
 int TS_BB_GetCount(TSBoundedQueue *queue);
 
 int TS_BB_IsIdValid(TSBoundedQueue *queue,long long id);
-
-void *TS_BB_GetEntry(TSBoundedQueue *queue,long long id);
 
 int TS_BB_IsFull(TSBoundedQueue *queue);
 
