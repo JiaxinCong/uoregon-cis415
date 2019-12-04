@@ -24,12 +24,11 @@ void *Publisher(void *arg) {
 }
 
 int main(int argc, char *argv[]) {
-	pthread_t subscriber, publisher;
-
 	char *arg1 = "Subscriber";
 	char *arg2 = "Publisher";
 
 	// Create threads
+	pthread_t subscriber, publisher;
 	int result1 = pthread_create(&subscriber, NULL, Subscriber, arg1);
 	int result2 = pthread_create(&publisher, NULL, Publisher, arg2);	
 
