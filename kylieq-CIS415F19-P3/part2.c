@@ -9,7 +9,7 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
 void *Subscriber(void *arg) {
 	pthread_mutex_lock(&lock);
-	pthread_cond_wait(&cond, &lock);
+	pthread_cond_wait(&cond, &lock); // block until condition var cond is broadcast to
 	printf("%s - Thread ID: %u\n", (char*)arg, (unsigned int)pthread_self());
 	pthread_mutex_unlock(&lock);
 	return 0;
@@ -17,7 +17,7 @@ void *Subscriber(void *arg) {
 
 void *Publisher(void *arg) {
 	pthread_mutex_lock(&lock);
-	pthread_cond_wait(&cond, &lock);
+	pthread_cond_wait(&cond, &lock); // block until condition var cond is broadcast to
 	printf("%s - Thread ID: %u\n", (char*)arg, (unsigned int)pthread_self());
 	pthread_mutex_unlock(&lock);
 	return 0;
@@ -25,7 +25,7 @@ void *Publisher(void *arg) {
 
 void *Cleanup(void *arg) {
 	pthread_mutex_lock(&lock);
-	pthread_cond_wait(&cond, &lock);
+	pthread_cond_wait(&cond, &lock); // block until condition var cond is broadcast to
 	printf("%s - Thread ID: %u\n", (char*)arg, (unsigned int)pthread_self());
 	pthread_mutex_unlock(&lock);
 	return 0;
@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 	char *arg2 = "Publisher Thread";
 	char *arg3 = "Cleanup Thread";
 
+	// Create threads
 	int result1 = pthread_create(&subscriber, NULL, Subscriber, arg1);
 	int result2 = pthread_create(&publisher, NULL, Publisher, arg2);	
 	int result3 = pthread_create(&cleanup, NULL, Cleanup, arg3);
