@@ -47,14 +47,13 @@ int main(int argc, char *argv[]) {
 
 	// Unblock threads blocked on condition var cond
 	pthread_cond_broadcast(&cond);
-	int check = 0;
 
 	// Wait for threads to terminate
-	check += pthread_join(subscriber, NULL);
-	check += pthread_join(publisher, NULL);
-	check += pthread_join(cleanup, NULL);
+	int check1 = pthread_join(subscriber, NULL);
+	int check2 = pthread_join(publisher, NULL);
+	int check3 = pthread_join(cleanup, NULL);
 
-	if (check == 0) {
+	if (check1 == 0 && check2 == 0 && check3 == 0) {
 		printf("All threads have successfully terminated.\n");
 	}
 
