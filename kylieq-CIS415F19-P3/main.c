@@ -9,9 +9,8 @@
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
-int CTR = 0;
+int COUNTER = 0;
 
-//struct topicEntry *entry;
 struct synch_bounded_queue *topic_queue;
 
 void *Subscriber(void *arg) {
@@ -45,7 +44,7 @@ void *Publisher(void *arg) {
 	printf("Proxy thread %u - type: %s\n", (unsigned int)pthread_self(), (char*)arg);
 	
 	int check = 0;
-	struct topicEntry *entry = MakeEntry(CTR);
+	struct topicEntry *entry = MakeEntry(COUNTER);
 	check = Enqueue(topic_queue, entry);
 	if (check > -1) {
 		printf("Enqueued: %d\n", check);
@@ -54,7 +53,7 @@ void *Publisher(void *arg) {
 		printf("Enqueue Denied\n");
 	}
 	pthread_mutex_unlock(&lock);
-	CTR++;
+	COUNTER++;
 	return 0;
 }
 
