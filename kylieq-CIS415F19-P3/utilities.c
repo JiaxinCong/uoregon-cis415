@@ -37,12 +37,12 @@ int CompareFileLines(struct FileLines *f0, struct FileLines *f1) {
 
 int GetLineCount(char *filename) {
     FILE *file = fopen(filename,"r");
-	if(file == NULL) {
+	if (file == NULL) {
         return -1;
     }
-	char buffer[1024];
+	char buffer[300];
 	int returnValue = 0;
-	while( fgets(buffer, sizeof(buffer), file) != NULL) {
+	while (fgets(buffer, sizeof(buffer), file) != NULL) {
 		returnValue += 1;	
 	}
 	fclose(file);
@@ -57,18 +57,18 @@ struct FileLines *LoadAFile(char *filename) {
     struct FileLines *lines = (struct FileLines*)malloc(sizeof(struct FileLines));
     lines->FileName = strdup(filename);
     lines->LineCount = count;
-    lines->Lines = (char **) malloc(sizeof(char *)*(lines->LineCount+1));
+    lines->Lines = (char **)malloc((lines->LineCount+1) * sizeof(char *));
     lines->Lines[lines->LineCount] = NULL;
 
     FILE *file = fopen(filename,"r");
-	char buffer[1024];
+	char buffer[300];
     for(int i=0 ;i<lines->LineCount;i++) {
         fgets(buffer,sizeof(buffer),file);
         	
         int len = strlen(buffer);
         for(int j=len-1; j>=0; j--) {
             char c = buffer[j];
-            if(c=='\n' || c=='\r') {
+            if(c == '\n' || c == '\r') {
                 buffer[j] = 0;
             }
             else {
@@ -82,14 +82,13 @@ struct FileLines *LoadAFile(char *filename) {
 }
 
 void FreeFile(struct FileLines *file) {
-    // Give the address of our pointer to a string to be freed.
     free(file->FileName);             
-    for(int i=0; i < file->LineCount; i++) {
-        if((file->Lines[i])!=NULL) {
-            free(file->Lines[i]); // find the line number, and pass the address of that pointer.
+    for (int i=0; i < file->LineCount; i++) {
+        if ((file->Lines[i]) != NULL) {
+            free(file->Lines[i]);
         }
     }    
-    free(file->Lines); // free the array of pointers.
+    free(file->Lines); 
     free(file);         
 }
 

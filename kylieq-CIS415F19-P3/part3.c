@@ -14,10 +14,6 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
 int DELTA = 0;
-int COUNTER = 0;
-
-struct synch_bounded_queue *topic_queue;
-struct topicEntry *entry;
 
 struct arg_struct{
 	int index;
@@ -45,11 +41,6 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
-	if (argc != 2) {
-		fprintf(stderr, "ERROR: Invalid arguments. Usage: ./<prgm> <testfilenmae>\n");
-		return -1;
-	}
-
 	struct FileLines* Lines = NULL;
 
 	Lines = LoadAFile(argv[1]);
@@ -76,17 +67,6 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-/*	for (int i=0; i<Lines->LineCount; i++){
-		printf("\nLine %d: ", i);
-		for(int j=0; j<5; j++){
-			if(arguments[i]->args[j] != NULL) {
-				printf("\t Arg %d: %s", j, arguments[i]->args[j]);
-			}
-		}
-	}
-
-	printf("\n");
-*/
 	pthread_t publisher_threads[THREADSIZE];
 	pthread_t subscriber_threads[THREADSIZE];
 	struct synch_bounded_queue *topic_queues[QUEUESIZE];
