@@ -1,0 +1,14 @@
+create topic 0 Mountains 25
+create topic 1 Dogs 50
+create topic 2 Goats 10
+query topics
+create publisher publisher0.txt
+create publisher publisher1.txt
+create publisher publisher2.txt
+query publishers
+create subscriber subscriber0.txt
+create subscriber subscriber1.txt
+create subscriber subscriber2.txt
+query subscribers
+Delta 100
+start
