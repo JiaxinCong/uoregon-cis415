@@ -7,12 +7,6 @@ struct FileLines {
 	int LineCount;
 };
 
-void ZeroCharString(char *str);
-
-void ZeroByteBuffer(char *buf,int len);
-
-void ZeroFreeString(char *str);
-
 int GetLineCount(char *filename);
 
 int CompareFileLines(struct FileLines *f0, struct FileLines *f1);

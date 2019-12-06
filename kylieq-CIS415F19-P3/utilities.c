@@ -81,27 +81,12 @@ struct FileLines *LoadAFile(char *filename) {
 	return lines;
 }
 
-void ZeroCharString(char *str) {
-    ZeroByteBuffer(str,strlen(str));
-}
-
-void ZeroByteBuffer(char *buf,int len) {
-    for(int i=0; i<len; i++) {
-        buf[i] = 0;
-    }
-}
-
-void ZeroFreeString(char *str) {
-    ZeroCharString(str);   // Now strings are always zeroed then freed.
-    free(str);
-}
-
 void FreeFile(struct FileLines *file) {
     // Give the address of our pointer to a string to be freed.
-    ZeroFreeString(file->FileName);               
+    free(file->FileName);             
     for(int i=0; i < file->LineCount; i++) {
         if((file->Lines[i])!=NULL) {
-            ZeroFreeString(file->Lines[i]); // find the line number, and pass the address of that pointer.
+            free(file->Lines[i]); // find the line number, and pass the address of that pointer.
         }
     }    
     free(file->Lines); // free the array of pointers.

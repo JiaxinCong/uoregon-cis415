@@ -135,7 +135,7 @@ int main() {
 	check += pthread_join(publisher, NULL);
 
 	if (check == 0) {
-		printf("All threads have successfully terminated.\n");
+		printf("All threads have successfully exited.\n");
 	}
 
 	printf("PART 2 TEST ENDS\n");

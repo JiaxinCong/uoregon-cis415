@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	int check2 = pthread_join(publisher, NULL);
 
 	if (check1 == 0 && check2 == 0) {
-		printf("All threads have successfully terminated.\n");
+		printf("All threads have successfully exited.\n");
 	}
 
 	return 0;

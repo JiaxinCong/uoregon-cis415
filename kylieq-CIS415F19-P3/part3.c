@@ -6,7 +6,7 @@
 #include "topic_queue.h"
 #include "synch_bounded_queue.h"
 #include "bounded_queue.h"
-#include "utilities.h"
+#include "utilities.h" /* Only struct FileLines and function FreeFile used */
 #define THREADSIZE 20
 #define QUEUESIZE 20
 
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
 		check += pthread_join(publisher_threads[i], NULL);
 	}	
 	if (check == 0) {
-		printf("All publisher threads have successfully terminated.\n");
+		printf("All publisher threads have successfully exited.\n");
 	}
 
 	check = 0;
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
 		check += pthread_join(subscriber_threads[i], NULL);
 	}
 	if (check == 0) {
-		printf("All subscriber threads have successfully terminated.\n");
+		printf("All subscriber threads have successfully exited.\n");
 	}
 
 	for (int i=0; i<20; i++) {
