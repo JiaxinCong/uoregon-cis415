@@ -7,7 +7,7 @@
 #include "synch_bounded_queue.h"
 #include "bounded_queue.h"
 #include "utilities.h"
-#define THREADSIZE 10
+#define NUMPROXIES 10
 #define QUEUESIZE 10
 
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
@@ -41,17 +41,17 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
-	struct FileLines* Lines = LoadAFile(argv[1]);
-	struct LineArguments **line_arguments = malloc(Lines->LineCount * sizeof(struct LineArguments *));
+	struct FileLines* file_lines = LoadAFile(argv[1]);
+	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
-	for (int i=0; i<Lines->LineCount; i++) {
+	for (int i=0; i<file_lines->LineCount; i++) {
 		line_arguments[i] = malloc(sizeof(struct LineArguments));
 	}
 
-	for (int i=0; i<Lines->LineCount; i++) {
+	for (int i=0; i<file_lines->LineCount; i++) {
 		line_arguments[i]->args = malloc(20 * sizeof(char *));
 
-		char *line = strtok(Lines->Lines[i]," \n");
+		char *line = strtok(file_lines->Lines[i], " \n");
 
 		for (int j = 0; line; j++){
 			if (line != NULL) {
@@ -63,15 +63,15 @@ int main(int argc, char *argv[]) {
 	}
 
 	struct SynchBoundedQueue *topic_queues[QUEUESIZE];
-	pthread_t subscriber_threads[THREADSIZE];
-	pthread_t publisher_threads[THREADSIZE];
+	pthread_t subscriber_threads[NUMPROXIES];
+	pthread_t publisher_threads[NUMPROXIES];
 	char *topic_names[QUEUESIZE];
-	char *subscriber_names[THREADSIZE];
-	char *publisher_names[THREADSIZE];
+	char *subscriber_names[NUMPROXIES];
+	char *publisher_names[NUMPROXIES];
 
 	int topicCtr = 0, subCtr = 0, pubCtr = 0;
 
-	for (int i=0; i<Lines->LineCount; i++) {
+	for (int i=0; i<file_lines->LineCount; i++) {
 		if (strcmp(line_arguments[i]->args[0], "start") == 0) {
 			break;
 		}
@@ -145,6 +145,6 @@ int main(int argc, char *argv[]) {
 		printf("All subscriber threads have successfully exited.\n");
 	}
 
-	FreeFile(Lines);
+	FreeFile(file_lines);
 	return 0;
 }
