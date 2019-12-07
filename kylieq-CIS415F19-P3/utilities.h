@@ -7,7 +7,7 @@ struct FileLines {
 	int LineCount;
 };
 
-struct line_arguments {
+struct LineArguments {
 	int count;
 	char **args;
 };

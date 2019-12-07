@@ -61,9 +61,9 @@ void FreeBoundedQueue(struct synch_bounded_queue *queue) {
 	SBQ_FreeBoundedQueue(queue);
 }
 
-struct topicEntry *MakeEntry(int num) {
-	struct topicEntry *entry = NULL;
-	entry = malloc(sizeof(struct topicEntry));
+struct TopicEntry *MakeEntry(int num) {
+	struct TopicEntry *entry = NULL;
+	entry = malloc(sizeof(struct TopicEntry));
 	entry->entryNum = num;
 	entry->timeStamp = NULL;
 	entry->pubID = 0;

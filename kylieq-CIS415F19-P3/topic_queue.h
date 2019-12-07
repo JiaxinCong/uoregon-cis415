@@ -5,7 +5,7 @@
 #define URLSIZE 500
 #define	CAPSIZE 500
 
-struct topicEntry {
+struct TopicEntry {
 	int entryNum;
 	struct timeval *timeStamp;
 	int pubID;
@@ -35,6 +35,6 @@ int IsEmpty(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
 void FreeBoundedQueue(struct synch_bounded_queue *queue); /* Not used in part 1 */
 
-struct topicEntry *MakeEntry();
+struct TopicEntry *MakeEntry();
 
 #endif

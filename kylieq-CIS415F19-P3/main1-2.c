@@ -13,7 +13,7 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 int COUNTER = 0;
 
 struct synch_bounded_queue *topic_queue;
-struct topicEntry *entry;
+struct TopicEntry *entry;
 
 void *Subscriber(void *arg) {
 	pthread_mutex_lock(&lock);
@@ -23,7 +23,7 @@ void *Subscriber(void *arg) {
 	int check = 0;
 	int tail = GetBack(topic_queue);
 	if (tail >= 0) {
-		struct topicEntry *entry = GetEntry(topic_queue, tail);
+		struct TopicEntry *entry = GetEntry(topic_queue, tail);
 		printf("Dequeued: %d\n", entry->entryNum);
 		check = Dequeue(topic_queue, tail);
 		if (check < 0) {
@@ -44,7 +44,7 @@ void *Publisher(void *arg) {
 	printf("Proxy thread %u - type: %s\n", (unsigned int)pthread_self(), (char*)arg);
 	
 	int check = 0;
-	struct topicEntry *entry = MakeEntry(COUNTER);
+	struct TopicEntry *entry = MakeEntry(COUNTER);
 	check = Enqueue(topic_queue, entry);
 	if (check > -1) {
 		printf("Enqueued: %d\n", check);
