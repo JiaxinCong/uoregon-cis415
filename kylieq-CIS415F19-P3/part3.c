@@ -41,7 +41,7 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
-	struct FileLines* file_lines = LoadAFile(argv[1]);
+	struct FileLines *file_lines = LoadAFile(argv[1]);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
 	for (int i=0; i<file_lines->LineCount; i++) {
