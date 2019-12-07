@@ -3,38 +3,6 @@
 #include <string.h>
 #include "utilities.h"
 
-struct FileLines *MakeEmptyLines(char *name, int length) {
-    struct FileLines *lines = (struct FileLines*)malloc(sizeof(struct FileLines));
-    lines->FileName = strdup(name);
-    lines->LineCount = length;
-    lines->Lines = (char **) malloc(sizeof(char *)*(lines->LineCount+1));
-    for(int i=0; i<lines->LineCount+1; i++) {
-        lines->Lines[i] = NULL;
-    }
-    return lines;
-}
-
-int CompareFileLines(struct FileLines *f0, struct FileLines *f1) {
-    if (f0->LineCount != f1->LineCount)
-        return -1;
-    if (strcmp(f0->FileName, f1->FileName) != 0)
-        return -1;
-    for (int i=0; i<f0->LineCount; i++) {
-        if (f0->Lines[i] == NULL && f1->Lines[i] != NULL) {
-            return -1;
-        }
-        if (f0->Lines[i] != NULL && f1->Lines[i] == NULL) {
-            return -1;
-        }
-        if (f0->Lines[i] != NULL && f1->Lines[i] != NULL) {
-            if (strcmp(f0->Lines[i], f1->Lines[i])!=0) {
-                return -1;
-            }
-        }
-    }
-    return 0;
-}
-
 struct FileLines *LoadAFile(char *filename) {
     FILE *file = fopen(filename,"r");
     struct FileLines *lines = NULL;
@@ -65,8 +33,40 @@ struct FileLines *LoadAFile(char *filename) {
         lines->Lines[i] = strdup(buffer);
     }
 
-	fclose(file);
-	return lines;
+    fclose(file);
+    return lines;
+}
+
+struct FileLines *MakeEmptyLines(char *name, int length) {
+    struct FileLines *lines = (struct FileLines*)malloc(sizeof(struct FileLines));
+    lines->FileName = strdup(name);
+    lines->LineCount = length;
+    lines->Lines = (char **) malloc(sizeof(char *)*(lines->LineCount+1));
+    for(int i=0; i<lines->LineCount+1; i++) {
+        lines->Lines[i] = NULL;
+    }
+    return lines;
+}
+
+int CompareFileLines(struct FileLines *f0, struct FileLines *f1) {
+    if (f0->LineCount != f1->LineCount)
+        return -1;
+    if (strcmp(f0->FileName, f1->FileName) != 0)
+        return -1;
+    for (int i=0; i<f0->LineCount; i++) {
+        if (f0->Lines[i] == NULL && f1->Lines[i] != NULL) {
+            return -1;
+        }
+        if (f0->Lines[i] != NULL && f1->Lines[i] == NULL) {
+            return -1;
+        }
+        if (f0->Lines[i] != NULL && f1->Lines[i] != NULL) {
+            if (strcmp(f0->Lines[i], f1->Lines[i])!=0) {
+                return -1;
+            }
+        }
+    }
+    return 0;
 }
 
 void FreeFile(struct FileLines *file) {

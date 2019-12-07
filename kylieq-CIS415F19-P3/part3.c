@@ -6,7 +6,7 @@
 #include "topic_queue.h"
 #include "synch_bounded_queue.h"
 #include "bounded_queue.h"
-#include "utilities.h" /* Only struct FileLines and function FreeFile used */
+#include "utilities.h"
 #define THREADSIZE 20
 #define QUEUESIZE 20
 
