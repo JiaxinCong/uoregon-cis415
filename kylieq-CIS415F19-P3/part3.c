@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		line_arguments[i] = malloc(sizeof(struct LineArguments));
-		line_arguments[i]->args = malloc(20 * sizeof(char *));
+		line_arguments[i]->args = malloc(10 * sizeof(char *));
 	}
 
 	// Split file line by line
