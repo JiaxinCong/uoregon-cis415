@@ -81,19 +81,19 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else if (strcmp(line_arguments[i]->args[0], "add") == 0) {
-			struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
+			struct ArgStruct *arg_struct = malloc(sizeof(struct ArgStruct *));
 			if (strcmp(line_arguments[i]->args[1], "subscriber") == 0) {
-				args->filename = line_arguments[i]->args[2];
-				args->index = subCtr;
+				arg_struct->filename = line_arguments[i]->args[2];
+				arg_struct->index = subCtr;
 				subscriber_names[subCtr] = line_arguments[i]->args[2];
-				pthread_create(&subscriber_threads[subCtr], NULL, Subscriber, args);
+				pthread_create(&subscriber_threads[subCtr], NULL, Subscriber, arg_struct);
 				subCtr += 1;
 			}
 			else if (strcmp(line_arguments[i]->args[1], "publisher") == 0) {
-				args->filename = line_arguments[i]->args[2];
-				args->index = pubCtr;
+				arg_struct->filename = line_arguments[i]->args[2];
+				arg_struct->index = pubCtr;
 				publisher_names[pubCtr] = line_arguments[i]->args[2];
-				pthread_create(&publisher_threads[pubCtr], NULL, Publisher, args);
+				pthread_create(&publisher_threads[pubCtr], NULL, Publisher, arg_struct);
 				pubCtr += 1;
 			}
 		}
