@@ -16,8 +16,8 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 int DELTA = 0;
 
 struct ArgStruct {
-	int index;
 	char *filename;
+	int index;
 };
 
 void *Subscriber(void *args){
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 
-	printf("Waiting for subscriber threads to exit...\n");
-	printf("Waiting for publisher threads to exit...\n");
+	printf("Waiting for subscriber threads...\n");
+	printf("Waiting for publisher threads...\n");
 
 	sleep(5);
 	pthread_cond_broadcast(&cond);
