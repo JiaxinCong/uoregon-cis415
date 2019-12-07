@@ -8,9 +8,9 @@ int RoundIDToBufferIndex(int size, long long index) {
     return result;
 }
 
-struct bounded_queue *BQ_MallocBoundedQueue(long size) {
-    struct bounded_queue *result = NULL;
-    result = malloc(sizeof(struct bounded_queue)); 
+struct BoundedQueue *BQ_MallocBoundedQueue(long size) {
+    struct BoundedQueue *result = NULL;
+    result = malloc(sizeof(struct BoundedQueue)); 
     result->size = size;
     result->buffer = malloc(size * sizeof(void *)); 
     for (int i=0; i<size; i++) {
@@ -21,7 +21,7 @@ struct bounded_queue *BQ_MallocBoundedQueue(long size) {
     return result;
 }
 
-long long BQ_Enqueue(struct bounded_queue *queue, void *entry) {
+long long BQ_Enqueue(struct BoundedQueue *queue, void *entry) {
 	// If enqueue valid, return position of head. Otherwise, -1.
 	long long result = -1;
 	long long head = RoundIDToBufferIndex(queue->size, queue->head);
@@ -33,7 +33,7 @@ long long BQ_Enqueue(struct bounded_queue *queue, void *entry) {
 	return result;
 }
 
-int BQ_Dequeue(struct bounded_queue *queue, long long id) {
+int BQ_Dequeue(struct BoundedQueue *queue, long long id) {
 	// If dequeue valid, return position of tail. Otherwise, -1.
 	long long result = -1;
 	if (BQ_IsEmpty(queue) == 0) { // queue not empty
@@ -46,7 +46,7 @@ int BQ_Dequeue(struct bounded_queue *queue, long long id) {
 	return result;
 }
 
-void *BQ_GetEntry(struct bounded_queue *queue, long long id) {
+void *BQ_GetEntry(struct BoundedQueue *queue, long long id) {
 	void *result = NULL;
 	if (BQ_ValidEntry(queue, id) == 1) {
 		int newid = RoundIDToBufferIndex(queue->size, id);
@@ -55,14 +55,14 @@ void *BQ_GetEntry(struct bounded_queue *queue, long long id) {
 	return result;
 }
 
-long long BQ_GetBack(struct bounded_queue *queue) {
+long long BQ_GetBack(struct BoundedQueue *queue) {
 	if (BQ_IsEmpty(queue) == 0) {
 		return queue->tail;
 	}
 	return -1;
 }
 
-long long BQ_GetFront(struct bounded_queue *queue) {
+long long BQ_GetFront(struct BoundedQueue *queue) {
 	long long result = -1;
 	if (BQ_IsEmpty(queue) == 0) {
 		result = queue->head-1;
@@ -70,12 +70,12 @@ long long BQ_GetFront(struct bounded_queue *queue) {
 	return result;
 }
 
-int BQ_GetCount(struct bounded_queue *queue) {
+int BQ_GetCount(struct BoundedQueue *queue) {
 	long long result = queue->head - queue->tail;
 	return result;
 }
 
-int BQ_ValidEntry(struct bounded_queue *queue, long long id) { 
+int BQ_ValidEntry(struct BoundedQueue *queue, long long id) { 
 	// Check if item referred to by id is in queue
 	long long head = queue->head;
 	long long tail = queue->tail;
@@ -85,21 +85,21 @@ int BQ_ValidEntry(struct bounded_queue *queue, long long id) {
 	return 0;
 }
 
-int BQ_IsFull(struct bounded_queue *queue) { 
+int BQ_IsFull(struct BoundedQueue *queue) { 
 	if (queue->head == queue->size && queue->tail == 0) {
 		return 1;
 	}
 	return 0;
 }
 
-int BQ_IsEmpty(struct bounded_queue *queue) { 
+int BQ_IsEmpty(struct BoundedQueue *queue) { 
 	if (queue->head == queue->tail) {
 		return 1;
 	}
 	return 0;
 }
 
-void BQ_FreeBoundedQueue(struct bounded_queue *queue) {
+void BQ_FreeBoundedQueue(struct BoundedQueue *queue) {
 	free(queue->buffer);
 	free(queue);
 }

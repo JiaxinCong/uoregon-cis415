@@ -5,7 +5,7 @@
 #include "bounded_queue.h"
 
 struct synch_bounded_queue {
-	struct bounded_queue *queue;
+	struct BoundedQueue *queue;
 	pthread_mutex_t lock; 
 };
 
