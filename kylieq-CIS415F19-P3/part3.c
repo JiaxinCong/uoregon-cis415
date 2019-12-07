@@ -83,7 +83,9 @@ int main(int argc, char *argv[]) {
 				topic_names[topicCtr] = line_arguments[i]->args[3];
 				topicCtr += 1;
 			}
-			else if (strcmp(line_arguments[i]->args[1], "subscriber") == 0) {
+		}
+		else if (strcmp(line_arguments[i]->args[0], "add") == 0) {
+			if (strcmp(line_arguments[i]->args[1], "subscriber") == 0) {
 				struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 				args->filename = line_arguments[i]->args[2];
 				args->index = subCtr;
@@ -102,16 +104,9 @@ int main(int argc, char *argv[]) {
 		}
 		else if (strcmp(line_arguments[i]->args[0], "delta") == 0) {
 			DELTA = atoi(line_arguments[i]->args[1]);
-			printf("DELTA %d\n", DELTA);
 		}
-		else {
-			if (strcmp(line_arguments[i]->args[1], "topics") == 0) {
-				printf("Topics:\n");
-				for (int i=0; i<topicCtr; i++) {
-					printf("Topic %d %s - size: %d\n", i, topic_names[i], topic_queues[i]->queue->size);
-				}
-			}
-			else if (strcmp(line_arguments[i]->args[1], "subscribers") == 0) {
+		else if (strcmp(line_arguments[i]->args[0], "query") == 0) {
+			if (strcmp(line_arguments[i]->args[1], "subscribers") == 0) {
 				printf("Subscribers:\n");
 				for (int i=0; i<subCtr; i++){
 					printf("Subscriber thread %d - %s\n", i, subscriber_names[i]);
@@ -125,6 +120,14 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+
+	for (int i=0; i<10; i++) {
+		printf("*****");
+	}
+	printf("\n");
+
+	printf("Waiting for subscriber threads to exit...\n");
+	printf("Waiting for publisher threads to exit...\n");
 
 	sleep(5);
 	pthread_cond_broadcast(&cond);
