@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
 	char *subscribernames[THREADSIZE];
 	char *publishernames[THREADSIZE];
 
-	int topic_count = 0;
-	int subscriber_count = 0;
-	int publisher_count = 0;
+	int topicCtr = 0;
+	int subCtr = 0;
+	int pubCtr = 0;
 
 	for (int i=0; i<Lines->LineCount; i++) {
 		if (strcmp(arguments[i]->args[0], "start") == 0) {
@@ -81,25 +81,25 @@ int main(int argc, char *argv[]) {
 			if (strcmp(arguments[i]->args[1], "topic") == 0) {
 				int size = atoi(arguments[i]->args[4]);
 				struct synch_bounded_queue *topic_queue = MallocTopicQueue(size);
-				topic_queues[topic_count] = topic_queue;
-				topicnames[topic_count] = arguments[i]->args[3];
-				topic_count += 1;
+				topic_queues[topicCtr] = topic_queue;
+				topicnames[topicCtr] = arguments[i]->args[3];
+				topicCtr += 1;
 			}
 			else if (strcmp(arguments[i]->args[1], "subscriber") == 0) {
 				struct arg_struct *args = malloc(sizeof(struct arg_struct *));
 				args->filename = arguments[i]->args[2];
-				args->index = subscriber_count;
-				subscribernames[subscriber_count] = arguments[i]->args[2];
-				pthread_create(&subscriber_threads[subscriber_count], NULL, Subscriber, (void *)args);
-				subscriber_count += 1;
+				args->index = subCtr;
+				subscribernames[subCtr] = arguments[i]->args[2];
+				pthread_create(&subscriber_threads[subCtr], NULL, Subscriber, (void *)args);
+				subCtr += 1;
 			}
 			else if (strcmp(arguments[i]->args[1], "publisher") == 0) {
 				struct arg_struct *args = malloc(sizeof(struct arg_struct *));
 				args->filename = arguments[i]->args[2];
-				args->index = publisher_count;
-				publishernames[publisher_count] = arguments[i]->args[2];
-				pthread_create(&publisher_threads[publisher_count], NULL, Publisher, (void *)args);
-				publisher_count += 1;
+				args->index = pubCtr;
+				publishernames[pubCtr] = arguments[i]->args[2];
+				pthread_create(&publisher_threads[pubCtr], NULL, Publisher, (void *)args);
+				pubCtr += 1;
 			}
 		}
 		else if (strcmp(arguments[i]->args[0], "Delta") == 0) {
@@ -109,20 +109,20 @@ int main(int argc, char *argv[]) {
 		else {
 			if (strcmp(arguments[i]->args[1], "topics") == 0) {
 				printf("Topics:\n");
-				for(int i = 0; i<topic_count; i++) {
+				for(int i = 0; i<topicCtr; i++) {
 					//printf("topic %d %d\n", i, topic_queues[i]->queue->size);
 					printf("Topic %d %s - size: %d\n", i, topicnames[i], topic_queues[i]->queue->size);
 				}
 			}
 			else if(strcmp(arguments[i]->args[1], "subscribers") == 0) {
 				printf("Subscribers:\n");
-				for(int i = 0; i < subscriber_count; i++){
+				for(int i = 0; i < subCtr; i++){
 					printf("Subscriber thread %d - %s\n", i, subscribernames[i]);
 				}
 			}
 			else if (strcmp(arguments[i]->args[1], "publishers") == 0) {
 				printf("Publishers:\n");
-				for(int i = 0; i < publisher_count; i++){
+				for(int i = 0; i < pubCtr; i++){
 					printf("Publisher thread %d - %s\n", i, publishernames[i]);
 				}
 			}
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 	pthread_cond_broadcast(&cond);
 
 	int check = 0;
-	for (int i=0; i<publisher_count; i++) {
+	for (int i=0; i<pubCtr; i++) {
 		check += pthread_join(publisher_threads[i], NULL);
 	}	
 	if (check == 0) {
@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	check = 0;
-	for (int i=0; i<subscriber_count; i++) {
+	for (int i=0; i<subCtr; i++) {
 		check += pthread_join(subscriber_threads[i], NULL);
 	}
 	if (check == 0) {
