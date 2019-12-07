@@ -13,13 +13,6 @@ struct topicEntry {
 	char photoCaption[CAPSIZE]; // photo caption
 };
 
-struct line_arguments {
-	int count;
-	char **args;
-};
-
-typedef struct line_arguments Argument;
-
 struct synch_bounded_queue *MallocTopicQueue(long size);
 
 long long Enqueue(struct synch_bounded_queue *queue,void *entry); 
