@@ -71,10 +71,7 @@ int main(int argc, char *argv[]) {
 	int topicCtr = 0, subCtr = 0, pubCtr = 0;
 
 	for (int i=0; i<file_lines->LineCount; i++) {
-		if (strcmp(line_arguments[i]->args[0], "start") == 0) {
-			break;
-		}
-		else if (strcmp(line_arguments[i]->args[0], "create") == 0) {
+		if (strcmp(line_arguments[i]->args[0], "create") == 0) {
 			if (strcmp(line_arguments[i]->args[1], "topic") == 0) {
 				int size = atoi(line_arguments[i]->args[4]);
 				struct SynchBoundedQueue *topic_queue = MallocTopicQueue(size);
@@ -101,9 +98,6 @@ int main(int argc, char *argv[]) {
 				pubCtr += 1;
 			}
 		}
-		else if (strcmp(line_arguments[i]->args[0], "delta") == 0) {
-			DELTA = atoi(line_arguments[i]->args[1]);
-		}
 		else if (strcmp(line_arguments[i]->args[0], "query") == 0) {
 			if (strcmp(line_arguments[i]->args[1], "subscribers") == 0) {
 				printf("Subscribers:\n");
@@ -117,6 +111,12 @@ int main(int argc, char *argv[]) {
 					printf("Publisher thread %d - %s\n", i, publisher_names[i]);
 				}
 			}
+		}
+		else if (strcmp(line_arguments[i]->args[0], "delta") == 0) {
+			DELTA = atoi(line_arguments[i]->args[1]);
+		}
+		else if (strcmp(line_arguments[i]->args[0], "start") == 0) {
+			break;
 		}
 	}
 
