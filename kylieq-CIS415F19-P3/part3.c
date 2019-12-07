@@ -52,12 +52,12 @@ int main(int argc, char *argv[]) {
 		line_arguments[i]->args = malloc(20 * sizeof(char *));
 
 		// Split file line by line
-		char *token = strtok(file_lines->Lines[i], " \n");
+		char *token = strtok(file_lines->Lines[i], " \n\r");
 		int ctr = 0;
 		while (token != NULL) {
 			line_arguments[i]->args[ctr] = malloc(strlen(token)+1);
 			strcpy(line_arguments[i]->args[ctr], token);
-			token = strtok(NULL, " \n");
+			token = strtok(NULL, " \n\r");
 			ctr++;
 		}
 	}
