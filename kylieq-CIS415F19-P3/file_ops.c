@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utilities.h"
+#include "file_ops.h"
 
 struct FileLines *LoadAFile(char *filename) {
     FILE *file = fopen(filename,"r");

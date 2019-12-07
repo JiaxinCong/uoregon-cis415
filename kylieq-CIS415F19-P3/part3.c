@@ -6,7 +6,7 @@
 #include "topic_queue.h"
 #include "synch_bounded_queue.h"
 #include "bounded_queue.h"
-#include "utilities.h"
+#include "file_ops.h"
 #define NUMPROXIES 10
 #define QUEUESIZE 10
 

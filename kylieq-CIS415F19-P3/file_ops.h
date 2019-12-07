@@ -1,5 +1,5 @@
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#ifndef FILE_OPS_H
+#define FILE_OPS_H
 
 struct FileLines {
 	char *FileName;

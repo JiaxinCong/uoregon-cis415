@@ -8,7 +8,7 @@ part2: part2.c
 	gcc -g -std=c99 -o part2 part2.c
 
 part3: part3.c
-	gcc -g -std=c99 -o part3 part3.c topic_queue.c synch_bounded_queue.c bounded_queue.c utilities.c
+	gcc -g -std=c99 -o part3 part3.c topic_queue.c synch_bounded_queue.c bounded_queue.c file_ops.c
 
 clean:
 	$(RM) main1-2 *.o *~
