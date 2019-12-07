@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 				pubCtr += 1;
 			}
 		}
-		else if (strcmp(line_arguments[i]->args[0], "Delta") == 0) {
+		else if (strcmp(line_arguments[i]->args[0], "delta") == 0) {
 			DELTA = atoi(line_arguments[i]->args[1]);
 			printf("DELTA %d\n", DELTA);
 		}
