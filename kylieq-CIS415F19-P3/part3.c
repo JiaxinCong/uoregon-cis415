@@ -108,7 +108,6 @@ int main(int argc, char *argv[]) {
 			if (strcmp(line_arguments[i]->args[1], "topics") == 0) {
 				printf("Topics:\n");
 				for(int i = 0; i<topicCtr; i++) {
-					//printf("topic %d %d\n", i, topic_queues[i]->queue->size);
 					printf("Topic %d %s - size: %d\n", i, topic_names[i], topic_queues[i]->queue->size);
 				}
 			}
@@ -128,11 +127,6 @@ int main(int argc, char *argv[]) {
 	}
 
 	sleep(5);
-	for(int i = 0; i < 20; i++) {
-		printf("*****");
-	}
-	printf("\n");
-
 	pthread_cond_broadcast(&cond);
 
 	int check = 0;
@@ -150,12 +144,7 @@ int main(int argc, char *argv[]) {
 	if (check == 0) {
 		printf("All subscriber threads have successfully exited.\n");
 	}
-
-	for (int i=0; i<20; i++) {
-		printf("*****");
-	}
-	printf("\n");
-
+	
 	FreeFile(Lines);
 	return 0;
 }
