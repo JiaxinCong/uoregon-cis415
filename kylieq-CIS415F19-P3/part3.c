@@ -107,19 +107,19 @@ int main(int argc, char *argv[]) {
 		else {
 			if (strcmp(line_arguments[i]->args[1], "topics") == 0) {
 				printf("Topics:\n");
-				for(int i = 0; i<topicCtr; i++) {
+				for (int i=0; i<topicCtr; i++) {
 					printf("Topic %d %s - size: %d\n", i, topic_names[i], topic_queues[i]->queue->size);
 				}
 			}
-			else if(strcmp(line_arguments[i]->args[1], "subscribers") == 0) {
+			else if (strcmp(line_arguments[i]->args[1], "subscribers") == 0) {
 				printf("Subscribers:\n");
-				for(int i = 0; i < subCtr; i++){
+				for (int i=0; i<subCtr; i++){
 					printf("Subscriber thread %d - %s\n", i, subscriber_names[i]);
 				}
 			}
 			else if (strcmp(line_arguments[i]->args[1], "publishers") == 0) {
 				printf("Publishers:\n");
-				for(int i = 0; i < pubCtr; i++){
+				for (int i=0; i<pubCtr; i++){
 					printf("Publisher thread %d - %s\n", i, publisher_names[i]);
 				}
 			}
