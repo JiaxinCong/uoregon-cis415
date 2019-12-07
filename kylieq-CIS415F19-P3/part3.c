@@ -51,14 +51,14 @@ int main(int argc, char *argv[]) {
 	for (int i=0; i<file_lines->LineCount; i++) {
 		line_arguments[i]->args = malloc(20 * sizeof(char *));
 
-		char *line = strtok(file_lines->Lines[i], " \n");
-
-		for (int j = 0; line; j++){
-			if (line != NULL) {
-				line_arguments[i]->args[j] = malloc(strlen(line)+1);
-				strcpy(line_arguments[i]->args[j], line);
-			}
-			line = strtok(NULL, " \n");
+		// Split file line by line
+		char *token = strtok(file_lines->Lines[i], " \n");
+		int ctr = 0;
+		while (token != NULL) {
+			line_arguments[i]->args[ctr] = malloc(strlen(token)+1);
+			strcpy(line_arguments[i]->args[ctr], token);
+			token = strtok(NULL, " \n");
+			ctr++;
 		}
 	}
 
