@@ -15,13 +15,13 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
 int DELTA = 0;
 
-struct arg_struct {
+struct ArgStruct {
 	int index;
 	char *filename;
 };
 
 void *Subscriber(void *args){
-	struct arg_struct *arg = args;
+	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Subscriber\n", (unsigned int)pthread_self());
@@ -31,7 +31,7 @@ void *Subscriber(void *args){
 }
 
 void *Publisher(void *args) {
-	struct arg_struct *arg = args;
+	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 				topicCtr += 1;
 			}
 			else if (strcmp(line_arguments[i]->args[1], "subscriber") == 0) {
-				struct arg_struct *args = malloc(sizeof(struct arg_struct *));
+				struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 				args->filename = line_arguments[i]->args[2];
 				args->index = subCtr;
 				subscribernames[subCtr] = line_arguments[i]->args[2];
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 				subCtr += 1;
 			}
 			else if (strcmp(line_arguments[i]->args[1], "publisher") == 0) {
-				struct arg_struct *args = malloc(sizeof(struct arg_struct *));
+				struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 				args->filename = line_arguments[i]->args[2];
 				args->index = pubCtr;
 				publishernames[pubCtr] = line_arguments[i]->args[2];
