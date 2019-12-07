@@ -81,8 +81,8 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else if (strcmp(line_arguments[i]->args[0], "add") == 0) {
+			struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 			if (strcmp(line_arguments[i]->args[1], "subscriber") == 0) {
-				struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 				args->filename = line_arguments[i]->args[2];
 				args->index = subCtr;
 				subscriber_names[subCtr] = line_arguments[i]->args[2];
@@ -90,7 +90,6 @@ int main(int argc, char *argv[]) {
 				subCtr += 1;
 			}
 			else if (strcmp(line_arguments[i]->args[1], "publisher") == 0) {
-				struct ArgStruct *args = malloc(sizeof(struct ArgStruct *));
 				args->filename = line_arguments[i]->args[2];
 				args->index = pubCtr;
 				publisher_names[pubCtr] = line_arguments[i]->args[2];
