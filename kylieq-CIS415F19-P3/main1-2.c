@@ -5,7 +5,6 @@
 #include <sys/time.h>
 #include "topic_queue.h"
 #include "synch_bounded_queue.h"
-#define NUMPROXIES 35
 
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex

@@ -7,8 +7,8 @@
 #include "synch_bounded_queue.h"
 #include "bounded_queue.h"
 #include "utilities.h"
-#define THREADSIZE 20
-#define QUEUESIZE 20
+#define THREADSIZE 10
+#define QUEUESIZE 10
 
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
@@ -62,9 +62,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	struct SynchBoundedQueue *topic_queues[QUEUESIZE];
 	pthread_t subscriber_threads[THREADSIZE];
 	pthread_t publisher_threads[THREADSIZE];
-	struct SynchBoundedQueue *topic_queues[QUEUESIZE];
 	char *topic_names[QUEUESIZE];
 	char *subscriber_names[THREADSIZE];
 	char *publisher_names[THREADSIZE];
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
 	if (check == 0) {
 		printf("All subscriber threads have successfully exited.\n");
 	}
-	
+
 	FreeFile(Lines);
 	return 0;
 }
