@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 				args->filename = line_arguments[i]->args[2];
 				args->index = subCtr;
 				subscriber_names[subCtr] = line_arguments[i]->args[2];
-				pthread_create(&subscriber_threads[subCtr], NULL, Subscriber, (void *)args);
+				pthread_create(&subscriber_threads[subCtr], NULL, Subscriber, args);
 				subCtr += 1;
 			}
 			else if (strcmp(line_arguments[i]->args[1], "publisher") == 0) {
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 				args->filename = line_arguments[i]->args[2];
 				args->index = pubCtr;
 				publisher_names[pubCtr] = line_arguments[i]->args[2];
-				pthread_create(&publisher_threads[pubCtr], NULL, Publisher, (void *)args);
+				pthread_create(&publisher_threads[pubCtr], NULL, Publisher, args);
 				pubCtr += 1;
 			}
 		}
