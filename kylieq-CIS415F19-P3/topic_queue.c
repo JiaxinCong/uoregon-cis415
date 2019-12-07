@@ -6,58 +6,58 @@
 #include "topic_queue.h"
 #include "synch_bounded_queue.h"
 
-struct synch_bounded_queue *MallocTopicQueue(long size) {
-	struct synch_bounded_queue *result = NULL;
+struct SynchBoundedQueue *MallocTopicQueue(long size) {
+	struct SynchBoundedQueue *result = NULL;
 	result = SBQ_MallocBoundedQueue(size);
 	return result;
 }
 
-long long Enqueue(struct synch_bounded_queue *queue, void *entry) {
+long long Enqueue(struct SynchBoundedQueue *queue, void *entry) {
 	long long result = SBQ_Enqueue(queue, entry);
 	return result;
 }
 
-int Dequeue(struct synch_bounded_queue *queue,long long id) {
+int Dequeue(struct SynchBoundedQueue *queue,long long id) {
 	int result = SBQ_Dequeue(queue, id); 
 	return result;
 }
 
-void *GetEntry(struct synch_bounded_queue *queue,long long id) {
+void *GetEntry(struct SynchBoundedQueue *queue,long long id) {
 	void *result = SBQ_GetEntry(queue, id);
 	return result;
 }
 
-long long GetBack(struct synch_bounded_queue *queue) {
+long long GetBack(struct SynchBoundedQueue *queue) {
 	long long result = SBQ_GetBack(queue);
 	return result;
 }
 
-long long GetFront(struct synch_bounded_queue *queue) { /* Not used in part 1 */
+long long GetFront(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
 	long long result = SBQ_GetFront(queue);
 	return result;
 }
 
-int GetCount(struct synch_bounded_queue *queue) { /* Not used in part 1 */
+int GetCount(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
 	long long result = SBQ_GetCount(queue);
 	return result;
 }
 
-int ValidEntry(struct synch_bounded_queue *queue,long long id) { /* Not used in part 1 */
+int ValidEntry(struct SynchBoundedQueue *queue,long long id) { /* Not used in part 1 */
 	int result = SBQ_ValidEntry(queue, id);
 	return result;
 }
 
-int IsFull(struct synch_bounded_queue *queue) { /* Not used in part 1 */
+int IsFull(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
 	int result = SBQ_IsFull(queue); 
 	return result;
 }
 
-int IsEmpty(struct synch_bounded_queue *queue) { /* Not used in part 1 */
+int IsEmpty(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
 	int result = SBQ_IsEmpty(queue);
 	return result;
 }
 
-void FreeBoundedQueue(struct synch_bounded_queue *queue) { 
+void FreeBoundedQueue(struct SynchBoundedQueue *queue) { 
 	SBQ_FreeBoundedQueue(queue);
 }
 

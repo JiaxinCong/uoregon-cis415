@@ -8,7 +8,7 @@
 
 int main() {
 	int size = 30;
-	struct synch_bounded_queue *topic_queue = MallocTopicQueue(size);
+	struct SynchBoundedQueue *topic_queue = MallocTopicQueue(size);
 	struct TopicEntry *entry = NULL;
 
 	int check = 0;

@@ -13,27 +13,27 @@ struct TopicEntry {
 	char photoCaption[CAPSIZE]; // photo caption
 };
 
-struct synch_bounded_queue *MallocTopicQueue(long size);
+struct SynchBoundedQueue *MallocTopicQueue(long size);
 
-long long Enqueue(struct synch_bounded_queue *queue,void *entry); 
+long long Enqueue(struct SynchBoundedQueue *queue,void *entry); 
 
-int Dequeue(struct synch_bounded_queue *queue,long long id);
+int Dequeue(struct SynchBoundedQueue *queue,long long id);
 
-void *GetEntry(struct synch_bounded_queue *queue,long long id);
+void *GetEntry(struct SynchBoundedQueue *queue,long long id);
 
-long long GetBack(struct synch_bounded_queue *queue);
+long long GetBack(struct SynchBoundedQueue *queue);
 
-long long GetFront(struct synch_bounded_queue *queue); /* Not used in part 1 */
+long long GetFront(struct SynchBoundedQueue *queue); /* Not used in part 1 */
 
-int GetCount(struct synch_bounded_queue *queue); /* Not used in part 1 */
+int GetCount(struct SynchBoundedQueue *queue); /* Not used in part 1 */
 
-int ValidEntry(struct synch_bounded_queue *queue,long long id); /* Not used in part 1 */
+int ValidEntry(struct SynchBoundedQueue *queue,long long id); /* Not used in part 1 */
 
-int IsFull(struct synch_bounded_queue *queue); /* Not used in part 1 */
+int IsFull(struct SynchBoundedQueue *queue); /* Not used in part 1 */
 
-int IsEmpty(struct synch_bounded_queue *queue); /* Not used in part 1 */
+int IsEmpty(struct SynchBoundedQueue *queue); /* Not used in part 1 */
 
-void FreeBoundedQueue(struct synch_bounded_queue *queue); /* Not used in part 1 */
+void FreeBoundedQueue(struct SynchBoundedQueue *queue); /* Not used in part 1 */
 
 struct TopicEntry *MakeEntry();
 

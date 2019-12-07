@@ -7,15 +7,15 @@
 #include "bounded_queue.h"
 #include "synch_bounded_queue.h"
 
-struct synch_bounded_queue *SBQ_MallocBoundedQueue(long size) {
-	struct synch_bounded_queue *result = NULL;
-    result = malloc(sizeof(struct synch_bounded_queue));
+struct SynchBoundedQueue *SBQ_MallocBoundedQueue(long size) {
+	struct SynchBoundedQueue *result = NULL;
+    result = malloc(sizeof(struct SynchBoundedQueue));
 	pthread_mutex_init(&(result->lock), NULL);
 	result->queue = BQ_MallocBoundedQueue(size);
 	return result; 
 }
 
-long long SBQ_Enqueue(struct synch_bounded_queue *queue,void *entry) {
+long long SBQ_Enqueue(struct SynchBoundedQueue *queue,void *entry) {
 	pthread_mutex_lock(&(queue->lock)); 
 	long long result = BQ_Enqueue(queue->queue,entry);
 	pthread_mutex_unlock(&(queue->lock)); 
@@ -23,7 +23,7 @@ long long SBQ_Enqueue(struct synch_bounded_queue *queue,void *entry) {
 	return result;
 }
 
-int SBQ_Dequeue(struct synch_bounded_queue *queue,long long id) {
+int SBQ_Dequeue(struct SynchBoundedQueue *queue,long long id) {
 	pthread_mutex_lock(&(queue->lock)); 
 	int result = BQ_Dequeue(queue->queue,id);
 	pthread_mutex_unlock(&(queue->lock)); 
@@ -31,14 +31,14 @@ int SBQ_Dequeue(struct synch_bounded_queue *queue,long long id) {
 	return result;
 }
 
-void *SBQ_GetEntry(struct synch_bounded_queue *queue,long long id) {
+void *SBQ_GetEntry(struct SynchBoundedQueue *queue,long long id) {
 	pthread_mutex_lock(&(queue->lock)); 
 	void *result = BQ_GetEntry(queue->queue,id);
 	pthread_mutex_unlock(&(queue->lock)); 
 	return result;
 }
 
-long long SBQ_GetBack(struct synch_bounded_queue *queue) {
+long long SBQ_GetBack(struct SynchBoundedQueue *queue) {
 	pthread_mutex_lock(&(queue->lock)); 
 	long long result = BQ_GetBack(queue->queue);
 	pthread_mutex_unlock(&(queue->lock)); 
@@ -46,7 +46,7 @@ long long SBQ_GetBack(struct synch_bounded_queue *queue) {
 	return result;
 }
 
-long long SBQ_GetFront(struct synch_bounded_queue *queue) {
+long long SBQ_GetFront(struct SynchBoundedQueue *queue) {
     pthread_mutex_lock(&(queue->lock)); 
     long long result = BQ_GetFront(queue->queue);
     pthread_mutex_unlock(&(queue->lock)); 
@@ -54,7 +54,7 @@ long long SBQ_GetFront(struct synch_bounded_queue *queue) {
     return result;
 }
 
-int SBQ_GetCount(struct synch_bounded_queue *queue) {
+int SBQ_GetCount(struct SynchBoundedQueue *queue) {
     long long result = 0;
     pthread_mutex_lock(&(queue->lock)); 
     result = BQ_GetCount(queue->queue);
@@ -62,7 +62,7 @@ int SBQ_GetCount(struct synch_bounded_queue *queue) {
     return result;
 }
 
-int SBQ_ValidEntry(struct synch_bounded_queue *queue,long long id) {
+int SBQ_ValidEntry(struct SynchBoundedQueue *queue,long long id) {
     int result = 0;  
     pthread_mutex_lock(&(queue->lock)); 
     result = BQ_ValidEntry(queue->queue,id);
@@ -70,7 +70,7 @@ int SBQ_ValidEntry(struct synch_bounded_queue *queue,long long id) {
     return result;
 }
 
-int SBQ_IsFull(struct synch_bounded_queue *queue) {
+int SBQ_IsFull(struct SynchBoundedQueue *queue) {
     int result = 0;
     pthread_mutex_lock(&(queue->lock)); 
     result = BQ_IsFull(queue->queue);
@@ -78,7 +78,7 @@ int SBQ_IsFull(struct synch_bounded_queue *queue) {
     return result;
 }
 
-int SBQ_IsEmpty(struct synch_bounded_queue *queue) {
+int SBQ_IsEmpty(struct SynchBoundedQueue *queue) {
     int result = 0;
     pthread_mutex_lock(&(queue->lock)); 
     result = BQ_IsEmpty(queue->queue);
@@ -86,7 +86,7 @@ int SBQ_IsEmpty(struct synch_bounded_queue *queue) {
     return result;
 }
 
-void SBQ_FreeBoundedQueue(struct synch_bounded_queue *queue) {
+void SBQ_FreeBoundedQueue(struct SynchBoundedQueue *queue) {
     BQ_FreeBoundedQueue(queue->queue);
     queue->queue = NULL;
     pthread_mutex_destroy(&(queue->lock));

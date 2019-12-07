@@ -12,7 +12,7 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
 int COUNTER = 0;
 
-struct synch_bounded_queue *topic_queue;
+struct SynchBoundedQueue *topic_queue;
 struct TopicEntry *entry;
 
 void *Subscriber(void *arg) {
