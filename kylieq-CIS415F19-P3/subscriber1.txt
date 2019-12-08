@@ -1,16 +1,16 @@
 sleep 3000
-get 2
+get 1
 sleep 3000
-get 2
+get 1
 sleep 3000
-get 2
+get 1
 sleep 1000
-get 2
+get 1
 sleep 1000
-get 2
+get 1
 sleep 3000
-get 3
+get 2
 sleep 500
-get 3
+get 2
 sleep 1000
 stop
