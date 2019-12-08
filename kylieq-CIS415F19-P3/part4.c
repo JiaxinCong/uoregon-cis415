@@ -33,7 +33,6 @@ void *Subscriber(void *args){
 	return 0;
 }
 
-// PUT SLEEP STOP 
 void *Publisher(void *args) {
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
@@ -41,7 +40,6 @@ void *Publisher(void *args) {
 	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
 	printf("Publisher thread %d reading %s\n", arg->index, (char *)arg->filename);
 
-//  ******************************
 	struct FileLines *file_lines = LoadAFile((char *)arg->filename);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
