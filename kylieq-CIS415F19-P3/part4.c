@@ -67,7 +67,7 @@ void *Publisher(void *args) {
 		if (strcmp(line_arguments[i]->args[0], "put") == 0) {
 			int topic_num = atoi(line_arguments[i]->args[1]);
 			int check = 0;
-			
+
 			struct TopicEntry *entry = MakeEntry(COUNTER);
 			entry->pubID = (unsigned int)pthread_self();
 			entry->photoURL = strdup(line_arguments[i]->args[2]);
@@ -80,14 +80,15 @@ void *Publisher(void *args) {
 				cap_idx++;
 				args_idx++;
 			}
-			/*check = Enqueue(topic_queue, entry);
+
+			check = Enqueue(topic_queue, entry);
 			if (check > -1) {
 				printf("Enqueued: %d\n", check);
 				COUNTER++;
 			}
 			else {
 				printf("Enqueue Denied\n");
-			}*/
+			}
 		}
 		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
 			int num_ms = atoi(line_arguments[i]->args[1]);
@@ -103,6 +104,9 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
+	int size = 30;
+	topic_queue = MallocTopicQueue(size);
+
 	struct FileLines *file_lines = LoadAFile(argv[1]);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
