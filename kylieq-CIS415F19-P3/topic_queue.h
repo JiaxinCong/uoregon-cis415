@@ -2,14 +2,13 @@
 #define TOPIC_QUEUE_H
 #include <sys/time.h>
 #include "synch_bounded_queue.h"
-#define URLSIZE 500
 #define	CAPSIZE 500
 
 struct TopicEntry {
 	int entryNum;
 	struct timeval *timeStamp;
 	int pubID;
-	char photoURL[URLSIZE]; // URL to photo
+	char *photoURL; // URL to photo
 	char photoCaption[CAPSIZE]; // photo caption
 };
 

@@ -1,17 +1,17 @@
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 1
-sleep 3000
+sleep 5
 get 0
-sleep 3000
+sleep 5
 get 0
 stop

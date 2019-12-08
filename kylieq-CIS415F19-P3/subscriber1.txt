@@ -1,16 +1,16 @@
-sleep 3000
+sleep 5
 get 1
-sleep 3000
+sleep 5
 get 1
-sleep 3000
+sleep 5
 get 1
-sleep 1000
+sleep 5
 get 1
-sleep 1000
+sleep 5
 get 1
-sleep 3000
+sleep 5
 get 2
-sleep 500
+sleep 5
 get 2
-sleep 1000
+sleep 5
 stop

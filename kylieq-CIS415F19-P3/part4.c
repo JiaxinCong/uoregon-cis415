@@ -14,6 +14,9 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
 int DELTA = 0;
+int COUNTER = 0;
+
+struct SynchBoundedQueue *topic_queue;
 
 struct ArgStruct {
 	char *filename;
@@ -30,6 +33,7 @@ void *Subscriber(void *args){
 	return 0;
 }
 
+// PUT SLEEP STOP 
 void *Publisher(void *args) {
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
@@ -37,14 +41,66 @@ void *Publisher(void *args) {
 	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
 	printf("Publisher thread %d reading %s\n", arg->index, (char *)arg->filename);
 
-	FILE *file = fopen((char *)arg->filename, "r");
-	char buffer[300];
-	int counter = 0;
-	while (fgets(buffer, sizeof(buffer), file) != NULL) {
-		printf("%s", buffer);
-	}
-	fclose(file);
+//  ******************************
+	struct FileLines *file_lines = LoadAFile((char *)arg->filename);
+	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
+	for (int i=0; i<file_lines->LineCount; i++) {
+		line_arguments[i] = malloc(sizeof(struct LineArguments));
+		line_arguments[i]->args = malloc(10 * sizeof(char *));
+	}
+
+	// Tokenize each line (in file_lines) 
+	for (int i=0; i<file_lines->LineCount; i++) {
+		char *token = strtok(file_lines->Lines[i], " \n\r");
+		int ctr = 0;
+		while (token != NULL) {
+			line_arguments[i]->args[ctr] = malloc(strlen(token)+1);
+			line_arguments[i]->count++;
+			strcpy(line_arguments[i]->args[ctr], token);
+			token = strtok(NULL, " \"\n\r");
+			ctr++;
+		}
+	}
+
+	for (int i=0; i<file_lines->LineCount; i++) {
+		printf("CHECK: %s\n", line_arguments[i]->args[0]);
+		printf("LINE COUNT: %d\n", file_lines->LineCount);
+		if (strcmp(line_arguments[i]->args[0], "put") == 0) {
+			/*int topic_num = atoi(line_arguments[i]->args[1]);
+			int check = 0;
+			struct TopicEntry *entry = MakeEntry(COUNTER);
+			entry->pubID = (unsigned int)pthread_self();
+			entry->photoURL = strdup(line_arguments[i]->args[2]);
+			int args_idx = 3;
+			int cap_idx = 0;*/
+			/*while (args_idx < line_arguments[i]->count) {
+				entry->photoCaption[cap_idx] = strdup(line_arguments[i]->args[args_idx]);
+				printf("caption: %s\n", entry->photoCaption[cap_idx]);
+				cap_idx++;
+				args_idx++;
+			}*/
+			/*check = Enqueue(topic_queue, entry);
+			if (check > -1) {
+				printf("Enqueued: %d\n", check);
+				COUNTER++;
+			}
+			else {
+				printf("Enqueue Denied\n");
+			}*/
+			continue;
+		}
+		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
+			int num_ms = atoi(line_arguments[i]->args[1]);
+			printf("SLEEPING\n");
+			sleep(num_ms);
+		}
+		else if (strcmp(line_arguments[i]->args[0], "stop") == 0) {
+			printf("STOP\n");
+			break;
+		}
+	}
+//  ******************************
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
