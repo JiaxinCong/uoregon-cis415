@@ -163,6 +163,11 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		printf("Error: Expected 2 arguments. Given %d argument(s).\n", argc);
+		return 0;
+	}
+
 	struct FileLines *file_lines = LoadAFile(argv[1]);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 

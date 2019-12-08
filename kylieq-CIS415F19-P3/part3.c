@@ -25,7 +25,6 @@ void *Subscriber(void *args){
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Subscriber\n", (unsigned int)pthread_self());
-	printf("Subscriber thread %d reading %s\n", arg->index, (char *)arg->filename);
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
@@ -35,12 +34,16 @@ void *Publisher(void *args) {
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
-	printf("Publisher thread %d reading %s\n", arg->index, (char *)arg->filename);
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
 
 int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		printf("Error: Expected 2 arguments. Given %d argument(s).\n", argc);
+		return 0;
+	}
+	
 	struct FileLines *file_lines = LoadAFile(argv[1]);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
