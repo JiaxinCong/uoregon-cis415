@@ -13,10 +13,11 @@
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Thread condition variable
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER; // Mutex
 
+struct SynchBoundedQueue *topic_queues[QUEUESIZE];
+char *topic_names[QUEUESIZE];
+
 int DELTA = 0;
 int COUNTER = 0;
-
-struct SynchBoundedQueue *topic_queue;
 
 struct ArgStruct {
 	char *filename;
@@ -53,7 +54,19 @@ void *Subscriber(void *args){
 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		if (strcmp(line_arguments[i]->args[0], "get") == 0) {
-			// DEQUEUE
+			/*int check = 0;
+			int tail = GetBack(topic_queue);
+			if (tail >= 0) {
+				struct TopicEntry *entry = GetEntry(topic_queue, tail);
+				printf("Dequeued: %d\n", entry->entryNum);
+				check = Dequeue(topic_queue, tail);
+				if (check < 0) {
+					printf("Dequeue Denied\n");
+				}
+			}
+			else {
+				printf("Dequeue Denied\n");
+			}*/
 			continue;
 		}
 		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
@@ -113,9 +126,13 @@ void *Publisher(void *args) {
 				args_idx++;
 			}
 
-			check = Enqueue(topic_queue, entry);
+			check = Enqueue(topic_queues[topic_num], entry);
 			if (check > -1) {
-				printf("Enqueued: %d\n", check);
+				printf("Enqueued to Topic %s: ", topic_names[topic_num]);
+				for (int i=0; i<cap_idx; i++) {
+					printf("%s ", entry->photoCaption[i]);
+				}
+				printf("\n");
 				COUNTER++;
 			}
 			else {
@@ -135,9 +152,6 @@ void *Publisher(void *args) {
 }
 
 int main(int argc, char *argv[]) {
-	int size = 30;
-	topic_queue = MallocTopicQueue(size);
-
 	struct FileLines *file_lines = LoadAFile(argv[1]);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
 
@@ -158,10 +172,8 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	struct SynchBoundedQueue *topic_queues[QUEUESIZE];
 	pthread_t subscriber_threads[NUMPROXIES];
 	pthread_t publisher_threads[NUMPROXIES];
-	char *topic_names[QUEUESIZE];
 	char *subscriber_names[NUMPROXIES];
 	char *publisher_names[NUMPROXIES];
 
