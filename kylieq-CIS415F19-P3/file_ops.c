@@ -15,13 +15,13 @@ struct FileLines *LoadAFile(char *filename) {
 
     fseek(file, 0, SEEK_SET);
 
-    lines = (struct FileLines*)malloc(sizeof(struct FileLines));
+    lines = (struct FileLines *)malloc(sizeof(struct FileLines));
     lines->FileName = strdup(filename);
     lines->LineCount = counter;
     lines->Lines = (char **)malloc((lines->LineCount+1) * sizeof(char *));
     lines->Lines[lines->LineCount] = NULL;
 
-    for(int i=0; i<lines->LineCount; i++) {
+    for (int i=0; i<lines->LineCount; i++) {
         fgets(buffer, sizeof(buffer), file);
         int len = strlen(buffer);
         for (int j=0; j<len; j++) {
