@@ -32,27 +32,17 @@ long long GetBack(struct SynchBoundedQueue *queue) {
 	return result;
 }
 
-long long GetFront(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
-	long long result = SBQ_GetFront(queue);
-	return result;
-}
-
-int GetCount(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
-	long long result = SBQ_GetCount(queue);
-	return result;
-}
-
-int ValidEntry(struct SynchBoundedQueue *queue,long long id) { /* Not used in part 1 */
+int ValidEntry(struct SynchBoundedQueue *queue,long long id) { 
 	int result = SBQ_ValidEntry(queue, id);
 	return result;
 }
 
-int IsFull(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
+int IsFull(struct SynchBoundedQueue *queue) { 
 	int result = SBQ_IsFull(queue); 
 	return result;
 }
 
-int IsEmpty(struct SynchBoundedQueue *queue) { /* Not used in part 1 */
+int IsEmpty(struct SynchBoundedQueue *queue) { 
 	int result = SBQ_IsEmpty(queue);
 	return result;
 }

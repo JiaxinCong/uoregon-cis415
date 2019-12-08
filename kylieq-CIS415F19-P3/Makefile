@@ -1,3 +1,5 @@
+all: part1 part2 part3 part4
+	
 part1: part1.c
 	gcc -g -std=c99 -o part1 part1.c topic_queue.c synch_bounded_queue.c bounded_queue.c
 

@@ -19,10 +19,6 @@ void *SBQ_GetEntry(struct SynchBoundedQueue *queue,long long id);
 
 long long SBQ_GetBack(struct SynchBoundedQueue *queue);
 
-long long SBQ_GetFront(struct SynchBoundedQueue *queue);
-
-int SBQ_GetCount(struct SynchBoundedQueue *queue);
-
 int SBQ_ValidEntry(struct SynchBoundedQueue *queue,long long id);
 
 int SBQ_IsFull(struct SynchBoundedQueue *queue);

@@ -22,17 +22,13 @@ void *GetEntry(struct SynchBoundedQueue *queue,long long id);
 
 long long GetBack(struct SynchBoundedQueue *queue);
 
-long long GetFront(struct SynchBoundedQueue *queue); /* Not used in part 1 */
+int ValidEntry(struct SynchBoundedQueue *queue,long long id); 
 
-int GetCount(struct SynchBoundedQueue *queue); /* Not used in part 1 */
+int IsFull(struct SynchBoundedQueue *queue); 
 
-int ValidEntry(struct SynchBoundedQueue *queue,long long id); /* Not used in part 1 */
+int IsEmpty(struct SynchBoundedQueue *queue); 
 
-int IsFull(struct SynchBoundedQueue *queue); /* Not used in part 1 */
-
-int IsEmpty(struct SynchBoundedQueue *queue); /* Not used in part 1 */
-
-void FreeBoundedQueue(struct SynchBoundedQueue *queue); /* Not used in part 1 */
+void FreeBoundedQueue(struct SynchBoundedQueue *queue); 
 
 struct TopicEntry *MakeEntry();
 

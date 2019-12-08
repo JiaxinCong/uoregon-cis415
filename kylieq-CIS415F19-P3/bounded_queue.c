@@ -62,19 +62,6 @@ long long BQ_GetBack(struct BoundedQueue *queue) {
 	return -1;
 }
 
-long long BQ_GetFront(struct BoundedQueue *queue) {
-	long long result = -1;
-	if (BQ_IsEmpty(queue) == 0) {
-		result = queue->head-1;
-	}
-	return result;
-}
-
-int BQ_GetCount(struct BoundedQueue *queue) {
-	long long result = queue->head - queue->tail;
-	return result;
-}
-
 int BQ_ValidEntry(struct BoundedQueue *queue, long long id) { 
 	// Check if item referred to by id is in queue
 	long long head = queue->head;

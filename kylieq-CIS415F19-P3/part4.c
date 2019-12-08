@@ -63,7 +63,7 @@ void *Subscriber(void *args){
 					printf("Dequeue Denied\n");
 				}
 				else {
-					printf("Dequeued from Topic \"%s\": ", topic_names[topic_num]);
+					printf("Dequeued from topic \"%s\": ", topic_names[topic_num]);
 					int cap_ctr = 0;
 					while (entry->photoCaption[cap_ctr] != NULL) {
 						printf("%s ", entry->photoCaption[cap_ctr]);
@@ -137,7 +137,7 @@ void *Publisher(void *args) {
 
 			check = Enqueue(topic_queues[topic_num], entry);
 			if (check > -1) {
-				printf("Enqueued to Topic \"%s\": ", topic_names[topic_num]);
+				printf("Enqueued to topic \"%s\": ", topic_names[topic_num]);
 				for (int i=0; i<cap_idx; i++) {
 					printf("%s ", entry->photoCaption[i]);
 				}

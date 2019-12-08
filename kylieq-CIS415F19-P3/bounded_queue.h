@@ -18,16 +18,12 @@ void *BQ_GetEntry(struct BoundedQueue *queue,long long id);
 
 long long BQ_GetBack(struct BoundedQueue *queue); 
 
-long long BQ_GetFront(struct BoundedQueue *queue); 
-
-int BQ_GetCount(struct BoundedQueue *queue); /* Not used in part 1 */
-
 int BQ_ValidEntry(struct BoundedQueue *queue,long long id); 
 
 int BQ_IsFull(struct BoundedQueue *queue);
 
 int BQ_IsEmpty(struct BoundedQueue *queue); 
 
-void BQ_FreeBoundedQueue(struct BoundedQueue *queue); /* Not used in part 1 */
+void BQ_FreeBoundedQueue(struct BoundedQueue *queue); 
 
 #endif

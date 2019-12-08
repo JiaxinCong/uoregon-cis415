@@ -46,22 +46,6 @@ long long SBQ_GetBack(struct SynchBoundedQueue *queue) {
 	return result;
 }
 
-long long SBQ_GetFront(struct SynchBoundedQueue *queue) {
-    pthread_mutex_lock(&(queue->lock)); 
-    long long result = BQ_GetFront(queue->queue);
-    pthread_mutex_unlock(&(queue->lock)); 
-    if (result < 0) return -1;
-    return result;
-}
-
-int SBQ_GetCount(struct SynchBoundedQueue *queue) {
-    long long result = 0;
-    pthread_mutex_lock(&(queue->lock)); 
-    result = BQ_GetCount(queue->queue);
-    pthread_mutex_unlock(&(queue->lock)); 
-    return result;
-}
-
 int SBQ_ValidEntry(struct SynchBoundedQueue *queue,long long id) {
     int result = 0;  
     pthread_mutex_lock(&(queue->lock)); 
