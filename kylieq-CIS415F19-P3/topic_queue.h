@@ -2,7 +2,7 @@
 #define TOPIC_QUEUE_H
 #include <sys/time.h>
 #include "synch_bounded_queue.h"
-#define	CAPSIZE 500
+#define	CAPSIZE 10
 
 struct TopicEntry {
 	int entryNum;

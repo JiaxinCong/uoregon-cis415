@@ -28,8 +28,6 @@ void *Subscriber(void *args){
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
-	printf("Proxy thread %u - type: Subscriber\n", (unsigned int)pthread_self());
-	printf("Subscriber thread %d reading %s\n", arg->index, (char *)arg->filename);
 
 	struct FileLines *file_lines = LoadAFile((char *)arg->filename);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
@@ -54,26 +52,38 @@ void *Subscriber(void *args){
 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		if (strcmp(line_arguments[i]->args[0], "get") == 0) {
-			/*int check = 0;
-			int tail = GetBack(topic_queue);
+			printf("Proxy thread %u - type: Subscriber (%d) - Executed command: get\n", (unsigned int)pthread_self(), arg->index);
+			int topic_num = atoi(line_arguments[i]->args[1]);
+			int check = 0;
+			int tail = GetBack(topic_queues[topic_num]);
 			if (tail >= 0) {
-				struct TopicEntry *entry = GetEntry(topic_queue, tail);
-				printf("Dequeued: %d\n", entry->entryNum);
-				check = Dequeue(topic_queue, tail);
+				struct TopicEntry *entry = GetEntry(topic_queues[topic_num], tail);
+				check = Dequeue(topic_queues[topic_num], tail);
 				if (check < 0) {
 					printf("Dequeue Denied\n");
+				}
+				else {
+					printf("Dequeued from Topic \"%s\": ", topic_names[topic_num]);
+					int cap_ctr = 0;
+					while (entry->photoCaption[cap_ctr] != NULL) {
+						printf("%s ", entry->photoCaption[cap_ctr]);
+						cap_ctr++;
+					}
+					printf("\n");
 				}
 			}
 			else {
 				printf("Dequeue Denied\n");
-			}*/
+			}
 			continue;
 		}
 		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
+			printf("Proxy thread %u - type: Subscriber (%d) - Executed command: sleep\n", (unsigned int)pthread_self(), arg->index);
 			int num_ms = atoi(line_arguments[i]->args[1]);
 			sleep(num_ms);
 		}
 		else if (strcmp(line_arguments[i]->args[0], "stop") == 0) {
+			printf("Proxy thread %u - type: Subscriber (%d) - Executed command: stop\n", (unsigned int)pthread_self(), arg->index);
 			break;
 		}
 	}
@@ -85,8 +95,6 @@ void *Publisher(void *args) {
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
-	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
-	printf("Publisher thread %d reading %s\n", arg->index, (char *)arg->filename);
 
 	struct FileLines *file_lines = LoadAFile((char *)arg->filename);
 	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
@@ -111,6 +119,7 @@ void *Publisher(void *args) {
 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		if (strcmp(line_arguments[i]->args[0], "put") == 0) {
+			printf("Proxy thread %u - type: Publisher (%d) - Executed command: put\n", (unsigned int)pthread_self(), arg->index);
 			int topic_num = atoi(line_arguments[i]->args[1]);
 			int check = 0;
 
@@ -128,7 +137,7 @@ void *Publisher(void *args) {
 
 			check = Enqueue(topic_queues[topic_num], entry);
 			if (check > -1) {
-				printf("Enqueued to Topic %s: ", topic_names[topic_num]);
+				printf("Enqueued to Topic \"%s\": ", topic_names[topic_num]);
 				for (int i=0; i<cap_idx; i++) {
 					printf("%s ", entry->photoCaption[i]);
 				}
@@ -140,10 +149,12 @@ void *Publisher(void *args) {
 			}
 		}
 		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
+			printf("Proxy thread %u - type: Publisher (%d) - Executed command: sleep\n", (unsigned int)pthread_self(), arg->index);
 			int num_ms = atoi(line_arguments[i]->args[1]);
 			sleep(num_ms);
 		}
 		else if (strcmp(line_arguments[i]->args[0], "stop") == 0) {
+			printf("Proxy thread %u - type: Publisher (%d) - Executed command: stop\n", (unsigned int)pthread_self(), arg->index);
 			break;
 		}
 	}

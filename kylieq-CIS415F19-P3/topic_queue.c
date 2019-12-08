@@ -68,6 +68,8 @@ struct TopicEntry *MakeEntry(int num) {
 	entry->timeStamp = NULL;
 	entry->pubID = 0;
 	entry->photoURL = NULL;
-	entry->photoCaption[0] = NULL;
+	for (int i=0; i<10; i++) {
+		entry->photoCaption[i] = NULL;
+	}
 	return entry;
 }
