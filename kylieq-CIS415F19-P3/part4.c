@@ -64,8 +64,6 @@ void *Publisher(void *args) {
 	}
 
 	for (int i=0; i<file_lines->LineCount; i++) {
-		printf("CHECK: %s\n", line_arguments[i]->args[0]);
-		printf("LINE COUNT: %d\n", file_lines->LineCount);
 		if (strcmp(line_arguments[i]->args[0], "put") == 0) {
 			/*int topic_num = atoi(line_arguments[i]->args[1]);
 			int check = 0;
