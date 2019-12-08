@@ -14,6 +14,8 @@ int main() {
 	int check = 0;
 	int ctr = 0;
 
+	printf("Size of queue: %d\n", size);
+
 	/* Fill queue & attempt to enqueue when full */
 	for (ctr=0; ctr<size+5; ctr++) {
 		entry = MakeEntry(ctr);
