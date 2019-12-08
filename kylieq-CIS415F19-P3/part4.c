@@ -29,6 +29,41 @@ void *Subscriber(void *args){
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Subscriber\n", (unsigned int)pthread_self());
 	printf("Subscriber thread %d reading %s\n", arg->index, (char *)arg->filename);
+
+	struct FileLines *file_lines = LoadAFile((char *)arg->filename);
+	struct LineArguments **line_arguments = malloc(file_lines->LineCount * sizeof(struct LineArguments *));
+
+	for (int i=0; i<file_lines->LineCount; i++) {
+		line_arguments[i] = malloc(sizeof(struct LineArguments));
+		line_arguments[i]->args = malloc(10 * sizeof(char *));
+	}
+
+	// Tokenize each line (in file_lines) 
+	for (int i=0; i<file_lines->LineCount; i++) {
+		char *token = strtok(file_lines->Lines[i], " \n\r");
+		int ctr = 0;
+		while (token != NULL) {
+			line_arguments[i]->args[ctr] = malloc(strlen(token)+1);
+			line_arguments[i]->count++;
+			strcpy(line_arguments[i]->args[ctr], token);
+			token = strtok(NULL, " \"\n\r");
+			ctr++;
+		}
+	}
+
+	for (int i=0; i<file_lines->LineCount; i++) {
+		if (strcmp(line_arguments[i]->args[0], "get") == 0) {
+			// DEQUEUE
+			continue;
+		}
+		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
+			int num_ms = atoi(line_arguments[i]->args[1]);
+			sleep(num_ms);
+		}
+		else if (strcmp(line_arguments[i]->args[0], "stop") == 0) {
+			break;
+		}
+	}
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
