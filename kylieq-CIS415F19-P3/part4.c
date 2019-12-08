@@ -65,19 +65,21 @@ void *Publisher(void *args) {
 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		if (strcmp(line_arguments[i]->args[0], "put") == 0) {
-			/*int topic_num = atoi(line_arguments[i]->args[1]);
+			int topic_num = atoi(line_arguments[i]->args[1]);
 			int check = 0;
+			
 			struct TopicEntry *entry = MakeEntry(COUNTER);
 			entry->pubID = (unsigned int)pthread_self();
 			entry->photoURL = strdup(line_arguments[i]->args[2]);
+
 			int args_idx = 3;
-			int cap_idx = 0;*/
-			/*while (args_idx < line_arguments[i]->count) {
+			int cap_idx = 0;
+			while (args_idx < line_arguments[i]->count) {
 				entry->photoCaption[cap_idx] = strdup(line_arguments[i]->args[args_idx]);
 				printf("caption: %s\n", entry->photoCaption[cap_idx]);
 				cap_idx++;
 				args_idx++;
-			}*/
+			}
 			/*check = Enqueue(topic_queue, entry);
 			if (check > -1) {
 				printf("Enqueued: %d\n", check);
@@ -86,15 +88,12 @@ void *Publisher(void *args) {
 			else {
 				printf("Enqueue Denied\n");
 			}*/
-			continue;
 		}
 		else if (strcmp(line_arguments[i]->args[0], "sleep") == 0) {
 			int num_ms = atoi(line_arguments[i]->args[1]);
-			printf("SLEEPING\n");
 			sleep(num_ms);
 		}
 		else if (strcmp(line_arguments[i]->args[0], "stop") == 0) {
-			printf("STOP\n");
 			break;
 		}
 	}

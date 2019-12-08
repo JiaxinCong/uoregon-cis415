@@ -9,7 +9,7 @@ struct TopicEntry {
 	struct timeval *timeStamp;
 	int pubID;
 	char *photoURL; // URL to photo
-	char photoCaption[CAPSIZE]; // photo caption
+	char *photoCaption[CAPSIZE]; // photo caption
 };
 
 struct SynchBoundedQueue *MallocTopicQueue(long size);
