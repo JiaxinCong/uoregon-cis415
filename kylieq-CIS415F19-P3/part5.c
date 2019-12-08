@@ -54,11 +54,11 @@ void *Subscriber(void *args){
 		}
 	}
 
-	struct TopicEntry *subscriber_output[get_count];
-	int SO_CTR = 0;
+	struct TopicEntry *entries[get_count];
+	int SE_CTR = 0;
 
 	for (int i=0; i<get_count; i++) {
-		subscriber_output[i] = NULL;
+		entries[i] = NULL;
 	}
 
 	for (int i=0; i<file_lines->LineCount; i++) {
@@ -80,12 +80,11 @@ void *Subscriber(void *args){
 						printf("%s ", entry->photoCaption[cap_ctr]);
 						cap_ctr++;
 					}
-
-					// Save dequeued entry to subscriber_output
-					subscriber_output[SO_CTR] = entry;
-					SO_CTR++;
-
 					printf("\n");
+
+					// Save dequeued entry 
+					entries[SE_CTR] = entry;
+					SE_CTR++;
 				}
 			}
 			else {
@@ -103,6 +102,25 @@ void *Subscriber(void *args){
 			break;
 		}
 	}
+
+	for (int i=0; i<10; i++) {
+		printf("*****");
+	}
+	printf("\n");
+	int z = 0;
+	while (entries[z] != NULL) {
+		int cap_ctr = 0;
+		while (entries[z]->photoCaption[cap_ctr] != NULL) {
+			printf("%s ", entries[z]->photoCaption[cap_ctr]);
+			cap_ctr++;
+		}
+		printf("\n");
+		z++;
+	}
+	for (int i=0; i<10; i++) {
+		printf("*****");
+	}
+	printf("\n");
 
 	pthread_mutex_unlock(&lock); 
 	return 0;
