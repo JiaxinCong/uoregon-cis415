@@ -24,7 +24,7 @@ struct ArgStruct {
 	int index;
 };
 
-void *Subscriber(void *args){
+void *Subscriber(void *args) {
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
 	pthread_cond_wait(&cond, &lock);
