@@ -36,6 +36,15 @@ void *Publisher(void *args) {
 	pthread_cond_wait(&cond, &lock);
 	printf("Proxy thread %u - type: Publisher\n", (unsigned int)pthread_self());
 	printf("Publisher thread %d reading %s\n", arg->index, (char *)arg->filename);
+
+	FILE *file = fopen((char *)arg->filename, "r");
+	char buffer[300];
+	int counter = 0;
+	while (fgets(buffer, sizeof(buffer), file) != NULL) {
+		printf("%s", buffer);
+	}
+	fclose(file);
+
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
@@ -49,7 +58,7 @@ int main(int argc, char *argv[]) {
 		line_arguments[i]->args = malloc(10 * sizeof(char *));
 	}
 
-	// Split each line into tokens
+	// Tokenize each line (in file_lines) 
 	for (int i=0; i<file_lines->LineCount; i++) {
 		char *token = strtok(file_lines->Lines[i], " \n\r");
 		int ctr = 0;
