@@ -76,7 +76,6 @@ void *Publisher(void *args) {
 			int cap_idx = 0;
 			while (args_idx < line_arguments[i]->count) {
 				entry->photoCaption[cap_idx] = strdup(line_arguments[i]->args[args_idx]);
-				printf("caption: %s\n", entry->photoCaption[cap_idx]);
 				cap_idx++;
 				args_idx++;
 			}
@@ -98,7 +97,6 @@ void *Publisher(void *args) {
 			break;
 		}
 	}
-//  ******************************
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
