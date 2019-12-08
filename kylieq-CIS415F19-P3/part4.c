@@ -240,35 +240,33 @@ int main(int argc, char *argv[]) {
 			DELTA = atoi(line_arguments[i]->args[1]);
 		}
 		else if (strcmp(line_arguments[i]->args[0], "start") == 0) {
-			break;
+			for (int i=0; i<10; i++) {
+				printf("*****");
+			}
+			printf("\n");
+
+			printf("Waiting for subscriber threads...\n");
+			printf("Waiting for publisher threads...\n");
+
+			sleep(5);
+			pthread_cond_broadcast(&cond);
+
+			int check = 0;
+			for (int i=0; i<pubCtr; i++) {
+				check += pthread_join(publisher_threads[i], NULL);
+			}	
+			if (check == 0) {
+				printf("All publisher threads have successfully exited.\n");
+			}
+
+			check = 0;
+			for (int i=0; i<subCtr; i++) {
+				check += pthread_join(subscriber_threads[i], NULL);
+			}
+			if (check == 0) {
+				printf("All subscriber threads have successfully exited.\n");
+			}
 		}
-	}
-
-	for (int i=0; i<10; i++) {
-		printf("*****");
-	}
-	printf("\n");
-
-	printf("Waiting for subscriber threads...\n");
-	printf("Waiting for publisher threads...\n");
-
-	sleep(5);
-	pthread_cond_broadcast(&cond);
-
-	int check = 0;
-	for (int i=0; i<pubCtr; i++) {
-		check += pthread_join(publisher_threads[i], NULL);
-	}	
-	if (check == 0) {
-		printf("All publisher threads have successfully exited.\n");
-	}
-
-	check = 0;
-	for (int i=0; i<subCtr; i++) {
-		check += pthread_join(subscriber_threads[i], NULL);
-	}
-	if (check == 0) {
-		printf("All subscriber threads have successfully exited.\n");
 	}
 
 	FreeFile(file_lines);
