@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		line_arguments[i]->args = malloc(10 * sizeof(char *));
 	}
 
-	// Split file line by line
+	// Split each line into tokens
 	for (int i=0; i<file_lines->LineCount; i++) {
 		char *token = strtok(file_lines->Lines[i], " \n\r");
 		int ctr = 0;
