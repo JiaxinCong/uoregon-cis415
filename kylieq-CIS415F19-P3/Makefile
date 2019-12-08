@@ -10,8 +10,12 @@ part2: part2.c
 part3: part3.c
 	gcc -g -std=c99 -o part3 part3.c topic_queue.c synch_bounded_queue.c bounded_queue.c file_ops.c
 
+part4: part4.c
+	gcc -g -std=c99 -o part4 part4.c topic_queue.c synch_bounded_queue.c bounded_queue.c file_ops.c
+
 clean:
 	$(RM) main1-2 *.o *~
 	$(RM) part1 *.o *~
 	$(RM) part2 *.o *~
 	$(RM) part3 *.o *~
+	$(RM) part4 *.o *~

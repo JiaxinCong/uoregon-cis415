@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 		while (token != NULL) {
 			line_arguments[i]->args[ctr] = malloc(strlen(token)+1);
 			strcpy(line_arguments[i]->args[ctr], token);
-			token = strtok(NULL, " \"\n\r");
+			token = strtok(NULL, " \n\r");
 			ctr++;
 		}
 	}
