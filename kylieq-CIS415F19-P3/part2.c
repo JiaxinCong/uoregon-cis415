@@ -1,4 +1,3 @@
-/* Part 1 & 2 combined */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
