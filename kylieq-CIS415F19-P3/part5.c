@@ -111,48 +111,37 @@ void *Subscriber(void *args){
 	strcat(filename, subnum[arg->index]);
 	strcat(filename, ".html");
 	strcat(filename, "\0");
-	//printf("filename: %s\n", filename);
-
 	FILE *file = fopen(filename, "w");
-	fprintf(file, "%s %s\r\n", "Subscriber:", (char *)arg->filename);
 
 	int idx = 0;
+	int current = entries[0]->entryNum;
+	fprintf(file, "<!DOCTYPE html><html><title>HTML_SUBSCRIBER_FILENAME</title>");
+	fprintf(file, "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}th, td {padding: 5px;}th {text-align: left;}</style>");
+	fprintf(file, "</head><body>");
+	fprintf(file, "<h1>Subscriber: %s</h1>", (char *)arg->filename);
+	fprintf(file, "<h2>Topic Name: %s</h2>", topic_names[entries[0]->entryNum]);
+	fprintf(file, "<table style=\"width:100%%\" align=\"middle\">");
+	fprintf(file, "<tr><th>CAPTION</th><th>PHOTO-URL</th></tr>");
 	while (entries[idx] != NULL) {
-		fprintf(file, "Topic Name: %s\r\n", topic_names[entries[idx]->entryNum]);
-		fprintf(file, "Caption: ");
-		int cap_ctr = 0;
-		while (entries[idx]->photoCaption[cap_ctr] != NULL) {
-			fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
-			cap_ctr++;
+		if (entries[idx]->entryNum == current) {
+			fprintf(file, "<tr>");
+			fprintf(file, "<td>");
+			int cap_ctr = 0;
+			while (entries[idx]->photoCaption[cap_ctr] != NULL) {
+				fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
+				cap_ctr++;
+			}
+			fprintf(file, "</td>");
+			fprintf(file, "<td>%s</td>", entries[idx]->photoURL);
+			fprintf(file, "</tr>");
 		}
-		fprintf(file, "\r\n");
-		fprintf(file, "Photo-URL: %s\r\n", entries[idx]->photoURL);
 		idx++;
 	}
+	fprintf(file, "</table>");
+	fprintf(file, "</body></html>");
 
 	fclose(file);
 
-
-/*	// Print dequeued entries...
-	for (int i=0; i<10; i++) {
-		printf("*****");
-	}
-	printf("\n");
-	int z = 0;
-	while (entries[z] != NULL) {
-		int cap_ctr = 0;
-		while (entries[z]->photoCaption[cap_ctr] != NULL) {
-			printf("%s ", entries[z]->photoCaption[cap_ctr]);
-			cap_ctr++;
-		}
-		printf("\n");
-		z++;
-	}
-	for (int i=0; i<10; i++) {
-		printf("*****");
-	}
-	printf("\n");
-*/
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
