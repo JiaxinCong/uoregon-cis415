@@ -114,19 +114,19 @@ void *Subscriber(void *args){
 	//printf("filename: %s\n", filename);
 
 	FILE *file = fopen(filename, "w");
-	fprintf(file, "%s %s\n", "Subscriber:", (char *)arg->filename);
+	fprintf(file, "%s %s\r\n", "Subscriber:", (char *)arg->filename);
 
 	int idx = 0;
 	while (entries[idx] != NULL) {
-		fprintf(file, "Topic Name: %s\n", topic_names[entries[idx]->entryNum]);
+		fprintf(file, "Topic Name: %s\r\n", topic_names[entries[idx]->entryNum]);
 		fprintf(file, "Caption: ");
 		int cap_ctr = 0;
 		while (entries[idx]->photoCaption[cap_ctr] != NULL) {
 			fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
 			cap_ctr++;
 		}
-		fprintf(file, "\n");
-		fprintf(file, "Photo-URL: %s\n", entries[idx]->photoURL);
+		fprintf(file, "\r\n");
+		fprintf(file, "Photo-URL: %s\r\n", entries[idx]->photoURL);
 		idx++;
 	}
 
@@ -192,6 +192,7 @@ void *Publisher(void *args) {
 			struct TopicEntry *entry = MakeEntry(COUNTER);
 			entry->pubID = (unsigned int)pthread_self();
 			entry->photoURL = strdup(line_arguments[i]->args[2]);
+			entry->entryNum = topic_num;
 
 			int args_idx = 3;
 			int cap_idx = 0;
