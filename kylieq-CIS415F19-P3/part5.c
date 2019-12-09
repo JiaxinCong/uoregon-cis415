@@ -24,6 +24,8 @@ struct ArgStruct {
 	int index;
 };
 
+char *subnum[10] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
 void *Subscriber(void *args){
 	struct ArgStruct *arg = args;
 	pthread_mutex_lock(&lock);
@@ -107,6 +109,24 @@ void *Subscriber(void *args){
 		printf("*****");
 	}
 	printf("\n");
+	char *thread = "Subscriber";
+	char filename[100];
+	strcat(filename, thread);
+	strcat(filename, subnum[arg->index]);
+	strcat(filename, ".html");
+	strcat(filename, "\0");
+	printf("filename: %s\n", filename);
+	for (int i=0; i<10; i++) {
+		printf("*****");
+	}
+	printf("\n");
+
+
+/*	// Print dequeued entries...
+	for (int i=0; i<10; i++) {
+		printf("*****");
+	}
+	printf("\n");
 	int z = 0;
 	while (entries[z] != NULL) {
 		int cap_ctr = 0;
@@ -121,7 +141,7 @@ void *Subscriber(void *args){
 		printf("*****");
 	}
 	printf("\n");
-
+*/
 	pthread_mutex_unlock(&lock); 
 	return 0;
 }
