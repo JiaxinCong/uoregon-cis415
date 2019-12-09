@@ -105,21 +105,32 @@ void *Subscriber(void *args){
 		}
 	}
 
-	for (int i=0; i<10; i++) {
-		printf("*****");
-	}
-	printf("\n");
 	char *thread = "Subscriber";
 	char filename[100];
 	strcat(filename, thread);
 	strcat(filename, subnum[arg->index]);
 	strcat(filename, ".html");
 	strcat(filename, "\0");
-	printf("filename: %s\n", filename);
-	for (int i=0; i<10; i++) {
-		printf("*****");
+	//printf("filename: %s\n", filename);
+
+	FILE *file = fopen(filename, "w");
+	fprintf(file, "%s %s\n", "Subscriber:", (char *)arg->filename);
+
+	int idx = 0;
+	while (entries[idx] != NULL) {
+		fprintf(file, "Topic Name: %s\n", topic_names[entries[idx]->entryNum]);
+		fprintf(file, "Caption: ");
+		int cap_ctr = 0;
+		while (entries[idx]->photoCaption[cap_ctr] != NULL) {
+			fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
+			cap_ctr++;
+		}
+		fprintf(file, "\n");
+		fprintf(file, "Photo-URL: %s\n", entries[idx]->photoURL);
+		idx++;
 	}
-	printf("\n");
+
+	fclose(file);
 
 
 /*	// Print dequeued entries...
