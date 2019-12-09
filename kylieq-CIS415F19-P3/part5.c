@@ -144,7 +144,6 @@ void *Subscriber(void *args){
 	}
 
 	fprintf(file, "</body></html>");
-
 	fclose(file);
 
 	pthread_mutex_unlock(&lock); 
