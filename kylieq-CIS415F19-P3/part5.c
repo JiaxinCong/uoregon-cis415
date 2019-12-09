@@ -18,6 +18,7 @@ char *topic_names[QUEUESIZE];
 
 int DELTA = 0;
 int COUNTER = 0;
+int TOPIC_COUNT = 0;
 
 struct ArgStruct {
 	char *filename;
@@ -113,31 +114,35 @@ void *Subscriber(void *args){
 	strcat(filename, "\0");
 	FILE *file = fopen(filename, "w");
 
-	int idx = 0;
-	int current = entries[0]->entryNum;
 	fprintf(file, "<!DOCTYPE html><html><title>HTML_SUBSCRIBER_FILENAME</title>");
 	fprintf(file, "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}th, td {padding: 5px;}th {text-align: left;}</style>");
 	fprintf(file, "</head><body>");
 	fprintf(file, "<h1>Subscriber: %s</h1>", (char *)arg->filename);
-	fprintf(file, "<h2>Topic Name: %s</h2>", topic_names[entries[0]->entryNum]);
-	fprintf(file, "<table style=\"width:100%%\" align=\"middle\">");
-	fprintf(file, "<tr><th>CAPTION</th><th>PHOTO-URL</th></tr>");
-	while (entries[idx] != NULL) {
-		if (entries[idx]->entryNum == current) {
-			fprintf(file, "<tr>");
-			fprintf(file, "<td>");
-			int cap_ctr = 0;
-			while (entries[idx]->photoCaption[cap_ctr] != NULL) {
-				fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
-				cap_ctr++;
+
+	for (int i=0; i<TOPIC_COUNT; i++) {
+		int idx = 0;
+		int current = i;
+		fprintf(file, "<h2>Topic Name: %s</h2>", topic_names[i]);
+		fprintf(file, "<table style=\"width:100%%\" align=\"middle\">");
+		fprintf(file, "<tr><th>CAPTION</th><th>PHOTO-URL</th></tr>");
+		while (entries[idx] != NULL) {
+			if (entries[idx]->entryNum == current) {
+				fprintf(file, "<tr>");
+				fprintf(file, "<td>");
+				int cap_ctr = 0;
+				while (entries[idx]->photoCaption[cap_ctr] != NULL) {
+					fprintf(file, "%s ", entries[idx]->photoCaption[cap_ctr]);
+					cap_ctr++;
+				}
+				fprintf(file, "</td>");
+				fprintf(file, "<td>%s</td>", entries[idx]->photoURL);
+				fprintf(file, "</tr>");
 			}
-			fprintf(file, "</td>");
-			fprintf(file, "<td>%s</td>", entries[idx]->photoURL);
-			fprintf(file, "</tr>");
+			idx++;
 		}
-		idx++;
+		fprintf(file, "</table>");
 	}
-	fprintf(file, "</table>");
+
 	fprintf(file, "</body></html>");
 
 	fclose(file);
@@ -258,6 +263,7 @@ int main(int argc, char *argv[]) {
 				struct SynchBoundedQueue *topic_queue = MallocTopicQueue(size);
 				topic_queues[topicCtr] = topic_queue;
 				topic_names[topicCtr] = line_arguments[i]->args[3];
+				TOPIC_COUNT += 1;
 				topicCtr += 1;
 			}
 		}
